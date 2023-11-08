@@ -2,7 +2,7 @@
 
 import { AnimatePresence, m } from "framer-motion";
 import { type ReactElement } from "react";
-import { useExperienceLoaderState, useExperienceReady } from "../experience-loader";
+import { useExperienceReady } from "../experience-loader";
 import { TypewriterEffectGreeting } from "./typewriter-effect-greeting";
 import { BlurredBackgroundColors } from "./blurred-background-colors";
 
