@@ -17,11 +17,13 @@ export function BlurredBackgroundColors(): ReactElement {
         initial: {
           scale: 1,
           opacity: 1,
-          rotate: 0
+          rotate: 0,
+          transformOrigin: "center center",
         },
         hidden: {
           scale: 0,
           opacity: 0,
+          transformOrigin: "center center",
           transitionEnd: {
             visibility: "hidden",
             display: "none"
