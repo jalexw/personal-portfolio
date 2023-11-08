@@ -1,0 +1,1 @@
+export const duration: number = 1.5;
