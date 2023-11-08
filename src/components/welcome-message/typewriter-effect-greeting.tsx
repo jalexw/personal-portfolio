@@ -9,6 +9,10 @@ function CursorBlinker() {
       variants={{
         hidden: {
           opacity: 0,
+          transitionEnd: {
+            visibility: "hidden",
+            display: "none"
+          }
         },
         blinking: {
           opacity: [0, 0, 1, 1],
@@ -18,13 +22,14 @@ function CursorBlinker() {
             repeatDelay: 0,
             ease: "linear",
             times: [0, 0.5, 0.5, 1]
-          }
+          },
+          visibility: "visible",
         }
       }}
-      initial="hidden"
+      initial="blinking"
       animate="blinking"
       exit="hidden"
-      className="text-slate-900 dark:text-white"
+      className="text-slate-900 dark:text-white inline-block"
       role='presentation'
     >
       |
@@ -32,12 +37,12 @@ function CursorBlinker() {
   );
 }
 
-export function TypewriterEffectGreeting({ message }: { message: string }): ReactElement {
+export function TypewriterEffectGreeting({ message }: { message: string[] }): ReactElement {
   const isReady = useExperienceReady()
   const count: MotionValue<number> = useMotionValue<number>(message.length);
   const rounded = useTransform(count, (latest) => Math.round(latest));
-  const displayText: MotionValue<string> = useTransform(rounded, (latest) => {
-    return message.slice(0, latest)
+  const displayText: MotionValue<string> = useTransform(rounded, (latest: number) => {
+    return message.slice(0, latest).join("");
   });
   const [scope, animate] = useAnimate();
 
@@ -54,7 +59,7 @@ export function TypewriterEffectGreeting({ message }: { message: string }): Reac
   }, [animate, message, count, isReady]);
 
   return (
-    <h1 className="flex flex-row flex-nowrap items-center text-4xl absolute m-auto top-[50vh]">
+    <h1 className="flex flex-row flex-nowrap items-center text-4xl absolute m-auto top-[50vh] pointer-events-none">
       <m.span ref={scope}>{displayText}</m.span>
       <CursorBlinker />
     </h1>
