@@ -4,27 +4,37 @@ import { PerspectiveCamera, useAnimations, useGLTF } from "@react-three/drei";
 import { useRef, type ReactElement } from "react";
 import { Box } from '@react-three/drei'
 import { useTime } from "framer-motion";
-import { useFrame } from "@react-three/fiber";
+import { Euler, useFrame } from "@react-three/fiber";
+import { BufferGeometry, Material, Mesh, NormalBufferAttributes, Object3DEventMap } from "three";
 
 export function Scene(): ReactElement {
   // const Penguin = useGLTF('/assets/models/penguin.gltf')
   // const animations = useAnimations(Penguin.animations, Penguin.scene)
 
   // const model = Penguin.scene.children
-  const x = useRef<number>(0)
-  const y = useRef<number>(0)
+  const cubeRef = useRef<any>()
   
-  useFrame((time) => {
-    const t: number = time.clock.getElapsedTime();
-    x.current = Math.sin(t) * 360
-    y.current = Math.cos(t) * 360
+  useFrame(({ clock }) => {
+    const t: number = clock.getElapsedTime();
+    if (!cubeRef.current) {
+      return;
+    }
+    cubeRef.current.rotation.x = Math.sin(t / 180) * 360
+    cubeRef.current.rotation.y = Math.cos(t / 180) * 360
   })
 
   return (
     <>
       <PerspectiveCamera makeDefault position={[ 0, 0, 0 ]} />
-      <Box position={[ 0, 0, -7 ]} rotation={[x.current, y.current, 0]}>
+      {/* <mesh ref={cubeRef}>
+        <boxGeometry  />
         <meshStandardMaterial color="lightblue" />
+      </mesh> */}
+      <Box
+        position={[ 0, 0, -6 ]}
+        ref={cubeRef}
+      >
+        <meshStandardMaterial color="red" />
       </Box>
 
       {/* <primitive object={Penguin.scene} /> */}
