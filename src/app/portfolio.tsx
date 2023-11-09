@@ -3,6 +3,7 @@
 import { DynamicExperience } from "@/components/experience";
 import { WelcomeMessage } from "@/components/welcome-message";
 import { email } from "@/metadata";
+import { AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import type { ReactElement } from "react";
 
@@ -31,12 +32,14 @@ export function PortfolioExperienceContent(): ReactElement {
 
       <div
         id="welcome-message-container"
-        className="w-full overflow-x-hidden flex items-center justify-center"
+        className="w-full overflow-x-hidden flex items-center justify-center z-10"
       >
         <WelcomeMessage />
       </div>
       
-      <DynamicExperience />
+      <AnimatePresence>
+        <DynamicExperience />
+      </AnimatePresence>
     </main>
   )
 }

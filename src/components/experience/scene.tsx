@@ -39,7 +39,7 @@ export function Scene(): ReactElement {
 
       {/* <primitive object={Penguin.scene} /> */}
 
-      <pointLight intensity={75} position={[0, 5, 5]}/>
+      <pointLight intensity={90} position={[0, 5, 5]}/>
       <ambientLight intensity={0.4} />
     </>
   )
