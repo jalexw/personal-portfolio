@@ -23,7 +23,9 @@ export function ContactDialog(): ReactElement {
   return (
     <Dialog>
       <DialogTriggerButton />
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent
+        className="sm:max-w-[425px] md:max-w-[525px] lg:max-w-[625px] overflow-y-scroll max-h-screen"
+      >
         <DialogHeader>
           <DialogTitle>Send me a message</DialogTitle>
           <DialogDescription>
