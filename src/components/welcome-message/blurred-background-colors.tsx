@@ -18,7 +18,6 @@ export function BlurredBackgroundColors(): ReactElement {
           scale: 1,
           opacity: 1,
           rotate: 0,
-          transformOrigin: "center center",
           visibility: "visible",
           display: "block"
         },
@@ -26,7 +25,6 @@ export function BlurredBackgroundColors(): ReactElement {
           scale: 0,
           opacity: 0,
           rotate: -20,
-          transformOrigin: "center center",
           transitionEnd: {
             visibility: "hidden",
             display: "none"
@@ -54,7 +52,7 @@ export function BlurredBackgroundColors(): ReactElement {
           before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10
           after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40
           before:lg:h-[350px]
-          z-[-1]
+          z-40
         "
       />
       <m.div
@@ -65,7 +63,7 @@ export function BlurredBackgroundColors(): ReactElement {
           before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10
           after:dark:from-sky-900 after:dark:via-[#b11cb6] after:dark:opacity-40
           before:lg:h-[350px]
-          z-[-1]
+          z-40
         "
       />
     </m.div>
