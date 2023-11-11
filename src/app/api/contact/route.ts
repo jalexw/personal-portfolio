@@ -16,7 +16,7 @@ const resend = new Resend(getResendKey());
 async function sendMeEmail(contactFormMessage: ContactFormData): Promise<void> {
   console.log(`Sending notification email to admin at ${new Date().toISOString()}`);
   await resend.emails.send({
-    from: 'Portfolio Contact Form <noreply@jalexw.ca>',
+    from: 'jalexw.ca - Contact Form <noreply@jalexw.ca>',
     to: ['J. Alex Whitman <contact@jalexw.ca>'],
     subject: 'Portfolio Contact Form Message',
     react: MessageNotificationEmailTemplate(contactFormMessage),
@@ -27,7 +27,7 @@ async function sendMeEmail(contactFormMessage: ContactFormData): Promise<void> {
 async function sendConfirmationEmail(contactFormMessage: ContactFormData): Promise<void> {
   console.log(`Sending confirmation email to \"${contactFormMessage.email}\" at ${new Date().toISOString()}`);
   await resend.emails.send({
-    from: 'J. Alex Whitman <noreply@jalexw.ca>',
+    from: 'J. Alex Whitman Contact Form <noreply@jalexw.ca>',
     to: [contactFormMessage.email],
     subject: 'Portfolio Contact Form Message',
     react: ContactConfirmationEmailTemplate(contactFormMessage),
