@@ -28,7 +28,7 @@ export function ExperienceCanvas(): ReactElement {
           opacity: 1,
           transition: {
             delay: welcomeMessageExitDuration,
-            duration: 2.5
+            duration: 3.5
           },
           visibility: "visible",
           display: "block"
