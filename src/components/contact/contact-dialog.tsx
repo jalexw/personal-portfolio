@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle
 } from "@/components/ui/dialog"
-import type { ReactElement } from "react"
+import { useState, type ReactElement } from "react"
 import { DialogTriggerButton } from "./dialog-trigger"
 import Link from "next/link"
 import { email } from "@/metadata"
@@ -19,8 +19,10 @@ import { SocialMediaLinks } from "./social-media-links"
 import { ContactForm } from "./contact-form"
 
 export function ContactDialog(): ReactElement {
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+
   return (
-    <Dialog>
+    <Dialog open={dialogOpen} onOpenChange={(o: boolean) => setDialogOpen(o)}>
       <DialogTriggerButton />
       <DialogContent
         className="sm:max-w-[425px] md:max-w-[525px] lg:max-w-[700px] xl:max-w-[900px] overflow-y-scroll max-h-screen"
@@ -37,8 +39,8 @@ export function ContactDialog(): ReactElement {
             </Link>
           </DialogDescription>
         </DialogHeader>
-        
-        <ContactForm />
+
+        <ContactForm setDialogOpen={setDialogOpen} />
 
         <Separator />
 

@@ -20,7 +20,11 @@ import { Loader2, Mail } from "lucide-react";
 import { contactFormSchema } from "./contact-form-schema";
 import { useToast } from "@/components/ui/use-toast";
 
-export function ContactForm(): ReactElement {
+export interface ContactFormProps {
+  setDialogOpen: (open: boolean) => void;
+}
+
+export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
   const [isSubmitting, startTransition] = useTransition();
   const { toast } = useToast();
 
@@ -52,6 +56,7 @@ export function ContactForm(): ReactElement {
           title: 'Message received!',
           description: 'Thanks for reaching out. I will get back to you as soon as possible!',
         });
+        setDialogOpen(false);
       } catch (error: unknown) {
         console.error(error);
         toast({
