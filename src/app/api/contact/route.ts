@@ -20,7 +20,7 @@ async function sendMeEmail(contactFormMessage: ContactFormData): Promise<void> {
     to: ['J. Alex Whitman <contact@jalexw.ca>'],
     subject: 'Portfolio Contact Form Message',
     react: MessageNotificationEmailTemplate(contactFormMessage),
-    text: `Thank you for contacting me. I will get back to you as soon as possible.\n\n${contactFormMessage.message}`,
+    text: `You've received a new message from ${contactFormMessage.name} <${contactFormMessage.email}>:\n\n${contactFormMessage.message}`,
   });
 }
 
@@ -31,7 +31,7 @@ async function sendConfirmationEmail(contactFormMessage: ContactFormData): Promi
     to: [contactFormMessage.email],
     subject: 'Portfolio Contact Form Message',
     react: ContactConfirmationEmailTemplate(contactFormMessage),
-    text: `Thank you for contacting me. I will get back to you as soon as possible.\n\n${contactFormMessage.message}`,
+    text: `Thank you for contacting me. I will get back to you as soon as possible.`,
   });
 }
 
