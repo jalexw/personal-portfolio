@@ -9,7 +9,6 @@ export const ContactConfirmationEmailTemplate: FC<Readonly<ContactFormData>> = (
   message
 }) => {
   const subjectCategory = messageCategories.find(category => category.value === subject);
-  const subjectCategoryGroupLabel = subjectCategory ? messageCategoryGroupLabelMap[subjectCategory.group] : '';
 
   return (
     <div>
@@ -29,7 +28,7 @@ export const ContactConfirmationEmailTemplate: FC<Readonly<ContactFormData>> = (
           </tr>
           <tr>
             <td>Subject: </td>
-            <td>{subjectCategoryGroupLabel}</td>
+            <td>{subjectCategory?.label}</td>
           </tr>
           <tr>
             <td>Message: </td>
