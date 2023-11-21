@@ -95,7 +95,11 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
                 <FormItem className="w-full lg:w-5/12 grow my-2">
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Your name" {...field} />
+                    <Input
+                      placeholder="Your name"
+                      autoComplete="name"
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription>
                     How would you like to be addressed?
@@ -112,7 +116,11 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
                 <FormItem className="w-full lg:w-5/12 grow my-2">
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="name@domain.com" {...field} />
+                    <Input
+                      placeholder="name@domain.com"
+                      autoComplete="email"
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription>
                     How can I reach you?
