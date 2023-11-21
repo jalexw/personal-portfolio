@@ -19,6 +19,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Loader2, Mail } from "lucide-react";
 import { contactFormSchema } from "./contact-form-schema";
 import { useToast } from "@/components/ui/use-toast";
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export interface ContactFormProps {
   setDialogOpen: (open: boolean) => void;
@@ -72,11 +73,11 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full px-2"
+        className="w-full m-2 p-2"
       >
-        <div className="space-y-4 max-h-72 overflow-y-scroll w-full p-2">
+        <ScrollArea className="space-y-2 w-full max-h-72 lg:max-h-none overflow-y-scroll">
           {/** Name & Email Fields -- put on same row on large screens */}
-          <div className="flex flex-row flex-wrap gap-2">
+          <div className="flex flex-row flex-wrap gap-2 mx-2">
             <FormField
               control={form.control}
               name="name"
@@ -117,7 +118,7 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
             control={form.control}
             name="subject"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="mx-2">
                 <FormLabel>Subject</FormLabel>
                 <FormControl>
                   <Input placeholder="Subject line" {...field} />
@@ -135,7 +136,7 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
             control={form.control}
             name="message"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="mx-2">
                 <FormLabel>Message</FormLabel>
                 <FormControl>
                   <Textarea placeholder="Your message" {...field} />
@@ -148,7 +149,7 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
             )}
             disabled={isSubmitting}
           />
-        </div>
+        </ScrollArea>
         <div className="flex flex-row justify-end w-full p-2">
           <Button
             type="submit"
