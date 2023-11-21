@@ -86,7 +86,7 @@ export function ContactFormSubjectSelect({ field }: ContactFormSubjectSelectProp
   }, [field.value])
 
   return (
-    <Select onValueChange={field.onChange} defaultValue={field.value}>
+    <Select onValueChange={field.onChange} defaultValue={field.value} disabled={field.disabled}>
       <SelectTrigger>
         {/* <Button
           variant="outline"
@@ -114,5 +114,5 @@ export function ContactFormSubjectSelect({ field }: ContactFormSubjectSelectProp
         ))}
       </SelectContent>
     </Select>
-  )
+  );
 }
