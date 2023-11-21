@@ -8,15 +8,22 @@ import type { ReactElement } from "react";
 
 export function PortfolioExperienceContent(): ReactElement {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-start">
-      <HeaderBar />
-
+    <main>
+      {/** Contains all user-interactable DOM content (like text that fades in as you scroll) */}
       <div
-        id="welcome-message-container"
-        className="w-full overflow-x-hidden flex items-center justify-center z-10"
+        id="dom-content"
+        className="w-full h-full fixed top-0 left-0 z-10"
       >
-        <WelcomeMessage />
+        <HeaderBar />
+
+        <div
+          id="welcome-message-container"
+          className="w-full overflow-x-hidden flex items-center justify-center z-10"
+        >
+          <WelcomeMessage />
+        </div>
       </div>
+      
       
       <AnimatePresence>
         <DynamicExperience />
