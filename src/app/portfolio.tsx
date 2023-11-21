@@ -12,7 +12,7 @@ export function PortfolioExperienceContent(): ReactElement {
       {/** Contains all user-interactable DOM content (like text that fades in as you scroll) */}
       <div
         id="dom-content"
-        className="w-full h-full fixed top-0 left-0 z-10"
+        className="w-full h-full fixed top-0 left-0 z-10 flex flex-col justify-start items-center"
       >
         <HeaderBar />
 
