@@ -17,9 +17,10 @@ import {
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Loader2, Mail } from "lucide-react";
-import { contactFormSchema } from "./contact-form-schema";
+import { type ContactFormData, contactFormSchema } from "./contact-form-schema";
 import { useToast } from "@/components/ui/use-toast";
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { ContactFormSubjectSelect } from "./contact-form-subject-select";
 
 export interface ContactFormProps {
   setDialogOpen: (open: boolean) => void;
@@ -30,18 +31,18 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
   const { toast } = useToast();
 
   // 1. Define your form.
-  const form = useForm<z.infer<typeof contactFormSchema>>({
+  const form = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
       name: "",
       email: "",
-      subject: "",
+      subject: undefined,
       message: "",
-    },
+    }
   })
  
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof contactFormSchema>) {
+  function onSubmit(values: ContactFormData) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     if (process.env.NODE_ENV === 'development') {
@@ -75,14 +76,23 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
         onSubmit={form.handleSubmit(onSubmit)}
         className="w-full m-2 p-2"
       >
-        <ScrollArea className="space-y-2 w-full max-h-72 lg:max-h-none overflow-y-scroll">
+        <ScrollArea
+          className="space-y-2 w-full overflow-y-scroll"
+          onScroll={(e) => {
+            e.preventDefault();
+            if (process.env.NODE_ENV === 'development') {
+              console.log("Scrolling form...")
+            }
+          }}
+          
+        >
           {/** Name & Email Fields -- put on same row on large screens */}
           <div className="flex flex-row flex-wrap gap-2 mx-2">
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem className="w-full lg:w-5/12 grow">
+                <FormItem className="w-full lg:w-5/12 grow my-2">
                   <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input placeholder="Your name" {...field} />
@@ -99,7 +109,7 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
               control={form.control}
               name="email"
               render={({ field }) => (
-                <FormItem className="w-full lg:w-5/12 grow">
+                <FormItem className="w-full lg:w-5/12 grow my-2">
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input placeholder="name@domain.com" {...field} />
@@ -118,13 +128,14 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
             control={form.control}
             name="subject"
             render={({ field }) => (
-              <FormItem className="mx-2">
+              <FormItem className="mx-2 my-2">
                 <FormLabel>Subject</FormLabel>
                 <FormControl>
-                  <Input placeholder="Subject line" {...field} />
+                  {/* <Input placeholder="Subject line" {...field} /> */}
+                  <ContactFormSubjectSelect field={field} />
                 </FormControl>
                 <FormDescription>
-                  What is the purpose of your message?
+                  Help me categorize your message so I can respond appropriately.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -136,7 +147,7 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
             control={form.control}
             name="message"
             render={({ field }) => (
-              <FormItem className="mx-2">
+              <FormItem className="mx-2 my-2">
                 <FormLabel>Message</FormLabel>
                 <FormControl>
                   <Textarea placeholder="Your message" {...field} />
