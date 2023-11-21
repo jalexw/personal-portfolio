@@ -32,9 +32,13 @@ export function ContactDialog(): ReactElement {
           <DialogDescription>
             Get in touch using the contact form below and I will respond to your message as soon as possible!
             Alternatively, send me an e-mail directly:
-            <Link href={`mailto:${email}`} className="inline-block">
-              <Button variant='link' className="m-0 flex flex-row gap-2 items-center justify-start">
-                <Mail className="h-4 w-4"/> {email}
+            <Link href={`mailto:${email}`} className="inline-block m-0 px-1 py-0">
+              <Button
+                variant='link'
+                size={'inline-link'}
+                className="m-0 py-0 flex flex-row gap-2 items-center justify-start"
+              >
+                <Mail className="h-3.5 w-3.5 p-0 m-0"/> {email}
               </Button>
             </Link>
           </DialogDescription>
