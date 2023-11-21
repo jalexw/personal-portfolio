@@ -88,21 +88,7 @@ export function ContactFormSubjectSelect({ field }: ContactFormSubjectSelectProp
   return (
     <Select onValueChange={field.onChange} defaultValue={field.value} disabled={field.disabled}>
       <SelectTrigger>
-        {/* <Button
-          variant="outline"
-          size="sm"
-          className="w-full justify-start"
-        >
-          {selectedCategory ? (
-            <>
-              <selectedCategory.icon className="mr-2 h-4 w-4 shrink-0" />
-              {selectedCategory.label}
-            </>
-          ) : (
-            <>Select message category</>
-          )}
-        </Button> */}
-        <SelectValue placeholder="Select message category" />
+        <SelectValue placeholder="Select message category..." />
       </SelectTrigger>
       <SelectContent>
         {messageCategoryGroups.map((group) => (
