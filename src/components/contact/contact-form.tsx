@@ -75,6 +75,7 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
         className="w-full px-2"
       >
         <div className="space-y-4 max-h-72 overflow-y-scroll w-full p-2">
+          {/** Name & Email Fields -- put on same row on large screens */}
           <div className="flex flex-row flex-wrap gap-2">
             <FormField
               control={form.control}
@@ -111,6 +112,7 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
               disabled={isSubmitting}
             />
           </div>
+          {/** Message Subject */}
           <FormField
             control={form.control}
             name="subject"
@@ -128,6 +130,7 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
             )}
             disabled={isSubmitting}
           />
+          {/** Message Content */}
           <FormField
             control={form.control}
             name="message"
