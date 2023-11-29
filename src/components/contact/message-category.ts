@@ -14,7 +14,7 @@ import {
   Swords,
 } from "lucide-react"
 
-export const messageCategoryGroups = ['personal', 'business', 'misc'] as const;
+export const messageCategoryGroups = ['business', 'personal', 'misc'] as const;
 
 export type MessageCategoryGroup = typeof messageCategoryGroups[number];
 
