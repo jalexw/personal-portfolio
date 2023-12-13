@@ -80,18 +80,18 @@ export const messageCategories = ([
     icon: Bug,
     group: 'business'
   },
-  {
-    value: "duel",
-    label: "Challenge me to a duel",
-    icon: Swords,
-    group: 'personal'
-  },
-  {
-    value: "romance",
-    label: "plz marry me",
-    icon: Heart,
-    group: 'personal'
-  },
+  // {
+  //   value: "duel",
+  //   label: "Challenge me to a duel",
+  //   icon: Swords,
+  //   group: 'personal'
+  // },
+  // {
+  //   value: "romance",
+  //   label: "plz marry me",
+  //   icon: Heart,
+  //   group: 'personal'
+  // },
   {
     value: "other",
     label: "Other",
