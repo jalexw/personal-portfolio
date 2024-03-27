@@ -1,5 +1,8 @@
 import type { ReactElement } from "react";
 import { ResumeHeader } from "./resume_header";
+import { FavProgrammingLanguages } from "./fav_programming_languages";
+
+const openingStatement: string = `I'm a recent graduate with expertise in developing full-stack applications, databases, and machine learning models. I'm a fast learning team player with a passion for system design and using cutting edge technology to solve problems.`
 
 export default function Resume(): ReactElement {
   return (
@@ -19,7 +22,8 @@ export default function Resume(): ReactElement {
         flex flex-col justify-start items-center gap-2
       ">
         <ResumeHeader />
-        <p>Coming soon!</p>
+        <p className="text-sm">{openingStatement}</p>
+        <FavProgrammingLanguages />
       </main>
     </div>
   )
