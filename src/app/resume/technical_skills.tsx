@@ -31,6 +31,7 @@ const technical_skills: TechnicalSkillDef[] = [
   { label: "NoSQL" },
   { label: "Django" },
   { label: "tRPC" },
+  { label: "REST" },
   { label: "NLP" }
 ]
 
