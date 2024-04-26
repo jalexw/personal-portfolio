@@ -60,7 +60,7 @@ function ProgrammingLanguageTierList() {
 
 export function FavProgrammingLanguages(): ReactElement {
   return (
-    <ResumeSection title="Favorite Programming Languages">
+    <ResumeSection title="Programming Languages">
       <ProgrammingLanguageTierList />
     </ResumeSection>
   );
