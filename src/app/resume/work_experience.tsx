@@ -36,9 +36,9 @@ export function WorkExperienceSection(): ReactElement {
         company_name="Aycoutay Technologies Ltd."
         time_description="2024"
         job_duties={[
-          "Reverse engineered a buggy legacy Windows-only Visual Basic hardware driver into a cross-platform memory-safe Rust library.",
-          "Created cross-platform native & web apps with Tauri which allowed taking electrophysiology measurements from a custom hardware device, and visualizing the data in real-time.",
-          "Set up authentication, authorization, and a type-safe tRPC API to allow secure access to data stored in MongoDB."
+          "Rewrote legacy Visual Basic hardware driver as a cross-platform memory-safe Rust library to interact with measurement device.",
+          "Created cross-platform native Tauri app, which allowed taking electrophysiology measurements from Aycoutay's proprietary hardware devices, analyzing and visualizing the measurement data in real-time.",
+          "Set up authentication, RBAC, and a type-safe tRPC API to allow secure access to data stored in MongoDB."
         ]}
       />
       <PastJobDescription
