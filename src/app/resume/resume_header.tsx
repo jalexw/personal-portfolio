@@ -14,13 +14,13 @@ export function ResumeHeader(): ReactElement {
             href={`https://github.com/${process.env.NEXT_PUBLIC_GITHUB_USERNAME}`}
             className="flex flex-row gap-2"
           >
-            <Github className="p-1" /> jalexw
+            <Github className="p-1" /> {process.env.NEXT_PUBLIC_GITHUB_USERNAME}
           </a>
           <a
             href={`https://linkedin.com/in/${process.env.NEXT_PUBLIC_LINKEDIN_USERNAME}`}
             className="flex flex-row gap-2"
           >
-            <Linkedin className="text-white bg-blue-800 p-1" /> jalexwhitman 
+            <Linkedin className="text-white bg-blue-800 p-1" /> {process.env.NEXT_PUBLIC_LINKEDIN_USERNAME}
           </a>
         </div>
 
