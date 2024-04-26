@@ -58,9 +58,9 @@ function ProgrammingLanguageTierList() {
   )
 }
 
-export function FavProgrammingLanguages(): ReactElement {
+export function FavProgrammingLanguages({ widthClassName }: { widthClassName: string }): ReactElement {
   return (
-    <ResumeSection title="Programming Languages">
+    <ResumeSection title="Programming Languages" widthClassName={widthClassName}>
       <ProgrammingLanguageTierList />
     </ResumeSection>
   );

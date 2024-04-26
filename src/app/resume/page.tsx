@@ -3,6 +3,8 @@ import { ResumeHeader } from "./resume_header";
 import { FavProgrammingLanguages } from "./fav_programming_languages";
 import { EducationAndCertificationsSection } from "./education_and_certifications";
 import { WorkExperienceSection } from "./work_experience";
+import { Separator } from "@/components/ui/separator";
+import { TechnicalSkills } from "./technical_skills";
 
 const openingStatement: string = `I'm a recent graduate with expertise in developing full-stack applications, databases, and machine learning models. I'm a fast learning team player with a passion for system design and using cutting edge technology to solve problems.`
 
@@ -26,7 +28,11 @@ export default function Resume(): ReactElement {
       ">
         <ResumeHeader />
         <p className="text-sm">{openingStatement}</p>
-        <FavProgrammingLanguages />
+        <div className="w-full flex flex-row gap-4">
+          <FavProgrammingLanguages widthClassName="" />
+          <Separator orientation="vertical" />
+          <TechnicalSkills widthClassName="grow" />
+        </div>
         <EducationAndCertificationsSection />
         <WorkExperienceSection />
       </main>
