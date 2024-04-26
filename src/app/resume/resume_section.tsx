@@ -12,9 +12,13 @@ export function ResumeSection(
 ): ReactElement {
   return (
     <section
-      className={cn("flex flex-col gap-2", widthClassName ?? "w-full")}
+      className={
+        cn("flex flex-col gap-2", widthClassName ?? "w-full")
+      }
     >
-      <h2 className="text-xl">{title}</h2>
+      <h2 className="text-xl text-nowrap">
+        {title}
+      </h2>
       <Separator />
       {children}
     </section>

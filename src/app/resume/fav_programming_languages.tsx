@@ -18,6 +18,7 @@ const languages = [
   { tier: '😁', name: 'C' },
   { tier: '😁', name: 'C#' },
   { tier: '😁', name: 'JavaScript' },
+  { tier: '😁', name: 'SQL' },
   { tier: '🙂', name: 'Java' },
   { tier: '🙂', name: 'PHP' },
   { tier: '🙂', name: 'Perl' },
@@ -60,7 +61,10 @@ function ProgrammingLanguageTierList() {
 
 export function FavProgrammingLanguages({ widthClassName }: { widthClassName: string }): ReactElement {
   return (
-    <ResumeSection title="Programming Languages" widthClassName={widthClassName}>
+    <ResumeSection
+      title="Programming Languages"
+      widthClassName={widthClassName}
+    >
       <ProgrammingLanguageTierList />
     </ResumeSection>
   );
