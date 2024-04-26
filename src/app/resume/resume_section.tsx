@@ -1,13 +1,19 @@
 import { Separator } from "@/components/ui/separator";
 import type { PropsWithChildren, ReactElement } from "react";
+import { cn } from "@/lib/utils";
 
 export interface ResumeSectionProps extends PropsWithChildren {
   title: string;
+  widthClassName?: string;
 }
 
-export function ResumeSection({ title, children }: ResumeSectionProps) {
+export function ResumeSection(
+  { title, children, widthClassName }: ResumeSectionProps
+): ReactElement {
   return (
-    <section className="w-full flex flex-col gap-2">
+    <section
+      className={cn("flex flex-col gap-2", widthClassName ?? "w-full")}
+    >
       <h2 className="text-xl">{title}</h2>
       <Separator />
       {children}
