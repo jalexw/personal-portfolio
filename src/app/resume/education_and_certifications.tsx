@@ -14,10 +14,11 @@ function EducationTile(props: EducationOrCertificationTileProps) {
   return (
     <div className="flex flex-col justify-start items-center grow text-center">
       <Image
-        width={80}
-        height={80}
+        width={64}
+        height={64}
         src={props.img_src}
         alt={props.img_alt}
+        className="mb-2"
       />
       <p className="text-xs font-bold text-wrap">{ props.certification_title }</p>
       <p className="text-xs">{ props.certification_issuer }</p>
