@@ -16,7 +16,7 @@ import { Separator } from "@/components/ui/separator";
 
 const openingStatement: string =
   `I'm a fast learning team player with a passion for system design and using cutting edge technology to solve problems. ` +
-  `I'm looking for opportunities to apply my skills in developing full-stack applications, databases, and machine learning models to create innovative solutions.`
+  `I'm looking for opportunities to apply and grow my skills in developing full-stack applications, databases, and machine learning models to create innovative solutions.`
 
 export default function Resume(): ReactElement {
   return (
