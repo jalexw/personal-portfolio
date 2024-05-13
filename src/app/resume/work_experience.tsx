@@ -56,7 +56,7 @@ const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
     company_name: "SolutionInc Ltd.",
     time_description: "2019, 2023",
     job_duties: [
-      "Built customer and staff portal applications for a new ISP company. Designed and implemented self-hosted high-availability Kubernetes cluster to host the web portals and services. Automated deployment to staging & production env's using Helm.",
+      "Built customer and staff portal applications for a new ISP company to allow controlling and monitoring network + IPTV services. Designed and implemented high-availability Kubernetes cluster to host services. Automated deployment using Helm.",
       "Upgraded a legacy LAMPerl-stack network monitoring dashboard to use containers, automated testing, C.I./C.D., & more. Added a report editing feature to allow customers to customize their hotel/convention center network gateway usage reports.",
       "Returned in a software development position after working for a summer on the support & delivery team as a student, where I mostly worked on staging hardware with proprietary software for allowing secure in-room media casting in large hotel networks."
     ]
@@ -84,7 +84,7 @@ const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
 
 export function WorkExperienceSection(): ReactElement {
   return (
-    <ResumeSection title="Work Experience">
+    <ResumeSection title="Relevant Work Experience">
       {WORK_EXPERIENCES.map((job, index) => (
       <div key={`${job.company_name}-${index}`}>
         <PastJobDescription key={`past-job-${index}`} {...job} />

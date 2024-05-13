@@ -38,7 +38,7 @@ export function TechnicalSkills({ skills, widthClassName }: TechnicalSkillsProps
   return (
     <ResumeSection
       widthClassName={widthClassName}
-      title="Selected Technical Skills"
+      title="Core Technical Skills"
     >
       <ul className="flex flex-row flex-wrap gap-1 justify-around">
         {
