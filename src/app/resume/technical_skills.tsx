@@ -1,6 +1,7 @@
 import type { ReactElement } from "react";
 import { ResumeSection } from "./resume_section";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 export interface TechnicalSkillDef {
   label: string;
@@ -44,7 +45,10 @@ export function TechnicalSkills({ skills, widthClassName }: TechnicalSkillsProps
           (skills ?? technical_skills).map(skill => (
             <Badge
               key={skill.label}
-              className="text-black bg-transparent border-dashed border-slate-400"
+              className={cn(
+                "text-black bg-transparent border-dashed border-slate-400",
+                "hover:text-white hover:bg-slate-400 hover:border-transparent"
+              )}
             >
               {skill.label}
             </Badge>
