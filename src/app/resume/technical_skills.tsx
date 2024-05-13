@@ -42,7 +42,10 @@ export function TechnicalSkills({ skills, widthClassName }: TechnicalSkillsProps
       <ul className="flex flex-row flex-wrap gap-1 justify-around">
         {
           (skills ?? technical_skills).map(skill => (
-            <Badge key={skill.label} className="print:text-black print:border-dashed print:border-slate-400">
+            <Badge
+              key={skill.label}
+              className="text-black bg-transparent border-dashed border-slate-400"
+            >
               {skill.label}
             </Badge>
           ))
