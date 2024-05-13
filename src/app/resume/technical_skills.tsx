@@ -29,6 +29,7 @@ const technical_skills: TechnicalSkillDef[] = [
   { label: "Turborepo" },
   { label: "Terraform" },
   { label: "APIs: REST, tRPC, GraphQL" },
+  { label: "O.O.P." },
   { label: "Vector Search"}
 ]
 
