@@ -8,9 +8,11 @@ interface EducationOrCertificationTileProps {
   certification_title: string;
   certification_issuer: string;
   certification_date: string;
+  scale?: number;
 }
 
 function EducationTile(props: EducationOrCertificationTileProps) {
+  const scale: number = props.scale ?? 1;
   return (
     <div className="flex flex-col justify-start items-center grow text-center">
       <Image
@@ -19,6 +21,7 @@ function EducationTile(props: EducationOrCertificationTileProps) {
         src={props.img_src}
         alt={props.img_alt}
         className="mb-2"
+        style={{ transform: `scale(${scale})` }}
       />
       <p className="text-xs font-bold text-wrap">{ props.certification_title }</p>
       <p className="text-xs">{ props.certification_issuer }</p>
@@ -44,6 +47,7 @@ export function EducationAndCertificationsSection(): ReactElement {
           certification_date="2018"
           img_alt="International Baccalaureate logo"
           img_src="/images/education/ib.png"
+          scale={0.75}
         />
          <EducationTile
           certification_title="Professional Machine Learning Engineer"
