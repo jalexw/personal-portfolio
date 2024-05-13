@@ -40,15 +40,15 @@ function WorkExperienceSeparator(): ReactElement {
   )
 }
 
-const WORK_EXPERIENCES: PastJobDescriptionProps[] = [
+const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
   {
     job_title: "Software Developer",
     company_name: "Aycoutay Technologies Ltd.",
     time_description: "2024",
     job_duties: [
-      "Rewrote legacy Visual Basic hardware driver as a cross-platform memory-safe Rust library to interact with measurement device.",
+      "Rewrote legacy Visual Basic driver as a cross-platform memory-safe Rust library to interact with measurement device.",
       "Created cross-platform native Tauri app, which allowed taking electrophysiology measurements from Aycoutay's proprietary hardware devices, analyzing and visualizing the measurement data in real-time.",
-      "Set up authentication, RBAC, and a type-safe tRPC API to allow secure access to data stored in MongoDB."
+      "Set up authentication, RBAC, and a type-safe tRPC API to allow secure access to electrophysiology data stored in MongoDB."
     ]
   },
   {
