@@ -47,7 +47,8 @@ export function TechnicalSkills({ skills, widthClassName }: TechnicalSkillsProps
               key={skill.label}
               className={cn(
                 "text-black bg-transparent border-dashed border-slate-400",
-                "hover:text-white hover:bg-slate-400 hover:border-transparent"
+                "hover:text-white hover:bg-slate-400 hover:border-transparent",
+                "print:hover:text-black print:hover:bg-transparent print:hover:border-slate-400",
               )}
             >
               {skill.label}
