@@ -19,7 +19,7 @@ function PastJobDescription(props: PastJobDescriptionProps): ReactElement {
         <p className="text-xs font-bold">{ props.time_description }</p>
       </header>
       <ul
-        className="w-full flex flex-col gap-1 list-disc"
+        className="w-full flex flex-col gap-1 list-disc list-inside"
       >
         {
           props.job_duties.map((duty, index) => (
@@ -34,7 +34,7 @@ function PastJobDescription(props: PastJobDescriptionProps): ReactElement {
 function WorkExperienceSeparator(): ReactElement {
   return (
     <Separator
-      className="border-dashed px-16 border-slate-400 bg-slate-400 print:border-slate-400 mt-2 mb-1"
+      className="border-dashed px-16 border-slate-300 border-t bg-transparent print:border-slate-300 mt-2 mb-1"
       decorative={true}
     />
   )
