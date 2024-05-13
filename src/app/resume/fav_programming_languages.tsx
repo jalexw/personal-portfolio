@@ -18,6 +18,8 @@ const languages = [
   { tier: '😁', name: 'C' },
   { tier: '😁', name: 'C#' },
   { tier: '😁', name: 'JavaScript' },
+  { tier: '😁', name: 'HTML' },
+  { tier: '😁', name: 'CSS' },
   { tier: '😁', name: 'SQL' },
   { tier: '🙂', name: 'Java' },
   { tier: '🙂', name: 'PHP' },
@@ -33,13 +35,13 @@ function ProgrammingLanguageTier({ tier }: ProgrammingLanguageTierProps) {
   const tierLanguages = languages.filter(language => language.tier === tier);
   
   return (
-    <li key={tier} className="w-full flex flex-row gap-2">
+    <li key={tier} className="w-full flex flex-row gap-2 items-center">
       <h3 className="text-lg">{tier}</h3>
-      <Separator orientation="vertical" />
-      <ul className="flex flex-row gap-2">
+      <Separator orientation="vertical" decorative={true} />
+      <ul className="flex flex-row gap-2 flex-wrap">
         {
-          tierLanguages.map(language => (
-            <li key={language.name}>{language.name}</li>
+          tierLanguages.map((language, index) => (
+            <li key={language.name}>{language.name}{index===tierLanguages.length-1 ? null: ", "}</li>
           ))
         }
       </ul>

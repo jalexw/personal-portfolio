@@ -14,7 +14,9 @@ import { TechnicalSkills } from "./technical_skills";
 // UI Components
 import { Separator } from "@/components/ui/separator";
 
-const openingStatement: string = `I'm a recent graduate with expertise in developing full-stack applications, databases, and machine learning models. I'm a fast learning team player with a passion for system design and using cutting edge technology to solve problems.`
+const openingStatement: string =
+  `I'm a fast learning team player with a passion for system design and using cutting edge technology to solve problems. ` +
+  `I'm looking for opportunities to apply my skills in developing full-stack applications, databases, and machine learning models to create innovative solutions.`
 
 export default function Resume(): ReactElement {
   return (
@@ -40,7 +42,7 @@ export default function Resume(): ReactElement {
           <FavProgrammingLanguages
             widthClassName="grow-0 min-w-[250px]"
           />
-          <Separator orientation="vertical" />
+          <Separator orientation="vertical" decorative={true} />
           <TechnicalSkills
             widthClassName="grow"
           />

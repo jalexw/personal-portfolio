@@ -19,8 +19,8 @@ export function ResumeSection(
       <h2 className="text-xl text-nowrap">
         {title}
       </h2>
-      <Separator />
+      <Separator decorative={true} />
       {children}
     </section>
-  )
+  );
 }

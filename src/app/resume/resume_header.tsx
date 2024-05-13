@@ -20,7 +20,7 @@ export function ResumeHeader(): ReactElement {
             href={`https://linkedin.com/in/${process.env.NEXT_PUBLIC_LINKEDIN_USERNAME}`}
             className="flex flex-row gap-2"
           >
-            <Linkedin className="text-white bg-blue-800 p-1" /> {process.env.NEXT_PUBLIC_LINKEDIN_USERNAME}
+            <Linkedin className="text-white bg-blue-800 p-1 print:bg-transparent print:text-black" /> {process.env.NEXT_PUBLIC_LINKEDIN_USERNAME}
           </a>
         </div>
 
@@ -46,7 +46,7 @@ export function ResumeHeader(): ReactElement {
           </a>
         </div>
       </header>
-      <Separator />
+      <Separator decorative={true} />
     </>
   )
 }
