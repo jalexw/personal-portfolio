@@ -14,13 +14,15 @@ export function ResumeHeader(): ReactElement {
             href={`https://github.com/${process.env.NEXT_PUBLIC_GITHUB_USERNAME}`}
             className="flex flex-row gap-2"
           >
-            <Github className="p-1" /> {process.env.NEXT_PUBLIC_GITHUB_USERNAME}
+            <Github className="p-1" /> 
+            <span className="text-black">{process.env.NEXT_PUBLIC_GITHUB_USERNAME}</span>
           </a>
           <a
             href={`https://linkedin.com/in/${process.env.NEXT_PUBLIC_LINKEDIN_USERNAME}`}
             className="flex flex-row gap-2"
           >
-            <Linkedin className="text-white bg-blue-800 p-1 print:bg-transparent print:text-black" /> {process.env.NEXT_PUBLIC_LINKEDIN_USERNAME}
+            <Linkedin className="text-white bg-blue-800 p-1 print:bg-transparent print:text-black" /> 
+            <span className="text-black">{process.env.NEXT_PUBLIC_LINKEDIN_USERNAME}</span>
           </a>
         </div>
 
@@ -36,13 +38,15 @@ export function ResumeHeader(): ReactElement {
             href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL}`}
             className="flex flex-row gap-2"
           >
-            <Mail className="p-1" /> {process.env.NEXT_PUBLIC_CONTACT_EMAIL}
+            <Mail className="p-1" />
+            <span className="text-black">{process.env.NEXT_PUBLIC_CONTACT_EMAIL}</span>
           </a>
           <a
             href={`https://${process.env.NEXT_PUBLIC_WEB_DOMAIN}`}
             className="flex flex-row gap-2"
           >
-            <Briefcase className="p-1" /> {process.env.NEXT_PUBLIC_WEB_DOMAIN}
+            <Briefcase className="p-1" />
+            <span className="text-black">{process.env.NEXT_PUBLIC_WEB_DOMAIN}</span>
           </a>
         </div>
       </header>
