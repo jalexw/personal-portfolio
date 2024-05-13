@@ -10,7 +10,7 @@ interface ProgrammingLanguageRef {
   name: string;
 }
 
-const languages = [
+const languages: readonly ProgrammingLanguageRef[] = [
   { tier: '😍', name: 'TypeScript' },
   { tier: '😍', name: 'Rust' },
   { tier: '😍', name: 'Python' },
@@ -24,8 +24,8 @@ const languages = [
   { tier: '🙂', name: 'Java' },
   { tier: '🙂', name: 'PHP' },
   { tier: '🙂', name: 'Perl' },
-  { tier: '🙂', name: 'R' },
-] as const satisfies ProgrammingLanguageRef[];
+  { tier: '🙂', name: 'R' }
+];
 
 interface ProgrammingLanguageTierProps {
   tier: Tier;
@@ -41,7 +41,11 @@ function ProgrammingLanguageTier({ tier }: ProgrammingLanguageTierProps) {
       <ul className="flex flex-row gap-2 flex-wrap">
         {
           tierLanguages.map((language, index) => (
-            <li key={language.name}>{language.name}{index===tierLanguages.length-1 ? null: ", "}</li>
+            <li
+              key={language.name}
+            >
+              {language.name}{index===tierLanguages.length-1 ? null: ", "}
+            </li>
           ))
         }
       </ul>
