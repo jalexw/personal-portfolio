@@ -10,7 +10,7 @@ import { calculateRelativeCursorPosition } from "./relativeCursorPosition";
 
 function calculateMouseEffect(relativeCursorPosition: CursorPosition): { x_rads: number, y_rads: number } {
   // Amplitude = 45degrees/ 1/2pi rads
-  const amplitude: number = Math.PI / 1.5;
+  const amplitude: number = Math.PI / 2;
   
   const x_rads = (amplitude / 2) - (amplitude * relativeCursorPosition.y);
   const y_rads = (amplitude / 2) - (amplitude * relativeCursorPosition.x);
