@@ -2,11 +2,9 @@
 
 import { DynamicExperience } from "@/components/experience";
 import { HeaderBar } from "@/components/header";
-import { Button } from "@/components/ui/button";
 import { WelcomeMessage } from "@/components/welcome-message";
 import { AnimatePresence } from "framer-motion";
-import { FileText } from "lucide-react";
-import Link from "next/link";
+
 import type { ReactElement } from "react";
 
 export function PortfolioExperienceContent(): ReactElement {
@@ -24,17 +22,6 @@ export function PortfolioExperienceContent(): ReactElement {
           className="w-full overflow-x-hidden flex items-center justify-center z-10"
         >
           <WelcomeMessage />
-        </div>
-
-        <div
-          id="resume-call-to-action-container"
-          className="w-full mt-[80vh] z-10 justify-start items-center flex flex-col grow sm:p-2 md:p-4 lg:p-8 xl:p-12 mb-24"
-        >
-          <Link href="/resume">
-            <Button className="gap-2">
-              <FileText className="w-4 h-4" /> View my resume
-            </Button>
-          </Link>
         </div>
       </div>
       

@@ -1,4 +1,3 @@
-
 export const firstName = "James" as const;
 export const middleName = "Alexander" as const;
 export const lastName = "Whitman" as const;

@@ -1,12 +1,23 @@
 import Link from "next/link";
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
+
+import { fullName } from "@/metadata/name";
+
+import { ResumeLink } from "@/components/resume-link";
 import { ContactDialog } from "@/components/contact";
 import { ThemeModeSelection } from "@/components/theme";
 
 export function HeaderBar(): ReactElement {
   return (
     <header
-      className="flex flex-col lg:flex-row items-center justify-between m-4 gap-2 sm:gap-4 w-full max-w-5xl p-4 sm:p-8 md:p-12 lg:p-16"
+      className="
+        flex flex-col lg:flex-row
+        items-center justify-between
+        m-4
+        gap-2 sm:gap-4
+        w-full max-w-5xl
+        p-4 sm:p-8 md:p-12 lg:p-16
+      "
     >
       {/** Title */}
       <Link href="/">
@@ -15,8 +26,9 @@ export function HeaderBar(): ReactElement {
             text-md sm:text-lg md:text-xl
             font-mono font-bold
             text-center lg:text-left
-          ">
-          {'J. Alex Whitman\'s Portfolio'}
+          "
+        >
+          {fullName}
         </h1>
       </Link>
 
@@ -24,13 +36,15 @@ export function HeaderBar(): ReactElement {
       <div
         className="
           flex
-          flex-row
+          flex-col
+          sm:flex-row
           flex-wrap
           gap-1 sm:gap-2 md:gap-4
           justify-start
           items-center
         "
       >
+        <ResumeLink />
         <ContactDialog />
         <ThemeModeSelection />
       </div>
