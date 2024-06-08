@@ -1,12 +1,13 @@
 "use client";
 
-import { PerspectiveCamera, useCursor } from "@react-three/drei";
+import { CameraShake, PerspectiveCamera, useCursor } from "@react-three/drei";
 import { useEffect, useRef, type ReactElement } from "react";
 import { Box } from '@react-three/drei'
 import { useFrame } from "@react-three/fiber";
 import { getCurrentWindowDimensions, useCurrentWindowDimensions } from "./useCurrentWindowDimensions";
 import { CursorPosition, useCursorPosition } from "./useCursorPosition";
 import { calculateRelativeCursorPosition } from "./relativeCursorPosition";
+import { usePrefersReducedMotion } from "./usePrefersReducedMotion";
 
 function calculateMouseEffect(relativeCursorPosition: CursorPosition): { x_rads: number, y_rads: number } {
   // Amplitude = 45degrees/ 1/2pi rads
@@ -29,11 +30,32 @@ function lerp(from: number, to: number, speed: number) {
   return Math.abs(from - to) < 0.001 ? to : amount
 }
 
+const cameraShakeConfig: Parameters<typeof CameraShake>[0] = {
+  maxYaw: 0.02 as const,
+  maxPitch: 0.02 as const,
+  maxRoll: 0.02 as const
+};
+
 export function Scene(): ReactElement {
   const cubeRef = useRef<any>()
   
   const windowSize = useCurrentWindowDimensions(getCurrentWindowDimensions());
   const cursorPosition = useCursorPosition();
+
+  const prefersReducedMotion: boolean = usePrefersReducedMotion();
+
+  function calculateMouseEffect(relativeCursorPosition: CursorPosition): { x_rads: number, y_rads: number } {
+    // Amplitude = 45degrees/ 1/2pi rads
+    const amplitude: number = !prefersReducedMotion ? (Math.PI / 2) : (Math.PI / 4);
+    
+    const x_rads = (amplitude / 2) - (amplitude * relativeCursorPosition.y);
+    const y_rads = (amplitude / 2) - (amplitude * relativeCursorPosition.x);
+  
+    return {
+      x_rads,
+      y_rads
+    }
+  }
 
   useFrame(({ clock }) => {
     if (!cubeRef.current) {
@@ -64,6 +86,8 @@ export function Scene(): ReactElement {
 
       <pointLight intensity={90} position={[0, 5, 5]}/>
       <ambientLight intensity={0.4} />
+
+      {!prefersReducedMotion && <CameraShake {...cameraShakeConfig} />}
     </>
   )
 }
