@@ -25,12 +25,6 @@ export function PortfolioExperienceLoadingManager({ children }: PropsWithChildre
         }
       })
     }, 3000)
-    setTimeout(() => {
-      toast({
-        title: "Site under construction...",
-        description: "Check back later to learn more about me!"
-      })
-    }, 5500)
   }, [toast])
   
   return (
