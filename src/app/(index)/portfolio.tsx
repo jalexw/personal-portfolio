@@ -1,6 +1,7 @@
 "use client";
 
 import { DynamicExperience } from "@/components/experience";
+import { useExperience } from "@/components/experience-loader";
 import { HeaderBar } from "@/components/header";
 import { WelcomeMessage } from "@/components/welcome-message";
 import { AnimatePresence } from "framer-motion";
@@ -8,6 +9,8 @@ import { AnimatePresence } from "framer-motion";
 import type { ReactElement } from "react";
 
 export function PortfolioExperienceContent(): ReactElement {
+  const experience = useExperience();
+
   return (
     <main>
       {/** Contains all user-interactable DOM content (like text that fades in as you scroll) */}
@@ -27,7 +30,11 @@ export function PortfolioExperienceContent(): ReactElement {
       
       
       <AnimatePresence>
-        <DynamicExperience />
+        <DynamicExperience onReady={() => {
+          experience.dispatch({
+            type: "canvas_ready"
+          });
+        }}/>
       </AnimatePresence>
     </main>
   )

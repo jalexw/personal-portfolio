@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import type { ReactElement } from "react";
 
@@ -6,8 +8,12 @@ import { fullName } from "@/metadata/name";
 import { ResumeLink } from "@/components/resume-link";
 import { ContactDialog } from "@/components/contact";
 import { ThemeModeSelection } from "@/components/theme";
+import { useExperienceReady } from "@/components/experience-loader";
+import { cn } from "@/lib/utils";
 
 export function HeaderBar(): ReactElement {
+  const experienceReady = useExperienceReady();
+
   return (
     <header
       className="
@@ -22,11 +28,13 @@ export function HeaderBar(): ReactElement {
       {/** Title */}
       <Link href="/">
         <h1
-          className="
-            text-md sm:text-lg md:text-xl
-            font-mono font-bold
-            text-center lg:text-left
-          "
+          className={cn(
+            "text-md sm:text-lg md:text-xl",
+            "font-mono font-bold",
+            "text-center lg:text-left",
+            "transition-colors",
+            experienceReady ? "text-white" : undefined
+          )}
         >
           {fullName}
         </h1>

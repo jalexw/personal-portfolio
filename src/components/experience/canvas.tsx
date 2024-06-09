@@ -3,11 +3,11 @@
 import { Canvas } from "@react-three/fiber";
 import { useEffect, type ReactElement } from "react";
 import { Scene } from "./scene";
-import { AnimatePresence, m } from "framer-motion";
+import { m } from "framer-motion";
 import { useExperienceReady } from "@/components/experience-loader";
 import { welcomeMessageExitDuration } from "@/components/welcome-message";
 
-export function ExperienceCanvas(): ReactElement {
+function ExperienceCanvasRenderer(): ReactElement {
   const isReady: boolean = useExperienceReady()
   if (!isReady) {
     return <></>;
@@ -54,6 +54,17 @@ export function ExperienceCanvas(): ReactElement {
       </Canvas>
     </m.div>
   )
+}
+
+export interface ExperienceCanvasOptions {
+  onReady: () => void;
+}
+
+export function ExperienceCanvas({ onReady }: ExperienceCanvasOptions): ReactElement {
+  useEffect(() => {
+    onReady();
+  })
+  return <ExperienceCanvasRenderer />;
 }
 
 export default ExperienceCanvas;

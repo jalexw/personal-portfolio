@@ -1,6 +1,6 @@
 "use client";
 
-import { CameraShake, PerspectiveCamera, useCursor } from "@react-three/drei";
+import { CameraShake, PerspectiveCamera, useCursor, useGLTF } from "@react-three/drei";
 import { useEffect, useRef, type ReactElement } from "react";
 import { Box } from '@react-three/drei'
 import { useFrame } from "@react-three/fiber";
@@ -8,6 +8,8 @@ import { getCurrentWindowDimensions, useCurrentWindowDimensions } from "./useCur
 import { CursorPosition, useCursorPosition } from "./useCursorPosition";
 import { calculateRelativeCursorPosition } from "./relativeCursorPosition";
 import { usePrefersReducedMotion } from "./usePrefersReducedMotion";
+import { Penguin } from "./penguin";
+import { Vector3 } from "three";
 
 function calculateMouseEffect(relativeCursorPosition: CursorPosition): { x_rads: number, y_rads: number } {
   // Amplitude = 45degrees/ 1/2pi rads
@@ -37,7 +39,7 @@ const cameraShakeConfig: Parameters<typeof CameraShake>[0] = {
 };
 
 export function Scene(): ReactElement {
-  const cubeRef = useRef<any>()
+  const penguinRef = useRef<any>()
   
   const windowSize = useCurrentWindowDimensions(getCurrentWindowDimensions());
   const cursorPosition = useCursorPosition();
@@ -47,9 +49,11 @@ export function Scene(): ReactElement {
   function calculateMouseEffect(relativeCursorPosition: CursorPosition): { x_rads: number, y_rads: number } {
     // Amplitude = 45degrees/ 1/2pi rads
     const amplitude: number = !prefersReducedMotion ? (Math.PI / 2) : (Math.PI / 4);
-    
-    const x_rads = (amplitude / 2) - (amplitude * relativeCursorPosition.y);
-    const y_rads = (amplitude / 2) - (amplitude * relativeCursorPosition.x);
+    const xAmplitude: number = amplitude / 3;
+    const yAmplitude: number = amplitude;
+
+    const x_rads: number = (xAmplitude / 2) - (xAmplitude * relativeCursorPosition.y);
+    const y_rads: number = (yAmplitude / 2) - (yAmplitude * relativeCursorPosition.x);
   
     return {
       x_rads,
@@ -58,7 +62,7 @@ export function Scene(): ReactElement {
   }
 
   useFrame(({ clock }) => {
-    if (!cubeRef.current) {
+    if (!penguinRef.current) {
       return;
     }
 
@@ -67,22 +71,20 @@ export function Scene(): ReactElement {
     const mouseEffect = calculateMouseEffect(relativeCursorPosition);
 
     // Interpolate between the current and target rotation values
-    const xRotation = lerp(cubeRef.current.rotation.x, mouseEffect.x_rads, mouseMovementDelay);
-    const yRotation = lerp(cubeRef.current.rotation.y, mouseEffect.y_rads, mouseMovementDelay);
+    const xRotation = lerp(penguinRef.current.rotation.x, mouseEffect.x_rads, mouseMovementDelay) + 0.1;
+    const yRotation = lerp(penguinRef.current.rotation.y, mouseEffect.y_rads, mouseMovementDelay);
 
-    cubeRef.current.rotation.x = xRotation;
-    cubeRef.current.rotation.y = yRotation;
+    penguinRef.current.rotation.x = xRotation;
+    penguinRef.current.rotation.y = yRotation;
   });
 
   return (
     <>
-      <PerspectiveCamera makeDefault position={[ 0, 0, 0 ]} />
-      <Box
-        position={[ 0, 0, -6 ]}
-        ref={cubeRef}
-      >
-        <meshStandardMaterial color="red" />
-      </Box>
+      {/* <PerspectiveCamera makeDefault position={[ 0, 0, 1400 ]} /> */}
+      <PerspectiveCamera makeDefault position={[ 0, 0.6, 4.5 ]} />
+
+
+      <Penguin ref={penguinRef} position={new Vector3(0, 0, 0)} />
 
       <pointLight intensity={90} position={[0, 5, 5]}/>
       <ambientLight intensity={0.4} />

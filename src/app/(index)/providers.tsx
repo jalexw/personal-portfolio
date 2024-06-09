@@ -1,1 +1,1 @@
-export {PortfolioExperienceLoadingManager} from '@/components/experience-loader';
+export {PortfolioExperienceProvider} from '@/components/experience-loader';

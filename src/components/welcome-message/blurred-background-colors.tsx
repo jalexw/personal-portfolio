@@ -1,11 +1,8 @@
 import type { ReactElement } from "react";
-import {AnimatePresence, m} from "framer-motion";
-import { useExperienceLoaderState } from "@/components/experience-loader";
+import {m} from "framer-motion";
 import { duration } from "./exit-duration";
 
 export function BlurredBackgroundColors(): ReactElement {
-  const { loadingStates } = useExperienceLoaderState()
-
   return (
     <m.div
       id='blurred-background-colors'

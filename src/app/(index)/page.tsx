@@ -1,11 +1,11 @@
 import type { ReactElement } from "react";
-import { PortfolioExperienceLoadingManager } from "./providers";
+import { PortfolioExperienceProvider } from "./providers";
 import { PortfolioExperienceContent } from "./portfolio";
 
 export default function IndexPage(): ReactElement {
   return (
-    <PortfolioExperienceLoadingManager>
+    <PortfolioExperienceProvider>
       <PortfolioExperienceContent />
-    </PortfolioExperienceLoadingManager>
+    </PortfolioExperienceProvider>
   );
 }
