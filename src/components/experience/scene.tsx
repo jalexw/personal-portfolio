@@ -1,6 +1,6 @@
 "use client";
 
-import { CameraShake, PerspectiveCamera, useCursor, useGLTF } from "@react-three/drei";
+import { CameraShake, PerspectiveCamera } from "@react-three/drei";
 import { useEffect, useRef, type ReactElement } from "react";
 import { Box } from '@react-three/drei'
 import { useFrame } from "@react-three/fiber";
@@ -10,19 +10,6 @@ import { calculateRelativeCursorPosition } from "./relativeCursorPosition";
 import { usePrefersReducedMotion } from "./usePrefersReducedMotion";
 import { Penguin } from "./penguin";
 import { Vector3 } from "three";
-
-function calculateMouseEffect(relativeCursorPosition: CursorPosition): { x_rads: number, y_rads: number } {
-  // Amplitude = 45degrees/ 1/2pi rads
-  const amplitude: number = Math.PI / 2;
-  
-  const x_rads = (amplitude / 2) - (amplitude * relativeCursorPosition.y);
-  const y_rads = (amplitude / 2) - (amplitude * relativeCursorPosition.x);
-
-  return {
-    x_rads,
-    y_rads
-  }
-}
 
 const mouseMovementDelay = 0.2;
 
@@ -82,7 +69,6 @@ export function Scene(): ReactElement {
     <>
       {/* <PerspectiveCamera makeDefault position={[ 0, 0, 1400 ]} /> */}
       <PerspectiveCamera makeDefault position={[ 0, 0.6, 4.5 ]} />
-
 
       <Penguin ref={penguinRef} position={new Vector3(0, 0, 0)} />
 

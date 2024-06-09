@@ -12,7 +12,7 @@ import { useExperienceReady } from "@/components/experience-loader";
 import { cn } from "@/lib/utils";
 
 export function HeaderBar(): ReactElement {
-  const experienceReady = useExperienceReady();
+  const experienceReady: boolean = useExperienceReady(['placeholder_exit', 'canvas', 'initial_assets', 'typewriter_effect_exit']);
 
   return (
     <header
@@ -32,7 +32,7 @@ export function HeaderBar(): ReactElement {
             "text-md sm:text-lg md:text-xl",
             "font-mono font-bold",
             "text-center lg:text-left",
-            "transition-colors",
+            "transition-colors duration-500",
             experienceReady ? "text-white" : undefined
           )}
         >

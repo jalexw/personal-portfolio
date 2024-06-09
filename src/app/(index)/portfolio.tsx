@@ -22,7 +22,7 @@ export function PortfolioExperienceContent(): ReactElement {
 
         <div
           id="welcome-message-container"
-          className="w-full overflow-x-hidden flex items-center justify-center z-10"
+          className="w-full overflow-x-hidden flex items-center justify-center z-10 min-h-[40vh]"
         >
           <WelcomeMessage />
         </div>

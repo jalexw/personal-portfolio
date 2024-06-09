@@ -6,26 +6,37 @@ import type { ExperienceAssetFileNames, ExperienceAssetFileURLs } from "./experi
 
 export class PortfolioExperienceLoadManager {
 
+  // Debug flag
+  private readonly _debug: boolean;
+
   // Loading managers
   private loadingManager: LoadingManager;
   private gltfLoader: GLTFLoader;
 
-  private _initial_assets: readonly AssetDefinition<ExperienceAssetFileNames, ExperienceAssetFileURLs, ExperienceAssetFileTypes>[];
+  // Assets to load
+  private readonly _initial_assets: readonly AssetDefinition<ExperienceAssetFileNames, ExperienceAssetFileURLs, ExperienceAssetFileTypes>[];
+  
+  // Loaded assets
   private _assets: Map<ExperienceAssetFileNames, AssetRef<ExperienceAssetFileNames, ExperienceAssetFileTypes>>;
 
-  private onAssetLoad() {
+  private onAssetLoad(...args: unknown[]): void {
     if (process.env.NODE_ENV === 'development') {
-      console.log("[onAssetLoad]")
+      console.log("[onAssetLoad] Successfully loaded asset: ", args)
     }
   }
 
-  private onAssetLoadProgress(...args: unknown[]) {
-    if (process.env.NODE_ENV === 'development') {
-      console.log("[onAssetLoadProgress]", args)
+  private onAssetLoadProgress(...args: unknown[]): void {
+    if (process.env.NODE_ENV === 'development' && this._debug) {
+      console.log("[onAssetLoadProgress] Progress Event:", args)
     }
   }
 
-  public constructor(initial_assets: readonly AssetDefinition<ExperienceAssetFileNames, ExperienceAssetFileURLs, ExperienceAssetFileTypes>[]) {
+  public constructor(
+    initial_assets: readonly AssetDefinition<ExperienceAssetFileNames, ExperienceAssetFileURLs, ExperienceAssetFileTypes>[],
+    debug: boolean = false
+  ) {
+    this._debug = debug;
+
     this.loadingManager = new LoadingManager(
       this.onAssetLoad,
       this.onAssetLoadProgress

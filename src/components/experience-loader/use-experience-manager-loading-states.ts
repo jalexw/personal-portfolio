@@ -17,7 +17,15 @@ interface CanvasReadyAction extends BaseAction<'canvas_ready'> {
   type: 'canvas_ready';
 }
 
-export type ExperienceManagerReducerAction = LoadCompleteAction | CanvasReadyAction;
+interface TypewriterEffectExitCompleteAction extends BaseAction<'typewriter_effect_exit_complete'> {
+  type: 'typewriter_effect_exit_complete';
+}
+
+interface PlaceholderExitCompleteAction extends BaseAction<'placeholder_exit_complete'> {
+  type: 'placeholder_exit_complete';
+}
+
+export type ExperienceManagerReducerAction = LoadCompleteAction | CanvasReadyAction | PlaceholderExitCompleteAction | TypewriterEffectExitCompleteAction;
 
 function experienceManagerReducer(state: PortfolioExperienceLoadingState['loadingStates'], action: ExperienceManagerReducerAction): PortfolioExperienceLoadingState['loadingStates'] {
   if (typeof action.type !== 'string') {
@@ -32,6 +40,12 @@ function experienceManagerReducer(state: PortfolioExperienceLoadingState['loadin
       return state;
     case 'initial_assets_loaded':
       state.initial_assets = true;
+      return state;
+    case 'placeholder_exit_complete':
+      state.placeholder_exit = true;
+      return state;
+    case 'typewriter_effect_exit_complete':
+      state.typewriter_effect_exit = true;
       return state;
     default:
       if (process.env.NODE_ENV === 'development') {

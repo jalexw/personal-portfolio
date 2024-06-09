@@ -8,7 +8,7 @@ import { useExperienceReady } from "@/components/experience-loader";
 import { welcomeMessageExitDuration } from "@/components/welcome-message";
 
 function ExperienceCanvasRenderer(): ReactElement {
-  const isReady: boolean = useExperienceReady()
+  const isReady: boolean = useExperienceReady(['canvas', 'placeholder_exit', 'initial_assets'])
   if (!isReady) {
     return <></>;
   }
@@ -49,6 +49,7 @@ function ExperienceCanvasRenderer(): ReactElement {
           zIndex: -10
         }}
         className="-z-10"
+        gl={{ alpha: true }}
       >
         <Scene />
       </Canvas>

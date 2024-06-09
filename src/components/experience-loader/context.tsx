@@ -4,7 +4,7 @@ import { type MutableRefObject, createContext } from "react";
 import type { ExperienceManagerReducerAction } from "./use-experience-manager-loading-states";
 import { PortfolioExperienceLoadManager } from "./load-manager";
 
-export type ExperienceLoadingCategories = 'canvas' | 'initial_assets';
+export type ExperienceLoadingCategories = 'canvas' | 'initial_assets' | 'placeholder_exit' | 'typewriter_effect_exit';
 
 export type PortfolioExperienceLoadingState = {
   loadingStates: Record<ExperienceLoadingCategories, boolean>;
@@ -15,7 +15,9 @@ export type PortfolioExperienceLoadingState = {
 export const defaultExperienceLoadingState: PortfolioExperienceLoadingState = {
   loadingStates: {
     canvas: false,
-    initial_assets: false
+    initial_assets: false,
+    placeholder_exit: false,
+    typewriter_effect_exit: false
   },
   experienceLoadManager: null,
   dispatch: () => {
