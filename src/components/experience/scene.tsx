@@ -8,7 +8,7 @@ import { getCurrentWindowDimensions, useCurrentWindowDimensions } from "./useCur
 import { CursorPosition, useCursorPosition } from "./useCursorPosition";
 import { calculateRelativeCursorPosition } from "./relativeCursorPosition";
 import { usePrefersReducedMotion } from "./usePrefersReducedMotion";
-import { Penguin } from "./penguin";
+import { Avatar } from "./avatar";
 import { Vector3 } from "three";
 
 const mouseMovementDelay = 0.2;
@@ -26,7 +26,7 @@ const cameraShakeConfig: Parameters<typeof CameraShake>[0] = {
 };
 
 export function Scene(): ReactElement {
-  const penguinRef = useRef<any>()
+  const avatarRef = useRef<any>()
   
   const windowSize = useCurrentWindowDimensions(getCurrentWindowDimensions());
   const cursorPosition = useCursorPosition();
@@ -49,7 +49,7 @@ export function Scene(): ReactElement {
   }
 
   useFrame(({ clock }) => {
-    if (!penguinRef.current) {
+    if (!avatarRef.current) {
       return;
     }
 
@@ -58,11 +58,11 @@ export function Scene(): ReactElement {
     const mouseEffect = calculateMouseEffect(relativeCursorPosition);
 
     // Interpolate between the current and target rotation values
-    const xRotation = lerp(penguinRef.current.rotation.x, mouseEffect.x_rads, mouseMovementDelay) + 0.1;
-    const yRotation = lerp(penguinRef.current.rotation.y, mouseEffect.y_rads, mouseMovementDelay);
+    const xRotation = lerp(avatarRef.current.rotation.x, mouseEffect.x_rads, mouseMovementDelay) + 0.1;
+    const yRotation = lerp(avatarRef.current.rotation.y, mouseEffect.y_rads, mouseMovementDelay);
 
-    penguinRef.current.rotation.x = xRotation;
-    penguinRef.current.rotation.y = yRotation;
+    avatarRef.current.rotation.x = xRotation;
+    avatarRef.current.rotation.y = yRotation;
   });
 
   return (
@@ -70,7 +70,7 @@ export function Scene(): ReactElement {
       {/* <PerspectiveCamera makeDefault position={[ 0, 0, 1400 ]} /> */}
       <PerspectiveCamera makeDefault position={[ 0, 0.6, 4.5 ]} />
 
-      <Penguin ref={penguinRef} position={new Vector3(0, 0, 0)} />
+      <Avatar ref={avatarRef} position={new Vector3(0, 0, 0)} />
 
       <pointLight intensity={90} position={[0, 5, 5]}/>
       <ambientLight intensity={0.4} />
