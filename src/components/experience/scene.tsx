@@ -1,8 +1,7 @@
 "use client";
 
 import { CameraShake, PerspectiveCamera } from "@react-three/drei";
-import { useEffect, useRef, type ReactElement } from "react";
-import { Box } from '@react-three/drei'
+import { useRef, type ReactElement } from "react";
 import { useFrame } from "@react-three/fiber";
 import { getCurrentWindowDimensions, useCurrentWindowDimensions } from "./useCurrentWindowDimensions";
 import { CursorPosition, useCursorPosition } from "./useCursorPosition";
@@ -67,7 +66,6 @@ export function Scene(): ReactElement {
 
   return (
     <>
-      {/* <PerspectiveCamera makeDefault position={[ 0, 0, 1400 ]} /> */}
       <PerspectiveCamera makeDefault position={[ 0, 0.6, 4.5 ]} />
 
       <Avatar
