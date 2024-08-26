@@ -21,9 +21,6 @@ function AvatarComponent(props: AvatarComponentProps, ref: Ref<Object3D<Object3D
 
   const gltf = avatarAssetRef.asset
   
-  // const children = gltf.scene.children
-  // console.log(children);
-
   return (
     <primitive
       object={gltf.scene}
