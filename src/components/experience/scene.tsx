@@ -72,7 +72,7 @@ export function Scene(): ReactElement {
 
       <Avatar
         ref={avatarRef}
-        position={new Vector3(0, -0.5, -0.5)}
+        position={new Vector3(0, -0.2, -0.2)}
       />
 
       <pointLight intensity={90} position={[0, 5, 5]}/>
