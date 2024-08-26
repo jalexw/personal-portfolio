@@ -32,8 +32,7 @@ export function HeaderBar(): ReactElement {
             "text-md sm:text-lg md:text-xl",
             "font-mono font-bold",
             "text-center lg:text-left",
-            "transition-colors duration-500",
-            experienceReady ? "text-white" : undefined
+            "transition-colors duration-500"
           )}
         >
           {fullName}
