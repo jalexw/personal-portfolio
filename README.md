@@ -22,3 +22,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [ ] Have avatar (a penguin maybe?) skiing in randomly generated obstacle-infested slope -- showcase combination of AI/search/animation skills all in one
 - [ ] Have a selected work section
 - [ ] After adding many page sections, have a "call to action" to contact me (re-use the open contact form dialog)
+
+## ReadyPlayer.Me
+
+https://models.readyplayer.me/66ccaa0b5dc072e7e55b9112.glb
