@@ -70,12 +70,15 @@ export function Scene(): ReactElement {
       {/* <PerspectiveCamera makeDefault position={[ 0, 0, 1400 ]} /> */}
       <PerspectiveCamera makeDefault position={[ 0, 0.6, 4.5 ]} />
 
-      <Avatar ref={avatarRef} position={new Vector3(0, 0, 0)} />
+      <Avatar
+        ref={avatarRef}
+        position={new Vector3(0, -0.5, -0.5)}
+      />
 
       <pointLight intensity={90} position={[0, 5, 5]}/>
       <ambientLight intensity={0.4} />
 
       {!prefersReducedMotion && <CameraShake {...cameraShakeConfig} />}
     </>
-  )
+  );
 }
