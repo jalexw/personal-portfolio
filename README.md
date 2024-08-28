@@ -16,7 +16,12 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Features/Requirements Brainstorm
 
-- [ ] A 3D avatar that moves through the experience 'with you" as you scroll
+- [x] A 3D avatar of myself
+- [x] A link to my resume, at `/resume` which is built with TailwindCSS / ShadCN UI Components
+- [x] A contact form that sends me and the user an email
+- [ ] Make avatar that moves through the experience 'with you" as you scroll?
+- [ ] Showcase my areas of expertise. E.g. databases, React Native apps, backend APIs, designing Kubernetes clusters, etc.
+- [ ] Showcase frameworks that I have used before. E.g. React, Vue, Angular, Next, Qt, Simplegui, etc.
 - [ ] Demonstrate my ability to 3D render complex things
 - [ ] When user tries to print page -- show them my 1 page resume??
 - [ ] Have avatar (a penguin maybe?) skiing in randomly generated obstacle-infested slope -- showcase combination of AI/search/animation skills all in one
@@ -25,4 +30,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## ReadyPlayer.Me
 
-https://models.readyplayer.me/66ccaa0b5dc072e7e55b9112.glb
+I was able to create a 3D avatar of myself in GLTF/GLB format using ReadyPlayer.Me: https://models.readyplayer.me/66ccaa0b5dc072e7e55b9112.glb
