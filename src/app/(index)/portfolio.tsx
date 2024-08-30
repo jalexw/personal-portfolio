@@ -16,7 +16,7 @@ export function PortfolioExperienceContent(): ReactElement {
       {/** Contains all user-interactable DOM content (like text that fades in as you scroll) */}
       <div
         id="dom-content"
-        className="w-full h-full fixed top-0 left-0 z-10 flex flex-col justify-start items-center overflow-y-scroll"
+        className="w-full h-full fixed top-0 left-0 z-10 flex flex-col justify-start items-center overflow-y-scroll max-w-[100vw] overflow-x-hidden"
       >
         <HeaderBar />
 
@@ -27,15 +27,16 @@ export function PortfolioExperienceContent(): ReactElement {
           <WelcomeMessage />
         </div>
       </div>
-      
-      
+
       <AnimatePresence>
-        <DynamicExperience onReady={() => {
-          experience.dispatch({
-            type: "canvas_ready"
-          });
-        }}/>
+        <DynamicExperience
+          onReady={() => {
+            experience.dispatch({
+              type: "canvas_ready",
+            });
+          }}
+        />
       </AnimatePresence>
     </main>
-  )
+  );
 }
