@@ -2,21 +2,26 @@ from os.path import abspath, join, splitext
 from os import listdir
 import sys
 import bpy
+import re
 
 def deleteAll() -> None:
     bpy.ops.object.select_all()
     bpy.ops.object.delete()
 
-deleteAll()
-
 class MixamoAnimationImporter:
+    clearWorkspaceOnRun: bool
     animationsDir: str
+    originalGltfModelFilepath: str
     fbx_filenames: list[str] # e.g. Waving.fbx in ${ANIMATIONS_DIR}/Waving.fbx
     action_names: list[str]
     imported_fbx_armatures: list
     has_loaded_files_from_animations_dir: bool
+    has_loaded_original_gltf_model: bool
     outputArmatureName: str
     final_cleanup_complete: bool
+    gltf_armature: bpy.types.Armature
+    target_object: bpy.types.Armature
+    export_gltf_filename: str
 
     def __importFbx(self, filepath: str, fbx_file_index: int):
         self.__deselectAll()
@@ -80,11 +85,18 @@ class MixamoAnimationImporter:
         if len(self.action_names) != len(self.imported_fbx_armatures):
             raise Exception("Array length mismatch")
 
-    def __init__(self) -> None:
-        self.animationsDir = "/Users/jalexw/Desktop/personal-portfolio/public/assets/alex_avatar/animations"
+    def __init__(self, animations_directory: str = "/Users/jalexw/Desktop/personal-portfolio/public/assets/alex_avatar/animations", original_gltf_model_filepath = "/Users/jalexw/Desktop/personal-portfolio/public/assets/alex_avatar/models/alex_avatar.glb", export_gltf_filepath = "/Users/jalexw/Desktop/personal-portfolio/public/assets/alex_avatar/output/alex_avatar.glb", clear_scene_on_init: bool = True) -> None:
+        self.animationsDir = animations_directory
         self.has_loaded_files_from_animations_dir = False
+        self.originalGltfModelFilepath = original_gltf_model_filepath
+        self.has_loaded_original_gltf_model = False
         self.outputArmatureName = "CombinedArmatures"
         self.final_cleanup_complete = False
+        self.gltf_armature = None
+        self.clearWorkspaceOnRun = clear_scene_on_init
+        self.export_gltf_filename = export_gltf_filepath
+        if self.clearWorkspaceOnRun:
+            self.clear_workspace()
 
     def __deselectAll(self) -> None:
         bpy.ops.object.select_all(action='DESELECT')
@@ -136,10 +148,42 @@ class MixamoAnimationImporter:
         print("Clearing Blender workspace...")
         self.__deleteAll()
 
-    def import_files_from_animations_directory(self) -> None:
-        print("Running Mixamo FBX importer...")
+    def __importOriginalGltfModel(self) -> None:
+        filepath = self.originalGltfModelFilepath
+        imported_gltf_scene = bpy.ops.import_scene.gltf(filepath=filepath)
+        print(f"Successfully imported GLTF scene from filepath \"{filepath}\"...")
+
+        imported_armature = None
+        num_armatures_in_fbx_file = 0
+        for obj in bpy.context.selected_objects:
+            if obj.type == 'ARMATURE':
+                num_armatures_in_fbx_file += 1
+                imported_armature = obj
+
+        if num_armatures_in_fbx_file > 1:
+            print(f"More than one armature found in GLTF file!")
+            exit(1)
+
+        if num_armatures_in_fbx_file == 0 or imported_armature is None:
+            print(f"No armature found in GLTF scene. Crashing...")
+            exit(1)
+        else:
+            print(f"Found armature in GLTF object!")
+
+        imported_armature.name = "GltfArmature"
+
+        return imported_armature
+
+    def import_files(self) -> None:
+        print("[MixamoAnimationImporter] Importing files...")
+        print(f"[MixamoAnimationImporter] Importing animation files from \"{self.animationsDir}\"...")
         self.__loadFbxFilesFromAnimationsDir(self.animationsDir)
         self.has_loaded_files_from_animations_dir = True
+        print(f"[MixamoAnimationImporter] Importing original GLTF model from {self.originalGltfModelFilepath}...")
+        self.gltf_armature = self.__importOriginalGltfModel()
+        self.has_loaded_original_gltf_model = True
+        print("[MixamoAnimationImporter] Finished importing files.")
+        return
 
     def __initCombinedOutputArmature(self, copy_from):
         print("Creating empty output armature to merge FBX animations into...")
@@ -191,10 +235,93 @@ class MixamoAnimationImporter:
                 raise Exception(f"Unhandled child type for source armature: \"{child.type}\"")
         ### end of __copyMeshIntoOutputArmature() ###
 
+    def setOutputMaterial(self, target_object, mesh_name) -> None:
+        pass
+
+    def __copyMaterialsFromGltfArmature(self, gltf_armature, target_object):
+        print(f"Attempting to copy mesh from first imported armature into output armature \"{self.outputArmatureName}\":")
+
+        # Generate a regex pattern for ".005"
+        trailing_duplicate_version_identifier_pattern = re.compile(r'^.*\.[\d]{3}$')
+
+        for child in gltf_armature.children:
+            if child.type == 'MESH':
+                gltf_mesh = child
+                gltf_mesh_name: str
+                if trailing_duplicate_version_identifier_pattern.match(gltf_mesh.name):
+                    gltf_mesh_name = gltf_mesh.name[:-4]
+                else:
+                    gltf_mesh_name = gltf_mesh.name
+                output_armature_name = self.outputArmatureName
+                corresponding_output_mesh_name = f"{output_armature_name}_mesh_{gltf_mesh_name}"
+                corresponding_output_mesh = None
+                for child in target_object.children:
+                    if child.name == corresponding_output_mesh_name:
+                        corresponding_output_mesh = child
+                        break
+
+                if corresponding_output_mesh is None:
+                    print(f"Warning: Could not find corresponding mesh '{corresponding_output_mesh_name}' in target object")
+                else:
+                    # Clear existing materials
+                    corresponding_output_mesh.data.materials.clear()
+
+                    # Copy materials from GLTF mesh to output mesh
+                    for mat_slot in gltf_mesh.material_slots:
+                        corresponding_output_mesh.data.materials.append(mat_slot.material)
+
+                    print(f"Copied materials from '{gltf_mesh.name}' to '{corresponding_output_mesh.name}'")
+
+            else:
+                raise Exception("Unhandled child type for GLTF armature")
+
+    def __deleteGltfArmature(self) -> None:
+        print("Attempting to delete GLTF armature...")
+
+        self.__deselectAll()
+
+        armature = self.gltf_armature
+
+        if armature is None:
+            raise Exception("Expected to find armature to delete but is None")
+
+        # Select the armature
+        if hasattr(armature, 'select_set'):
+            armature.select_set(True)
+
+        # Select all children (including meshes)
+        if hasattr(armature, 'children'):
+            for child in armature.children: # type: ignore
+                child.select_set(True)
+
+        # Delete selected objects
+        bpy.ops.object.delete()
+
+        print("Deleted GLTF armature.")
+    ### end of __deleteGltfArmature() ###
+
+    def __cleanFinalOutputArmature(self, target_object) -> None:
+        # Rename armature group
+        target_object.name = "Armature"
+
+        # Rename children
+        for child in target_object.children:
+            output_mesh_name_prefix = f"{self.outputArmatureName}_mesh_"
+            if child.name.startswith(output_mesh_name_prefix):
+                child.name = child.name[len(output_mesh_name_prefix):]
+
+        # Delete any actions, only use NLA tracks
+        if target_object.animation_data and target_object.animation_data.action:
+            target_object.animation_data.action = None
+
+        return
+
     # Delete stuff from the scene so that only the output armature remains
-    def final_cleanup(self) -> None:
+    def final_cleanup(self, target_object) -> None:
         print("MixamoAnimationImporter - Performing final scene cleanup...")
         self.__deleteAllOriginalFbxArmatures()
+        self.__deleteGltfArmature()
+        self.__cleanFinalOutputArmature(target_object)
         print("MixamoAnimationImporter - Performing final scene cleanup...")
         self.final_cleanup_complete = True
         ### end of final_cleanup() ###
@@ -212,11 +339,11 @@ class MixamoAnimationImporter:
                 # If the target object has no animation data, create it
                 if hasattr(target_object, 'animation_data'):
                     if target_object.animation_data is None:
-                        print("Calling animation_data_create() for first animation in list")
+                        print(f"Calling animation_data_create() for first animation in list with name: \"{action_name}\"")
                         target_object.animation_data_create()
 
                 else:
-                    print("Calling animation_data_create() for first animation in list")
+                    print(f"Calling animation_data_create() for first animation in list with name: \"{action_name}\"")
                     target_object.animation_data_create()
 
                 # Add the action to the target object's NLA tracks
@@ -226,14 +353,35 @@ class MixamoAnimationImporter:
 
         print("Finished combining NLA tracks successfully.")
 
-    def run(self) -> None:
-        if not self.has_loaded_files_from_animations_dir:
-            raise Exception("Please call import_files_from_animations_directory() before run()")
+    def __runtime_assertions(self) -> None:
+        if not self.has_loaded_files_from_animations_dir or not self.has_loaded_original_gltf_model:
+            raise Exception("Please call import_files() before run()")
+
         if self.final_cleanup_complete:
             raise Exception("MixamoAnimationImporter has already run! Please create a new instance.")
 
         if len(self.action_names) <= 1:
             raise Exception("Expected to find 2 or more FBX animation actions to merge together")
+
+        if not hasattr(self, "gltf_armature"):
+            raise Exception("GLTF Armature was not loaded before run()")
+
+    # Export GLTF
+    def export_gltf(self):
+        if not self.final_cleanup_complete:
+            raise Exception("Cannot export as GLTF until final cleanup finished!")
+        target_object = self.target_object
+        bpy.ops.export_scene.gltf(
+            filepath=self.export_gltf_filename,
+            check_existing=False
+        )
+        print(f"Wrote GLTF export to \"{self.export_gltf_filename}\"...")
+        return;
+
+    # Merges animations
+    # Be sure to call import_files() before run()
+    def run(self) -> None:
+        self.__runtime_assertions() # run some sanity check assertions before trying to merge anything
 
         # Copy one of the armatures to be the start of the new output armatures
         target_object = self.__initCombinedOutputArmature(self.imported_fbx_armatures[0])
@@ -245,16 +393,22 @@ class MixamoAnimationImporter:
         source_armature = self.imported_fbx_armatures[0]
         self.__copyMeshIntoOutputArmature(source_armature=source_armature, target_object=target_object)
 
+        # Copy materials from original GLTF model
+        self.__copyMaterialsFromGltfArmature(gltf_armature=self.gltf_armature, target_object=target_object)
+
+        ### Final output model should be done by this point
+
         # Attach output object to scene
         print(f"Linking output armature \"{self.outputArmatureName}\" to scene...")
         bpy.context.scene.collection.objects.link(target_object)
 
         # Clean up so that only the final output armature remains in scene
-        self.final_cleanup()
+        self.final_cleanup(target_object=target_object)
 
+        self.target_object = target_object
         print("Finished MixamoAnimationImporter.run() successfully")
 
-importer = MixamoAnimationImporter()
-importer.clear_workspace()
-importer.import_files_from_animations_directory()
+importer = MixamoAnimationImporter(clear_scene_on_init=True)
+importer.import_files()
 importer.run()
+importer.export_gltf()

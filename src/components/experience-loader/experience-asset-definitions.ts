@@ -3,7 +3,7 @@ import type { AssetDefinition, ExperienceAssetFileTypes } from "./asset-def";
 export const experienceAssetDefinitions = [
   {
     name: "avatar",
-    url: "/assets/alex_avatar/models/alex_avatar.glb",
+    url: "/assets/alex_avatar/output/alex_avatar.glb",
     type: "gltf",
   },
 ] as const satisfies readonly AssetDefinition<
