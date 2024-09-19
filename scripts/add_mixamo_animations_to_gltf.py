@@ -199,22 +199,8 @@ class MixamoAnimationImporter:
         self.final_cleanup_complete = True
         ### end of final_cleanup() ###
 
-    def run(self) -> None:
-        if not self.has_loaded_files_from_animations_dir:
-            raise Exception("Please call import_files_from_animations_directory() before run()")
-        if self.final_cleanup_complete:
-            raise Exception("MixamoAnimationImporter has already run! Please create a new instance.")
-
-        if len(self.action_names) <= 1:
-            raise Exception("Expected to find 2 or more FBX animation actions to merge together")
-
-        # Copy one of the armatures to be the start of the new output armatures
-        target_object = self.__initCombinedOutputArmature(self.imported_fbx_armatures[0])
-
-        fbx_file_i = -1
-        for fbx_file in self.imported_fbx_armatures:
-            fbx_file_i += 1
-
+    def add_nla_tracks_to_output(self, target_object) -> None:
+        for fbx_file_i, fbx_file in enumerate(self.imported_fbx_armatures):
             imported_armature = self.__selectFbxImportAnimature(fbx_file_i)
 
             # Copy animation data to the target object
@@ -239,6 +225,21 @@ class MixamoAnimationImporter:
                 nla_strip = nla_track.strips.new(action_name, int(action.frame_range[0]), action)
 
         print("Finished combining NLA tracks successfully.")
+
+    def run(self) -> None:
+        if not self.has_loaded_files_from_animations_dir:
+            raise Exception("Please call import_files_from_animations_directory() before run()")
+        if self.final_cleanup_complete:
+            raise Exception("MixamoAnimationImporter has already run! Please create a new instance.")
+
+        if len(self.action_names) <= 1:
+            raise Exception("Expected to find 2 or more FBX animation actions to merge together")
+
+        # Copy one of the armatures to be the start of the new output armatures
+        target_object = self.__initCombinedOutputArmature(self.imported_fbx_armatures[0])
+
+        # Copy animation data into output
+        self.add_nla_tracks_to_output(target_object=target_object)
 
         # Copy armature data from the first imported armature
         source_armature = self.imported_fbx_armatures[0]
