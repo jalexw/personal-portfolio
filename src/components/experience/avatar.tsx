@@ -14,6 +14,47 @@ interface AvatarComponentProps {
   position: Vector3;
 }
 
+interface AvatarComponentShowcaserProps extends AvatarComponentProps {
+  gltf: GLTF;
+}
+
+function AvatarComponentShowcaser(
+  { gltf, ...props }: AvatarComponentShowcaserProps,
+  ref: Ref<Object3D<Object3DEventMap>>,
+): ReactElement {
+  const animations = useAnimations(gltf.animations, gltf.scene);
+
+  useEffect(() => {
+    // if (process.env.NODE_ENV === "development") {
+    //   console.log(
+    //     "[AvatarComponentShowcaser] Running models animations side effect",
+    //   );
+    //   console.log("Animations: ", animations);
+    // }
+
+    if (animations) {
+      const actions = animations?.actions;
+      const clips = animations.clips;
+      if (!!actions && Array.isArray(actions)) {
+        if (process.env.NODE_ENV === "development") {
+          console.log("Playing animation");
+        }
+        actions["Falling Idle"]?.play();
+      }
+    } else {
+      console.warn("useAnimations is not ready!");
+    }
+  }, [animations]);
+
+  return (
+    <primitive
+      object={gltf.scene}
+      ref={animations.ref}
+      position={props.position}
+    />
+  );
+}
+
 function AvatarComponent(
   props: AvatarComponentProps,
   ref: Ref<Object3D<Object3DEventMap>>,
@@ -37,7 +78,8 @@ function AvatarComponent(
     throw new Error("Failed to load 3D Avatar GLTF data!");
   }
 
-  return <primitive object={gltf.scene} ref={ref} position={props.position} />;
+  const Showcaser = forwardRef(AvatarComponentShowcaser);
+  return <Showcaser ref={ref} position={props.position} gltf={gltf} />;
 }
 
 export const Avatar = forwardRef(AvatarComponent);
