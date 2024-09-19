@@ -16,6 +16,7 @@ class MixamoAnimationImporter:
     imported_fbx_armatures: list
     has_loaded_files_from_animations_dir: bool
     outputArmatureName: str
+    final_cleanup_complete: bool
 
     def __importFbx(self, filepath: str, fbx_file_index: int):
         self.__deselectAll()
@@ -83,6 +84,7 @@ class MixamoAnimationImporter:
         self.animationsDir = "/Users/jalexw/Desktop/personal-portfolio/public/assets/alex_avatar/animations"
         self.has_loaded_files_from_animations_dir = False
         self.outputArmatureName = "CombinedArmatures"
+        self.final_cleanup_complete = False
 
     def __deselectAll(self) -> None:
         bpy.ops.object.select_all(action='DESELECT')
@@ -94,17 +96,26 @@ class MixamoAnimationImporter:
         # Delete imported objects
         print("Deleting original imported armatures...")
 
-        for index, _ in enumerate(self.imported_fbx_armatures):
+        for index, armature in enumerate(self.imported_fbx_armatures):
             self.__deselectAll()
-            self.__selectFbxImportAnimature(index)
-            bpy.ops.object.select_hierarchy(extend=True)
-            bpy.ops.object.delete()
-            print(f"Deleted armature at index \"{index}\"...")
 
-    def __deleteAnyNonOutputArmature(self):
-        self.__deselectAll()
-        bpy.ops.object.select_pattern(pattern=f"[^{self.outputArmatureName}]")
-        bpy.ops.object.delete()
+            # Select the armature
+            armature.select_set(True)
+
+            # Select all children (including meshes)
+            for child in armature.children:
+                child.select_set(True)
+
+            # Delete selected objects
+            bpy.ops.object.delete()
+
+            print(f"Deleted armature and its children at index \"{index}\"...")
+
+        # Clear the list of imported armatures
+        self.imported_fbx_armatures.clear()
+        self.action_names.clear()
+        self.fbx_filenames.clear()
+    ### end of __deleteAllOriginalFbxArmatures() ###
 
     def __selectFbxImportAnimature(self, fbx_file_index: int):
         try:
@@ -180,9 +191,19 @@ class MixamoAnimationImporter:
                 raise Exception(f"Unhandled child type for source armature: \"{child.type}\"")
         ### end of __copyMeshIntoOutputArmature() ###
 
+    # Delete stuff from the scene so that only the output armature remains
+    def final_cleanup(self) -> None:
+        print("MixamoAnimationImporter - Performing final scene cleanup...")
+        self.__deleteAllOriginalFbxArmatures()
+        print("MixamoAnimationImporter - Performing final scene cleanup...")
+        self.final_cleanup_complete = True
+        ### end of final_cleanup() ###
+
     def run(self) -> None:
         if not self.has_loaded_files_from_animations_dir:
             raise Exception("Please call import_files_from_animations_directory() before run()")
+        if self.final_cleanup_complete:
+            raise Exception("MixamoAnimationImporter has already run! Please create a new instance.")
 
         if len(self.action_names) <= 1:
             raise Exception("Expected to find 2 or more FBX animation actions to merge together")
@@ -223,13 +244,12 @@ class MixamoAnimationImporter:
         source_armature = self.imported_fbx_armatures[0]
         self.__copyMeshIntoOutputArmature(source_armature=source_armature, target_object=target_object)
 
-        # Copy mesh and link it to the scene
-        # # self.__deleteAllOriginalFbxArmatures()
-        # # self.__deleteAnyNonOutputArmature()
-
         # Attach output object to scene
         print(f"Linking output armature \"{self.outputArmatureName}\" to scene...")
         bpy.context.scene.collection.objects.link(target_object)
+
+        # Clean up so that only the final output armature remains in scene
+        self.final_cleanup()
 
         print("Finished MixamoAnimationImporter.run() successfully")
 
