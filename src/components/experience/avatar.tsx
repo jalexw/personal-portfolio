@@ -1,7 +1,20 @@
 "use client";
 
-import { type ReactElement, type Ref, forwardRef, useEffect } from "react";
-import { type Vector3, type Object3D, type Object3DEventMap } from "three";
+import {
+  type ReactElement,
+  type Ref,
+  forwardRef,
+  useEffect,
+  useRef,
+} from "react";
+import {
+  type Vector3,
+  type Object3D,
+  type Object3DEventMap,
+  LoopOnce,
+  LoopRepeat,
+  AnimationAction,
+} from "three";
 import {
   useExperience,
   type PortfolioExperienceLoadManager,
@@ -9,6 +22,7 @@ import {
 import type { AssetRef } from "../experience-loader/asset-def";
 import type { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { useAnimations } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 
 interface AvatarComponentProps {
   position: Vector3;
@@ -22,38 +36,61 @@ function AvatarComponentShowcaser(
   { gltf, ...props }: AvatarComponentShowcaserProps,
   ref: Ref<Object3D<Object3DEventMap>>,
 ): ReactElement {
-  const animations = useAnimations(gltf.animations, gltf.scene);
+  const { clips, actions, mixer, ...animations } = useAnimations(
+    gltf.animations,
+    gltf.scene,
+  );
+
+  useFrame((state, delta) => {
+    mixer.update(delta);
+  });
 
   useEffect(() => {
-    // if (process.env.NODE_ENV === "development") {
-    //   console.log(
-    //     "[AvatarComponentShowcaser] Running models animations side effect",
-    //   );
-    //   console.log("Animations: ", animations);
-    // }
-
     if (animations) {
-      const actions = animations?.actions;
-      const clips = animations.clips;
-      if (!!actions && Array.isArray(actions)) {
-        if (process.env.NODE_ENV === "development") {
-          console.log("Playing animation");
-        }
-        actions["Falling Idle"]?.play();
+      const fallAction: AnimationAction | null = actions["Falling Idle"];
+      const landAction: AnimationAction | null = actions["Falling To Landing"];
+      const waveAction: AnimationAction | null = actions["Waving"];
+      const idleAction: AnimationAction | null = actions["Breathing Idle"];
+
+      if (fallAction && landAction && waveAction && idleAction) {
+        // Play falling animation
+        fallAction.reset().play();
+        fallAction.setLoop(LoopRepeat, Infinity);
+
+        // After 1 second, transition to landing
+        setTimeout(() => {
+          const landingActionDurationSeconds: number =
+            landAction.getClip().duration;
+          const landingActionDurationMs: number =
+            landingActionDurationSeconds * 1000;
+          // Slowly merge the fall action into the landing action
+          fallAction.fadeOut(landingActionDurationSeconds / 4);
+          landAction
+            .reset()
+            .fadeIn(landingActionDurationSeconds / 8)
+            .play();
+          landAction.setLoop(LoopOnce, 1);
+
+          // Start the idle action
+          idleAction.fadeIn(landingActionDurationSeconds).play();
+          idleAction.setEffectiveTimeScale(0.5);
+          idleAction.setLoop(LoopRepeat, Infinity);
+
+          landAction.fadeOut(landingActionDurationSeconds);
+          fallAction.fadeOut(landingActionDurationSeconds);
+        }, 1000);
+      } else {
+        console.warn("One or more required animations are missing!");
       }
     } else {
       console.warn("useAnimations is not ready!");
     }
-  }, [animations]);
+  }, []);
 
-  return (
-    <primitive
-      object={gltf.scene}
-      ref={animations.ref}
-      position={props.position}
-    />
-  );
+  return <primitive object={gltf.scene} ref={ref} position={props.position} />;
 }
+
+const Showcaser = forwardRef(AvatarComponentShowcaser);
 
 function AvatarComponent(
   props: AvatarComponentProps,
@@ -78,7 +115,6 @@ function AvatarComponent(
     throw new Error("Failed to load 3D Avatar GLTF data!");
   }
 
-  const Showcaser = forwardRef(AvatarComponentShowcaser);
   return <Showcaser ref={ref} position={props.position} gltf={gltf} />;
 }
 
