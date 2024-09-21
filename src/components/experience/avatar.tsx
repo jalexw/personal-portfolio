@@ -23,6 +23,7 @@ import type { AssetRef } from "../experience-loader/asset-def";
 import type { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { useAnimations } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
+import { avatarAnimation } from "./avatar_animation";
 
 interface AvatarComponentProps {
   position: Vector3;
@@ -45,40 +46,28 @@ function AvatarComponentShowcaser(
     mixer.update(delta);
   });
 
-  useEffect(() => {
+  useEffect(function animationEffect() {
     if (animations) {
       const fallAction: AnimationAction | null = actions["Falling Idle"];
       const landAction: AnimationAction | null = actions["Falling To Landing"];
       const waveAction: AnimationAction | null = actions["Waving"];
       const idleAction: AnimationAction | null = actions["Breathing Idle"];
+      const jumpingAction: AnimationAction | null = actions["Jumping Up"];
 
-      if (fallAction && landAction && waveAction && idleAction) {
-        // Play falling animation
-        fallAction.reset().play();
-        fallAction.setLoop(LoopRepeat, Infinity);
-
-        // After 1 second, transition to landing
-        setTimeout(() => {
-          const landingActionDurationSeconds: number =
-            landAction.getClip().duration;
-          const landingActionDurationMs: number =
-            landingActionDurationSeconds * 1000;
-          // Slowly merge the fall action into the landing action
-          fallAction.fadeOut(landingActionDurationSeconds / 4);
-          landAction
-            .reset()
-            .fadeIn(landingActionDurationSeconds / 8)
-            .play();
-          landAction.setLoop(LoopOnce, 1);
-
-          // Start the idle action
-          idleAction.fadeIn(landingActionDurationSeconds).play();
-          idleAction.setEffectiveTimeScale(0.5);
-          idleAction.setLoop(LoopRepeat, Infinity);
-
-          landAction.fadeOut(landingActionDurationSeconds);
-          fallAction.fadeOut(landingActionDurationSeconds);
-        }, 1000);
+      if (
+        fallAction &&
+        landAction &&
+        waveAction &&
+        idleAction &&
+        jumpingAction
+      ) {
+        avatarAnimation(
+          fallAction,
+          landAction,
+          waveAction,
+          idleAction,
+          jumpingAction,
+        );
       } else {
         console.warn("One or more required animations are missing!");
       }
