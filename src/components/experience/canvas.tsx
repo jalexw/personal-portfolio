@@ -8,7 +8,11 @@ import { useExperienceReady } from "@/components/experience-loader";
 import { welcomeMessageExitDuration } from "@/components/welcome-message";
 
 function ExperienceCanvasRenderer(): ReactElement {
-  const isReady: boolean = useExperienceReady(['canvas', 'placeholder_exit', 'initial_assets'])
+  const isReady: boolean = useExperienceReady([
+    "canvas",
+    "placeholder_exit",
+    "initial_assets",
+  ]);
   if (!isReady) {
     return <></>;
   }
@@ -21,18 +25,18 @@ function ExperienceCanvasRenderer(): ReactElement {
           opacity: 0,
           transitionEnd: {
             visibility: "hidden",
-            display: "none"
-          }
+            display: "none",
+          },
         },
         visible: {
           opacity: 1,
           transition: {
             delay: welcomeMessageExitDuration,
-            duration: 3.5
+            duration: 3.5,
           },
           visibility: "visible",
-          display: "block"
-        }
+          display: "block",
+        },
       }}
       initial="hidden"
       animate="visible"
@@ -41,12 +45,12 @@ function ExperienceCanvasRenderer(): ReactElement {
     >
       <Canvas
         style={{
-          width: '100%',
-          height: '100%',
-          position: 'relative',
+          width: "100%",
+          height: "100%",
+          position: "relative",
           top: 0,
           left: 0,
-          zIndex: -10
+          zIndex: -10,
         }}
         className="-z-10"
         gl={{ alpha: true }}
@@ -54,17 +58,19 @@ function ExperienceCanvasRenderer(): ReactElement {
         <Scene />
       </Canvas>
     </m.div>
-  )
+  );
 }
 
 export interface ExperienceCanvasOptions {
   onReady: () => void;
 }
 
-export function ExperienceCanvas({ onReady }: ExperienceCanvasOptions): ReactElement {
+export function ExperienceCanvas({
+  onReady,
+}: ExperienceCanvasOptions): ReactElement {
   useEffect(() => {
     onReady();
-  })
+  });
   return <ExperienceCanvasRenderer />;
 }
 

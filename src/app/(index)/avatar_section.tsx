@@ -1,4 +1,4 @@
-"use client";
+import type { ReactElement } from "react";
 
 import { DynamicExperience } from "@/components/experience";
 import { useExperience } from "@/components/experience-loader";
@@ -6,17 +6,14 @@ import { HeaderBar } from "@/components/header";
 import { WelcomeMessage } from "@/components/welcome-message";
 import { AnimatePresence } from "framer-motion";
 
-import type { ReactElement } from "react";
-
-export function PortfolioExperienceContent(): ReactElement {
+export function AvatarSection(): ReactElement {
   const experience = useExperience();
 
   return (
-    <main>
-      {/** Contains all user-interactable DOM content (like text that fades in as you scroll) */}
+    <section className="h-full w-full overflow-hidden">
       <div
         id="dom-content"
-        className="w-full h-full fixed top-0 left-0 z-10 flex flex-col justify-start items-center overflow-y-scroll max-w-[100vw] overflow-x-hidden"
+        className="w-full h-[100vh] z-10 flex flex-col justify-start items-center overflow-y-scroll overflow-x-hidden"
       >
         <HeaderBar />
 
@@ -37,6 +34,6 @@ export function PortfolioExperienceContent(): ReactElement {
           }}
         />
       </AnimatePresence>
-    </main>
+    </section>
   );
 }
