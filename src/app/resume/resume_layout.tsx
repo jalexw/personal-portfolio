@@ -13,7 +13,7 @@ import { WorkExperienceSection } from "./work_experience";
 import { TechnicalSkills } from "./technical_skills";
 
 // UI Components
-import { Separator } from "@/components/ui/separator";
+import { Separator } from "@schemavaults/ui";
 
 export default function ResumeLayout(): ReactElement {
   return (

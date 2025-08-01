@@ -1,41 +1,32 @@
-import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
-import { description, title } from '@/metadata'
-import type { ReactElement, ReactNode } from 'react'
-import { ThemeProvider } from '@/components/theme'
-import { Toaster } from '@/components/ui/toaster'
+import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
+import "@schemavaults/theme/globals.css";
+import { description, title } from "@/metadata";
+import type { ReactElement, ReactNode } from "react";
+import ClientProviders from "./client-providers";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title,
-  description
-}
+  description,
+};
 
 export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
   children,
 }: {
-  children: ReactNode
+  children: ReactNode;
 }): ReactElement {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-          <Toaster />
-        </ThemeProvider>
+        <ClientProviders>{children}</ClientProviders>
       </body>
     </html>
-  )
+  );
 }

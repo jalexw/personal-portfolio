@@ -29,20 +29,22 @@ import { useAnimations } from "@react-three/drei";
 import { type MotionValue, useScroll } from "framer-motion";
 import { useFrame } from "@react-three/fiber";
 import { avatarAnimation } from "./avatar_animation";
-import { AvatarAnimationActions } from "./avatar_animation_actions";
+import type { AvatarAnimationActions } from "./avatar_animation_actions";
+import type { TAvatarRef } from "./TAvatarRef";
 
 interface AvatarComponentProps {
   position: Vector3;
+  ref: TAvatarRef;
 }
 
 interface AvatarComponentShowcaserProps extends AvatarComponentProps {
   gltf: GLTF;
 }
 
-function AvatarComponentShowcaser(
-  { gltf, ...props }: AvatarComponentShowcaserProps,
-  ref: Ref<Object3D<Object3DEventMap>>,
-): ReactElement {
+function AvatarComponentShowcaser({
+  gltf,
+  ...props
+}: AvatarComponentShowcaserProps): ReactElement {
   const [lastEntryByFall, setLastEntryByFall] = useState<number>(Date.now());
   const [lastExitByJump, setLastExitByJump] = useState<number | null>(null);
 
@@ -170,15 +172,12 @@ function AvatarComponentShowcaser(
     [lastExitByJump, lastEntryByFall, avatarActions],
   );
 
-  return <primitive object={gltf.scene} ref={ref} position={props.position} />;
+  return (
+    <primitive object={gltf.scene} ref={props.ref} position={props.position} />
+  );
 }
 
-const Showcaser = forwardRef(AvatarComponentShowcaser);
-
-function AvatarComponent(
-  props: AvatarComponentProps,
-  ref: Ref<Object3D<Object3DEventMap>>,
-): ReactElement {
+function AvatarComponent(props: AvatarComponentProps): ReactElement {
   const experience = useExperience();
   const manager = experience.experienceLoadManager?.current;
 
@@ -198,7 +197,13 @@ function AvatarComponent(
     throw new Error("Failed to load 3D Avatar GLTF data!");
   }
 
-  return <Showcaser ref={ref} position={props.position} gltf={gltf} />;
+  return (
+    <AvatarComponentShowcaser
+      ref={props.ref}
+      position={props.position}
+      gltf={gltf}
+    />
+  );
 }
 
-export const Avatar = forwardRef(AvatarComponent);
+export const Avatar = AvatarComponent;

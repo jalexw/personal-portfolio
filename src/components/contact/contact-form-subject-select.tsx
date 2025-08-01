@@ -1,20 +1,6 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-// import {
-//   Command,
-//   CommandEmpty,
-//   CommandGroup,
-//   CommandInput,
-//   CommandItem,
-//   CommandList,
-// } from "@/components/ui/command"
-// import {
-//   Popover,
-//   PopoverContent,
-//   PopoverTrigger,
-// } from "@/components/ui/popover"
+import { cn } from "@/lib/utils";
 import {
   Select,
   SelectContent,
@@ -23,15 +9,20 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { ReactElement, useMemo, useState } from "react"
-import type { ControllerRenderProps } from "react-hook-form"
-import type { ContactFormData } from "./contact-form-schema"
-import { type MessageCategory, messageCategories, messageCategoryGroupLabelMap, type MessageCategoryGroup, messageCategoryGroups } from "./message-category"
-// import { ScrollArea } from "@/components/ui/scroll-area"
+} from "@schemavaults/ui";
+import { ReactElement, useMemo, useState } from "react";
+import type { ControllerRenderProps } from "react-hook-form";
+import type { ContactFormData } from "./contact-form-schema";
+import {
+  type MessageCategory,
+  messageCategories,
+  messageCategoryGroupLabelMap,
+  type MessageCategoryGroup,
+  messageCategoryGroups,
+} from "./message-category";
 
 export interface ContactFormSubjectSelectProps {
-  field: ControllerRenderProps<ContactFormData, "subject">
+  field: ControllerRenderProps<ContactFormData, "subject">;
 }
 
 interface MessageCategoryGroupProps {
@@ -39,10 +30,15 @@ interface MessageCategoryGroupProps {
   selected: MessageCategory | null;
 }
 
-function MessageCategoryGroup({ group, selected }: MessageCategoryGroupProps): ReactElement {
+function MessageCategoryGroup({
+  group,
+  selected,
+}: MessageCategoryGroupProps): ReactElement {
   // Get only message categories that belong to this category group.
-  const categories = messageCategories.filter((category) => category.group === group);
-  
+  const categories = messageCategories.filter(
+    (category) => category.group === group,
+  );
+
   // Group label
   const heading = messageCategoryGroupLabelMap[group];
 
@@ -67,26 +63,35 @@ function MessageCategoryGroup({ group, selected }: MessageCategoryGroupProps): R
               "inline mr-2 h-4 w-4",
               messageCategory.value === selected?.value
                 ? "opacity-100"
-                : "opacity-40"
+                : "opacity-40",
             )}
           />
           <span className="inline">{messageCategory.label}</span>
         </SelectItem>
       ))}
     </SelectGroup>
-  )
+  );
 }
 
-export function ContactFormSubjectSelect({ field }: ContactFormSubjectSelectProps) {
+export function ContactFormSubjectSelect({
+  field,
+}: ContactFormSubjectSelectProps) {
   // const [open, setOpen] = useState<boolean>(false);
   // const [selected, setSelected] = useState<MessageCategory | null>(null);
 
   const selectedCategory: MessageCategory | null = useMemo(() => {
-    return messageCategories.find((category) => category.value === field.value) || null
-  }, [field.value])
+    return (
+      messageCategories.find((category) => category.value === field.value) ||
+      null
+    );
+  }, [field.value]);
 
   return (
-    <Select onValueChange={field.onChange} defaultValue={field.value} disabled={field.disabled}>
+    <Select
+      onValueChange={field.onChange}
+      defaultValue={field.value}
+      disabled={field.disabled}
+    >
       <SelectTrigger>
         <SelectValue placeholder="Select message category..." />
       </SelectTrigger>
@@ -95,7 +100,7 @@ export function ContactFormSubjectSelect({ field }: ContactFormSubjectSelectProp
           <MessageCategoryGroup
             key={group}
             group={group}
-            selected={(selectedCategory) ?? null}
+            selected={selectedCategory ?? null}
           />
         ))}
       </SelectContent>

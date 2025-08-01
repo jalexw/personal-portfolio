@@ -1,4 +1,4 @@
-import { Separator } from "@/components/ui/separator";
+import { Separator } from "@schemavaults/ui";
 import type { PropsWithChildren, ReactElement } from "react";
 import { cn } from "@/lib/utils";
 
@@ -7,18 +7,14 @@ export interface ResumeSectionProps extends PropsWithChildren {
   widthClassName?: string;
 }
 
-export function ResumeSection(
-  { title, children, widthClassName }: ResumeSectionProps
-): ReactElement {
+export function ResumeSection({
+  title,
+  children,
+  widthClassName,
+}: ResumeSectionProps): ReactElement {
   return (
-    <section
-      className={
-        cn("flex flex-col gap-2", widthClassName ?? "w-full")
-      }
-    >
-      <h2 className="text-xl text-nowrap">
-        {title}
-      </h2>
+    <section className={cn("flex flex-col gap-2", widthClassName ?? "w-full")}>
+      <h2 className="text-xl text-nowrap">{title}</h2>
       <Separator decorative={true} />
       {children}
     </section>

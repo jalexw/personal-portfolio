@@ -1,76 +1,74 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  darkMode: "class",
-  content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
-  theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
-    extend: {
-      colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
-      keyframes: {
-        "accordion-down": {
-          from: { height: 0 },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: 0 },
-        },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-      },
-    },
-  },
-  plugins: [require("tailwindcss-animate")],
+console.log("@schemavaults/web - tailwind.config.ts");
+
+import type { Config } from "tailwindcss";
+// Import the config factory
+import { SchemaVaultsTailwindConfigFactory } from "@schemavaults/theme";
+
+let currentDirectory: string;
+try {
+  currentDirectory = __dirname;
+  if (typeof currentDirectory !== "string") {
+    throw new Error("current dir path not a string");
+  }
+} catch (e: unknown) {
+  console.error("Failed to load current directory");
+  process.exit(1);
 }
+
+// Import helper utilities for file/module resolution
+import { join } from "path";
+import { existsSync, lstatSync, type Stats } from "fs";
+
+function node_modules(): string {
+  let node_modules_path: string;
+  if (currentDirectory.endsWith("/src") || currentDirectory.endsWith("/dist")) {
+    node_modules_path = join(currentDirectory, "..", "node_modules");
+  } else {
+    node_modules_path = join(currentDirectory, "node_modules");
+  }
+
+  return node_modules_path;
+}
+
+function isdir(path: string): boolean {
+  if (!existsSync(path)) return false;
+
+  let lstatResult: Stats;
+  try {
+    lstatResult = lstatSync(path);
+  } catch (e: unknown) {
+    throw new Error(
+      "Error running lstatSync for tailwind.config.ts isdir() function!",
+    );
+  }
+  return lstatResult.isDirectory();
+}
+
+if (!isdir(node_modules())) {
+  console.error("Failed to resolve node_modules/ directory for test!");
+  throw new Error("Failed to resolve node_modules/ directory for test!");
+}
+
+let config: Config;
+try {
+  // Initialize the config factory
+  const configFactory = new SchemaVaultsTailwindConfigFactory({
+    node_modules,
+    isdir,
+    join,
+    debug: true,
+  });
+
+  // Generate and export the config
+  config = configFactory.createConfig({
+    content: ["./src/**/*.{tsx,jsx,js,ts}", "@schemavaults/ui"],
+  }) satisfies Config;
+} catch (e) {
+  console.error(
+    "Failed to generate TailwindCSS config using @schemavaults/theme module!",
+    e,
+  );
+  process.exit(1);
+}
+
+export default config;

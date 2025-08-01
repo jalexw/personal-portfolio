@@ -1,6 +1,5 @@
 import type { ReactElement } from "react";
-import {DialogTrigger} from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button";
+import { Button, DialogTrigger } from "@schemavaults/ui";
 import { AtSign, Mail } from "lucide-react";
 export function DialogTriggerButton(): ReactElement {
   return (
@@ -8,8 +7,8 @@ export function DialogTriggerButton(): ReactElement {
       <Button variant="outline" className="flex flex-row justify-start gap-2">
         <span className="block sm:hidden">Contact: </span>
         <span className="hidden sm:block">Get in touch: </span>
-        <AtSign className="h-4 w-4"/> / <Mail className="h-4 w-4"/>
+        <AtSign className="h-4 w-4" /> / <Mail className="h-4 w-4" />
       </Button>
     </DialogTrigger>
-  )
+  );
 }

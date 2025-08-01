@@ -1,7 +1,7 @@
 {
   "terminal": {
     "shell": {
-      "program": "/usr/bin/zsh"
+      "program": "/bin/zsh"
     }
   }
 }

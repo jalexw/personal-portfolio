@@ -12,6 +12,7 @@ import { calculateRelativeCursorPosition } from "./relativeCursorPosition";
 import { usePrefersReducedMotion } from "./usePrefersReducedMotion";
 import { Avatar } from "./avatar";
 import { Vector3 } from "three";
+import { TAvatarRef, TAvatarRefData } from "./TAvatarRef";
 
 const mouseMovementDelay = 0.2;
 
@@ -28,7 +29,7 @@ const cameraShakeConfig: Parameters<typeof CameraShake>[0] = {
 };
 
 export function Scene(): ReactElement {
-  const avatarRef = useRef<any>();
+  const avatarRef: TAvatarRef = useRef<TAvatarRefData>(null);
 
   const windowSize = useCurrentWindowDimensions(getCurrentWindowDimensions());
   const cursorPosition = useCursorPosition();

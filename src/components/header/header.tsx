@@ -7,12 +7,17 @@ import { fullName } from "@/metadata/name";
 
 import { ResumeLink } from "@/components/resume-link";
 import { ContactDialog } from "@/components/contact";
-import { ThemeModeSelection } from "@/components/theme";
+import { ThemeModeSelection } from "@/components/toggle-theme-button";
 import { useExperienceReady } from "@/components/experience-loader";
 import { cn } from "@/lib/utils";
 
 export function HeaderBar(): ReactElement {
-  const experienceReady: boolean = useExperienceReady(['placeholder_exit', 'canvas', 'initial_assets', 'typewriter_effect_exit']);
+  const experienceReady: boolean = useExperienceReady([
+    "placeholder_exit",
+    "canvas",
+    "initial_assets",
+    "typewriter_effect_exit",
+  ]);
 
   return (
     <header
@@ -32,7 +37,7 @@ export function HeaderBar(): ReactElement {
             "text-md sm:text-lg md:text-xl",
             "font-mono font-bold",
             "text-center lg:text-left",
-            "transition-colors duration-500"
+            "transition-colors duration-500",
           )}
         >
           {fullName}
@@ -56,5 +61,5 @@ export function HeaderBar(): ReactElement {
         <ThemeModeSelection />
       </div>
     </header>
-  )
+  );
 }
