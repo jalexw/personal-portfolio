@@ -19,11 +19,8 @@ import {
   SkinnedMesh,
   Material,
 } from "three";
-import {
-  useExperience,
-  type PortfolioExperienceLoadManager,
-} from "../experience-loader";
-import type { AssetRef } from "../experience-loader/asset-def";
+import useExperience from "@/hooks/use-experience";
+import type { AssetRef } from "@/lib/experience-asset-definition";
 import type { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { useAnimations } from "@react-three/drei";
 import { type MotionValue, useScroll } from "framer-motion";

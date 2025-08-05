@@ -1,13 +1,21 @@
+"use client";
+
 import type { ReactElement } from "react";
 
 import { DynamicExperience } from "@/components/experience";
-import { useExperience } from "@/components/experience-loader";
+import useExperience from "@/hooks/use-experience";
 import { HeaderBar } from "@/components/header";
 import { WelcomeMessage } from "@/components/welcome-message";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "@schemavaults/ui";
+import useDebug from "@/hooks/useDebug";
 
 export function AvatarSection(): ReactElement {
+  const debug: boolean = useDebug();
   const experience = useExperience();
+
+  if (debug) {
+    console.log("[AvatarSection] rendering...");
+  }
 
   return (
     <section className="h-full w-full overflow-hidden">
@@ -27,7 +35,13 @@ export function AvatarSection(): ReactElement {
 
       <AnimatePresence>
         <DynamicExperience
-          onReady={() => {
+          key="dynamic-jalexw-portfolio-experience"
+          onReady={(): void => {
+            if (debug) {
+              console.log(
+                "[AvatarSection] Canvas is ready! Dispatching ready event...",
+              );
+            }
             experience.dispatch({
               type: "canvas_ready",
             });

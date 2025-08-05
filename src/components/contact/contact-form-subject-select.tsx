@@ -13,13 +13,12 @@ import {
 import { ReactElement, useMemo, useState } from "react";
 import type { ControllerRenderProps } from "react-hook-form";
 import type { ContactFormData } from "./contact-form-schema";
+import { type MessageCategory, messageCategories } from "./message-category";
 import {
-  type MessageCategory,
-  messageCategories,
   messageCategoryGroupLabelMap,
   type MessageCategoryGroup,
   messageCategoryGroups,
-} from "./message-category";
+} from "@/lib/ContactMessageCategoryGroup";
 
 export interface ContactFormSubjectSelectProps {
   field: ControllerRenderProps<ContactFormData, "subject">;

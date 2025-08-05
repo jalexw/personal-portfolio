@@ -1,4 +1,2 @@
 export { PortfolioExperienceProvider } from "./experience-context-provider";
-export { useExperience } from "./use-experience";
-export { useExperienceReady } from "./use-experience-ready";
-export type * from "./load-manager";
+export type * from "@/lib/portfolio-experience-load-manager";

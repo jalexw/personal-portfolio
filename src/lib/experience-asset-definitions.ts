@@ -1,4 +1,7 @@
-import type { AssetDefinition, ExperienceAssetFileTypes } from "./asset-def";
+import type {
+  AssetDefinition,
+  ExperienceAssetFileTypes,
+} from "@/lib/experience-asset-definition";
 
 export const experienceAssetDefinitions = [
   {

@@ -1,20 +1,22 @@
-import type { FC } from 'react';
-import type { ContactFormData } from '@/components/contact';
-import { messageCategories, messageCategoryGroupLabelMap } from '../contact/message-category';
+import type { FC } from "react";
+import type { ContactFormData } from "@/components/contact";
+import { messageCategories } from "@/components/contact/message-category";
 
-export const ContactConfirmationEmailTemplate: FC<Readonly<ContactFormData>> = ({
-  name,
-  email,
-  subject,
-  message
-}) => {
-  const subjectCategory = messageCategories.find(category => category.value === subject);
+export const ContactConfirmationEmailTemplate: FC<
+  Readonly<ContactFormData>
+> = ({ name, email, subject, message }) => {
+  const subjectCategory = messageCategories.find(
+    (category) => category.value === subject,
+  );
 
   return (
     <div>
       <h1>Hey {name}!</h1>
-      <p>Thank you for reaching out to me! Just confirming that I have received your message. I will get back to your message as soon as possible.</p>
-      <br/>
+      <p>
+        Thank you for reaching out to me! Just confirming that I have received
+        your message. I will get back to your message as soon as possible.
+      </p>
+      <br />
       <p>Here is a copy of your message:</p>
       <table>
         <tbody>
@@ -38,4 +40,4 @@ export const ContactConfirmationEmailTemplate: FC<Readonly<ContactFormData>> = (
       </table>
     </div>
   );
-}
+};

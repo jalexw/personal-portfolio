@@ -1,9 +1,6 @@
 "use client";
 
-import { loadFramerMotionFeatures } from "@/lib/lazy-framer";
-import { LazyMotion } from "framer-motion";
 import {
-  useState,
   type PropsWithChildren,
   type ReactElement,
   useEffect,
@@ -13,13 +10,13 @@ import {
 import {
   PortfolioExperienceContext,
   type PortfolioExperienceLoadingState,
-} from "./context";
+} from "@/contexts/portfolio-experience-context";
 import {
   type ExperienceManagerReducerAction,
   useExperienceManagerLoadingStatesReducer,
-} from "./use-experience-manager-loading-states";
-import { PortfolioExperienceLoadManager } from "./load-manager";
-import { experienceAssetDefinitions } from "./experience-asset-definitions";
+} from "@/hooks/use-experience-manager-loading-states-reducer";
+import { PortfolioExperienceLoadManager } from "@/lib/portfolio-experience-load-manager";
+import { experienceAssetDefinitions } from "@/lib/experience-asset-definitions";
 
 export function PortfolioExperienceProvider({
   children,
@@ -60,12 +57,6 @@ export function PortfolioExperienceProvider({
       }
     }
     init();
-  });
-
-  useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
-      console.log("[PortfolioExperienceProvider] Setting up experience...");
-    }
   }, []);
 
   return (
@@ -78,9 +69,7 @@ export function PortfolioExperienceProvider({
         } satisfies PortfolioExperienceLoadingState
       }
     >
-      <LazyMotion features={loadFramerMotionFeatures} strict>
-        {children}
-      </LazyMotion>
+      {children}
     </PortfolioExperienceContext.Provider>
   );
 }

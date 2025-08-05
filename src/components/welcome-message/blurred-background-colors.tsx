@@ -1,11 +1,11 @@
 import type { ReactElement } from "react";
-import {m} from "framer-motion";
+import { m } from "@schemavaults/ui";
 import { duration } from "./exit-duration";
 
 export function BlurredBackgroundColors(): ReactElement {
   return (
     <m.div
-      id='blurred-background-colors'
+      id="blurred-background-colors"
       transition={{
         duration: duration,
         ease: "easeInOut",
@@ -16,7 +16,7 @@ export function BlurredBackgroundColors(): ReactElement {
           opacity: 1,
           rotate: 0,
           visibility: "visible",
-          display: "block"
+          display: "block",
         },
         hidden: {
           scale: 0,
@@ -24,13 +24,13 @@ export function BlurredBackgroundColors(): ReactElement {
           rotate: -20,
           transitionEnd: {
             visibility: "hidden",
-            display: "none"
-          }
-        }
+            display: "none",
+          },
+        },
       }}
-      initial={'visible'}
-      animate={'visible'}
-      exit={'hidden'}
+      initial={"visible"}
+      animate={"visible"}
+      exit={"hidden"}
       className="
         absolute flex
         antialiased m-auto
@@ -64,5 +64,5 @@ export function BlurredBackgroundColors(): ReactElement {
         "
       />
     </m.div>
-  )
+  );
 }

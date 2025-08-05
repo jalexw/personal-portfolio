@@ -19,7 +19,7 @@ export function ClientProviders({
       defaultTheme="system"
       enableSystem
     >
-      <LazyFramerMotionProvider key="lazy-framer-motion-provider">
+      <LazyFramerMotionProvider strict>
         <TooltipProvider>{children}</TooltipProvider>
       </LazyFramerMotionProvider>
       <Toaster />

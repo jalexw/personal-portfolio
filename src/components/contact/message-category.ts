@@ -1,3 +1,4 @@
+import type { MessageCategoryGroup } from "@/lib/ContactMessageCategoryGroup";
 import {
   type LucideIcon,
   Hand,
@@ -12,73 +13,69 @@ import {
   Wrench,
   Rocket,
   Swords,
-} from "lucide-react"
-
-export const messageCategoryGroups = ['business', 'personal', 'misc'] as const;
-
-export type MessageCategoryGroup = typeof messageCategoryGroups[number];
+} from "lucide-react";
 
 export type MessageCategory = {
   value: string;
   label: string;
   icon: LucideIcon;
   group: MessageCategoryGroup;
-}
+};
 
-export const messageCategories = ([
+export const messageCategories = [
   {
     value: "greetings",
     label: "Just trying to say hello!",
     icon: Hand,
-    group: 'personal'
+    group: "personal",
   },
   {
     value: "new-website",
     label: "Request a custom website",
     icon: AppWindow,
-    group: 'business'
+    group: "business",
   },
   {
     value: "new-app",
     label: "Request a custom app",
     icon: TabletSmartphone,
-    group: 'business'
+    group: "business",
   },
   {
     value: "new-database",
     label: "Request a custom database",
     icon: DatabaseZap,
-    group: 'business'
+    group: "business",
   },
   {
     value: "new-ai",
     label: "Request a custom AI model/bot",
     icon: Bot,
-    group: 'business'
+    group: "business",
   },
   {
     value: "new-system",
     label: "Request system design",
     icon: Rocket,
-    group: 'business'
+    group: "business",
   },
   {
     value: "consulting",
     label: "Request consulting service",
     icon: Presentation,
-    group: 'business'
+    group: "business",
   },
   {
     value: "code-review",
     label: "Request debug or code review",
     icon: Wrench,
-    group: 'business'
+    group: "business",
   },
   {
     value: "bug-report",
     label: "Report a bug",
     icon: Bug,
-    group: 'business'
+    group: "business",
   },
   // {
   //   value: "duel",
@@ -96,15 +93,11 @@ export const messageCategories = ([
     value: "other",
     label: "Other",
     icon: HelpCircle,
-    group: 'misc'
-  }
-] as const) satisfies readonly MessageCategory[];
+    group: "misc",
+  },
+] as const satisfies readonly MessageCategory[];
 
-export const messageCategoryValues = messageCategories.map((category) => category.value);
-export type MessageCategoryValue = typeof messageCategoryValues[number];
-
-export const messageCategoryGroupLabelMap: Record<MessageCategoryGroup, string> = {
-  business: 'Business',
-  personal: 'Personal',
-  misc: 'Miscellaneous'
-}
+export const messageCategoryValues = messageCategories.map(
+  (category) => category.value,
+);
+export type MessageCategoryValue = (typeof messageCategoryValues)[number];
