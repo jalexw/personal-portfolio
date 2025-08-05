@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { ResumeSection } from "./resume_section";
+import ResumeSection from "./resume_section";
 import { Badge } from "@schemavaults/ui";
 import { cn } from "@/lib/utils";
 

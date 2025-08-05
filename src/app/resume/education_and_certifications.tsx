@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { ResumeSection } from "./resume_section";
+import ResumeSection from "./resume_section";
 import Image from "next/image";
 
 interface EducationOrCertificationTileProps {
@@ -23,11 +23,11 @@ function EducationTile(props: EducationOrCertificationTileProps) {
         className="mb-2"
         style={{ transform: `scale(${scale})` }}
       />
-      <p className="text-xs font-bold text-wrap">{ props.certification_title }</p>
-      <p className="text-xs">{ props.certification_issuer }</p>
-      <p className="text-xs">{ props.certification_date }</p>
+      <p className="text-xs font-bold text-wrap">{props.certification_title}</p>
+      <p className="text-xs">{props.certification_issuer}</p>
+      <p className="text-xs">{props.certification_date}</p>
     </div>
-  )
+  );
 }
 
 export function EducationAndCertificationsSection(): ReactElement {
@@ -49,14 +49,14 @@ export function EducationAndCertificationsSection(): ReactElement {
           img_src="/images/education/ib.png"
           scale={0.75}
         />
-         <EducationTile
+        <EducationTile
           certification_title="Professional Machine Learning Engineer"
           certification_issuer="Google Cloud Platform"
           certification_date="2023"
           img_alt="Google Cloud Platform logo"
           img_src="/images/education/gcp.png"
         />
-         <EducationTile
+        <EducationTile
           certification_title="Associate Cloud Engineer"
           certification_issuer="Google Cloud Platform"
           certification_date="2023"
@@ -65,5 +65,5 @@ export function EducationAndCertificationsSection(): ReactElement {
         />
       </div>
     </ResumeSection>
-  )
+  );
 }

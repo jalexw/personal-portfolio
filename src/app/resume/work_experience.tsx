@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { ResumeSection } from "./resume_section";
+import ResumeSection from "./resume_section";
 import { Separator } from "@schemavaults/ui";
 
 interface PastJobDescriptionProps {

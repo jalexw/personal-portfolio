@@ -20,3 +20,5 @@ export function ResumeSection({
     </section>
   );
 }
+
+export default ResumeSection;
