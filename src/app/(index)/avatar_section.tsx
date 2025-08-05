@@ -17,6 +17,17 @@ export function AvatarSection(): ReactElement {
     console.log("[AvatarSection] rendering...");
   }
 
+  function onCanvasReady(): void {
+    if (debug) {
+      console.log(
+        "[onCanvasReady] Canvas is ready! Dispatching ready event...",
+      );
+    }
+    experience.dispatch({
+      type: "canvas_ready",
+    });
+  }
+
   return (
     <section className="h-full w-full overflow-hidden">
       <div
@@ -25,27 +36,20 @@ export function AvatarSection(): ReactElement {
       >
         <HeaderBar />
 
-        <div
-          id="welcome-message-container"
-          className="w-full overflow-x-hidden flex items-center justify-center z-10 min-h-[40vh]"
-        >
-          <WelcomeMessage />
-        </div>
+        {!experience.loadingStates.placeholder_exit && (
+          <div
+            id="welcome-message-container"
+            className="w-full overflow-x-hidden flex items-center justify-center z-10 min-h-[40vh]"
+          >
+            <WelcomeMessage />
+          </div>
+        )}
       </div>
 
       <AnimatePresence>
         <DynamicExperience
           key="dynamic-jalexw-portfolio-experience"
-          onReady={(): void => {
-            if (debug) {
-              console.log(
-                "[AvatarSection] Canvas is ready! Dispatching ready event...",
-              );
-            }
-            experience.dispatch({
-              type: "canvas_ready",
-            });
-          }}
+          onReady={onCanvasReady}
         />
       </AnimatePresence>
     </section>
