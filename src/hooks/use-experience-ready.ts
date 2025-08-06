@@ -1,7 +1,7 @@
 "use client";
 
 import useDebug from "@/hooks/useDebug";
-import { type ExperienceLoadingCategories } from "@/contexts/portfolio-experience-context";
+import { type ExperienceLoadingCategories } from "@/contexts/portfolio-experience-loading-context";
 import useExperience from "@/hooks/use-experience";
 
 /**

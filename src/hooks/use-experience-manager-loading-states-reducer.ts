@@ -4,7 +4,7 @@ import { useReducer } from "react";
 import {
   defaultExperienceLoadingState,
   type PortfolioExperienceLoadingState,
-} from "@/contexts/portfolio-experience-context";
+} from "@/contexts/portfolio-experience-loading-context";
 
 interface BaseAction<T extends string> {
   type: T;

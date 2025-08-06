@@ -10,7 +10,7 @@ import {
 import {
   PortfolioExperienceContext,
   type PortfolioExperienceLoadingState,
-} from "@/contexts/portfolio-experience-context";
+} from "@/contexts/portfolio-experience-loading-context";
 import {
   type ExperienceManagerReducerAction,
   useExperienceManagerLoadingStatesReducer,

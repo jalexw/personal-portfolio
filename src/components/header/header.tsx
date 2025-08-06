@@ -13,14 +13,15 @@ import { cn } from "@/lib/utils";
 export function HeaderBar(): ReactElement {
   return (
     <header
-      className="
-        flex flex-col lg:flex-row
-        items-center justify-between
-        m-4
-        gap-2 sm:gap-4
-        w-full max-w-5xl
-        p-4 sm:p-8 md:p-12 lg:p-16
-      "
+      className={cn(
+        "flex flex-col lg:flex-row",
+        "items-center justify-between",
+        "m-4",
+        "gap-2 sm:gap-4",
+        "w-full max-w-5xl",
+        "p-4 sm:p-8 md:p-12 lg:p-16",
+        "z-50",
+      )}
     >
       {/** Title */}
       <Link href="/">

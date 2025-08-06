@@ -2,7 +2,7 @@
 
 import { type RefObject, createContext } from "react";
 import type { ExperienceManagerReducerAction } from "@/hooks/use-experience-manager-loading-states-reducer";
-import { PortfolioExperienceLoadManager } from "@/lib/portfolio-experience-load-manager";
+import type { PortfolioExperienceLoadManager } from "@/lib/portfolio-experience-load-manager";
 
 export type ExperienceLoadingCategories =
   | "canvas"
