@@ -5,8 +5,20 @@ type SetLastClickAction = {
   timestamp: number;
 };
 
+type StartExitAction = {
+  type: "exit";
+  timestamp: number;
+};
+
+type StartEntranceAction = {
+  type: "enter";
+  timestamp: number;
+};
+
 export type PortfolioExperienceInteractionsStateReducerAction =
-  SetLastClickAction;
+  | SetLastClickAction
+  | StartExitAction
+  | StartEntranceAction;
 
 export function portfolioExperienceInteractionsStateReducer(
   state: PortfolioExperienceInteractionsState,
@@ -17,6 +29,16 @@ export function portfolioExperienceInteractionsStateReducer(
       return {
         ...state,
         lastClickTime: action.timestamp,
+      };
+    case "enter":
+      return {
+        ...state,
+        lastEntranceTime: action.timestamp,
+      };
+    case "exit":
+      return {
+        ...state,
+        lastExitTime: action.timestamp,
       };
     default:
       throw new Error(

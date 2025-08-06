@@ -3,20 +3,24 @@ import { LoopRepeat, LoopOnce } from "three";
 import type { AvatarAnimationActions } from "./avatar_animation_actions";
 import { avatarAnimationsConstants } from "./avatar_animation_constants";
 
-export interface AvatarAnimationInputs extends AvatarAnimationActions {
-  lastEntryByFall: number;
-  lastExitByJump: number | null;
+export interface AvatarAnimationInputs {
+  actions: AvatarAnimationActions;
+  interactions: {
+    lastEntryByFall: number;
+    lastExitByJump: number | null;
+    lastClickTime: number | null;
+  };
 }
 
 export function avatarAnimation({
-  fallAction,
-  landAction,
-  waveAction,
-  idleAction,
-  jumpingAction,
-  lastEntryByFall,
-  lastExitByJump,
+  actions,
+  interactions,
 }: AvatarAnimationInputs): void {
+  const { fallAction, landAction, waveAction, idleAction, jumpingAction } =
+    actions;
+
+  const { lastEntryByFall, lastExitByJump, lastClickTime } = interactions;
+
   const now = Date.now();
 
   if (process.env.NODE_ENV === "development") {
@@ -112,3 +116,5 @@ export function avatarAnimation({
 
   throw new Error("Unhandled animation state");
 }
+
+export default avatarAnimation;

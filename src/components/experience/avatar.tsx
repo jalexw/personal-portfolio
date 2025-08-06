@@ -8,6 +8,7 @@ import {
   useRef,
   useMemo,
   useState,
+  useCallback,
 } from "react";
 import {
   type Vector3,
@@ -28,6 +29,9 @@ import { useFrame } from "@react-three/fiber";
 import { avatarAnimation } from "./avatar_animation";
 import type { AvatarAnimationActions } from "./avatar_animation_actions";
 import type { TAvatarRef } from "./TAvatarRef";
+import useExperienceInteractionsState from "@/hooks/use-experience-interactions-state";
+import useExperienceInteractionsStateDispatch from "@/hooks/use-experience-interactions-state-dispatch";
+import useDebug from "@/hooks/useDebug";
 
 interface AvatarComponentProps {
   position: Vector3;
@@ -38,19 +42,42 @@ interface AvatarComponentShowcaserProps extends AvatarComponentProps {
   gltf: GLTF;
 }
 
+const SCROLL_THRESHOLD_VIEWPORT_HEIGHT = 25 as const satisfies number;
+
 function AvatarComponentShowcaser({
   gltf,
   ...props
 }: AvatarComponentShowcaserProps): ReactElement {
-  const [lastEntryByFall, setLastEntryByFall] = useState<number>(Date.now());
-  const [lastExitByJump, setLastExitByJump] = useState<number | null>(null);
+  const debug: boolean = useDebug();
+  const interactionsState = useExperienceInteractionsState();
+  const interact = useExperienceInteractionsStateDispatch();
+  const lastEntryByFall: number | null = interactionsState.lastEntranceTime;
+  const lastExitByJump: number | null = interactionsState.lastExitTime;
+  const lastClickTime: number | null = interactionsState.lastClickTime;
+
+  const exit = useCallback((): void => {
+    if (debug) {
+      console.log("[AvatarComponentShowcaser] exit()");
+    }
+    interact({
+      type: "exit",
+      timestamp: Date.now(),
+    });
+  }, [interact, debug]);
+
+  const enter = useCallback((): void => {
+    if (debug) {
+      console.log("[AvatarComponentShowcaser] enter()");
+    }
+    interact({
+      type: "enter",
+      timestamp: Date.now(),
+    });
+  }, [interact]);
 
   const scroll = useScroll();
 
-  const { clips, actions, mixer, ...animations } = useAnimations(
-    gltf.animations,
-    gltf.scene,
-  );
+  const { actions, mixer } = useAnimations(gltf.animations, gltf.scene);
 
   const avatarActions: AvatarAnimationActions | null = useMemo(() => {
     if (!actions || typeof actions !== "object") return null;
@@ -113,35 +140,33 @@ function AvatarComponentShowcaser({
     updateOpacity(1);
   });
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const offset: MotionValue<number> = scroll.scrollY;
-      const windowHeight = window.innerHeight;
-      if (typeof offset === "object") {
-        const currentY: number = offset.get();
-        const scrollPositionVH = (currentY / windowHeight) * 100;
-        const isOverThreshold = scrollPositionVH > 25;
+  const isOverScrollThreshold = useCallback((scrollY: MotionValue<number>) => {
+    if (typeof scrollY !== "object") {
+      throw new Error("Expected scrollY to be a MotionValue object!");
+    }
+    const currentY: number = scrollY.get();
+    const windowHeight = window.innerHeight;
+    const scrollPositionVH = (currentY / windowHeight) * 100;
+    const isOverThreshold: boolean =
+      scrollPositionVH > SCROLL_THRESHOLD_VIEWPORT_HEIGHT;
+    return isOverThreshold;
+  }, []);
 
-        if (isOverThreshold && typeof lastExitByJump !== "number") {
-          const latestExitStart = Date.now();
-          // Trigger jump and fade-out animations if it's not already triggered
-          setLastExitByJump(latestExitStart);
-          // Trigger animation logic or dispatch actions as needed
-          if (process.env.NODE_ENV === "development") {
-            console.log("Last exit by jump: ", latestExitStart);
-          }
-        } else if (!isOverThreshold && typeof lastExitByJump === "number") {
-          // Reset jump status if back within threshold
-          setLastExitByJump(null);
-          setLastEntryByFall(Date.now());
+  useEffect(() => {
+    const handleScroll = (): void => {
+      const isOverThreshold: boolean = isOverScrollThreshold(scroll.scrollY);
+      if (isOverThreshold) {
+        if (typeof lastExitByJump !== "number") {
+          exit();
+          return;
+        }
+      } else if (!isOverThreshold) {
+        if (typeof lastEntryByFall !== "number") {
+          enter();
+          return;
         }
       } else {
-        if (process.env.NODE_ENV === "development") {
-          console.warn(
-            "[handleScroll] Scroll offset is not an object:",
-            offset,
-          );
-        }
+        throw new Error("Unreachable code was somehow reached 👁️👄👁️");
       }
     };
 
@@ -152,21 +177,33 @@ function AvatarComponentShowcaser({
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [scroll, avatarActions, lastExitByJump]);
+  }, [scroll, avatarActions, lastExitByJump, isOverScrollThreshold]);
 
   useEffect(
     function animationEffect(): void {
-      if (avatarActions) {
-        avatarAnimation({
-          ...avatarActions,
-          lastEntryByFall,
-          lastExitByJump,
-        });
-      } else {
+      if (!avatarActions) {
         console.warn("One or more required animations are missing!");
+        return;
+      }
+      if (typeof lastEntryByFall === "number") {
+        avatarAnimation({
+          actions: avatarActions,
+          interactions: {
+            lastEntryByFall,
+            lastExitByJump,
+            lastClickTime,
+          },
+        });
       }
     },
-    [lastExitByJump, lastEntryByFall, avatarActions],
+    [
+      lastExitByJump,
+      lastEntryByFall,
+      lastClickTime,
+      avatarActions,
+      exit,
+      enter,
+    ],
   );
 
   return (
