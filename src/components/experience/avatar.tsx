@@ -44,6 +44,8 @@ interface AvatarComponentShowcaserProps extends AvatarComponentProps {
 
 const SCROLL_THRESHOLD_VIEWPORT_HEIGHT = 25 as const satisfies number;
 
+type UnsubscribeFn = () => void;
+
 function AvatarComponentShowcaser({
   gltf,
   ...props
@@ -180,13 +182,13 @@ function AvatarComponentShowcaser({
   }, [scroll, avatarActions, lastExitByJump, isOverScrollThreshold]);
 
   useEffect(
-    function animationEffect(): void {
+    function animationEffect(): void | UnsubscribeFn {
       if (!avatarActions) {
         console.warn("One or more required animations are missing!");
         return;
       }
       if (typeof lastEntryByFall === "number") {
-        avatarAnimation({
+        return avatarAnimation({
           actions: avatarActions,
           interactions: {
             lastEntryByFall,
