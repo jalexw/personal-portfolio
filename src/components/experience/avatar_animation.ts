@@ -75,7 +75,6 @@ function playWaveAnimation(actions: AvatarAnimationActions): UnsubscribeFn {
 
   actions.waveAction
     .crossFadeFrom(actions.idleAction, waveDurationSeconds / 6)
-    .setLoop(LoopOnce, 1)
     .reset()
     .play();
   const timer = setTimeout(
@@ -102,7 +101,16 @@ function playIdleAnimation(
   fadeIn: number | undefined = undefined,
 ): void {
   if (debug) {
-    console.log("[playIdleAnimation]");
+    console.log("[playIdleAnimation] Fading out non-idle animations...");
+  }
+
+  const fadeOutOthersTime: number = typeof fadeIn === "number" ? fadeIn : 0.2;
+  actions.waveAction.fadeOut(fadeOutOthersTime);
+  actions.landAction.fadeOut(fadeOutOthersTime);
+  actions.fallAction.fadeOut(fadeOutOthersTime);
+
+  if (debug) {
+    console.log("[playIdleAnimation] Starting idle animation...");
   }
 
   if (typeof fadeIn === "number") {
@@ -113,6 +121,7 @@ function playIdleAnimation(
       .play();
   } else {
     actions.idleAction
+      .reset()
       .setEffectiveTimeScale(0.5)
       .setLoop(LoopRepeat, Infinity)
       .play();
