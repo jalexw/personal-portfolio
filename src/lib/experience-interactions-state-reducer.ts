@@ -1,7 +1,7 @@
 import type { PortfolioExperienceInteractionsState } from "@/contexts/portfolio-experience-interactions-state-context";
 
 type SetLastClickAction = {
-  type: "setLastClick";
+  type: "click";
   timestamp: number;
 };
 
@@ -25,7 +25,7 @@ export function portfolioExperienceInteractionsStateReducer(
   action: PortfolioExperienceInteractionsStateReducerAction,
 ): PortfolioExperienceInteractionsState {
   switch (action.type) {
-    case "setLastClick":
+    case "click":
       return {
         ...state,
         lastClickTime: action.timestamp,

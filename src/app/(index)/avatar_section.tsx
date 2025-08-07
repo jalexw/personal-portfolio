@@ -10,6 +10,7 @@ import { AnimatePresence, cn } from "@schemavaults/ui";
 import useDebug from "@/hooks/useDebug";
 import ExperienceInteractionsStateManager from "@/components/experience-interactions-state-manager";
 import useExperienceInteractionsStateDispatch from "@/hooks/use-experience-interactions-state-dispatch";
+import useExperienceInteractionsState from "@/hooks/use-experience-interactions-state";
 
 function ExperienceClickCaptureElement(): ReactElement {
   const debug: boolean = useDebug();
@@ -29,7 +30,7 @@ function ExperienceClickCaptureElement(): ReactElement {
           console.log("[onClickAvatarSection] clicked!");
         }
         interactionsDispatch({
-          type: "setLastClick",
+          type: "click",
           timestamp: Date.now(),
         });
       }}
