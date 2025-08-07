@@ -4,6 +4,7 @@ import type { AvatarAnimationActions } from "./avatar_animation_actions";
 import { avatarAnimationsConstants } from "./avatar_animation_constants";
 
 export interface AvatarAnimationInputs {
+  debug: boolean;
   actions: AvatarAnimationActions;
   interactions: {
     lastEntryByFall: number;
@@ -13,6 +14,7 @@ export interface AvatarAnimationInputs {
 }
 
 export function avatarAnimation({
+  debug,
   actions,
   interactions,
 }: AvatarAnimationInputs): void {
@@ -21,9 +23,9 @@ export function avatarAnimation({
 
   const { lastEntryByFall, lastExitByJump, lastClickTime } = interactions;
 
-  const now = Date.now();
+  const now: number = Date.now();
 
-  if (process.env.NODE_ENV === "development") {
+  if (debug) {
     console.log(
       "Running avatar animation logic at t=",
       now,
@@ -51,7 +53,7 @@ export function avatarAnimation({
   const hasEntered: boolean =
     entryAnimationTotalDurationMs < timeSinceLastEntryStart;
 
-  if (process.env.NODE_ENV === "development") {
+  if (debug) {
     console.log("[avatarAnimation] hasEntered: ", hasEntered);
     console.table({
       timeSinceLastEntryStart,
@@ -61,7 +63,7 @@ export function avatarAnimation({
 
   if (hasEntered) {
     if (typeof lastExitByJump === "number") {
-      if (process.env.NODE_ENV === "development") {
+      if (debug) {
         console.log(
           "[avatarAnimation] Entry complete, and supposed to jump out... Jumping!",
         );
@@ -77,7 +79,7 @@ export function avatarAnimation({
       jumpingAction.setLoop(LoopOnce, 1).play();
       return;
     } else {
-      if (process.env.NODE_ENV === "development") {
+      if (debug) {
         console.log(
           "[avatarAnimation] Avatar has entered but not exited, idling...",
         );
@@ -90,7 +92,7 @@ export function avatarAnimation({
       return;
     }
   } else {
-    if (process.env.NODE_ENV === "development") {
+    if (debug) {
       console.log("[avatarAnimation] Entry not yet complete, falling in...");
     }
 

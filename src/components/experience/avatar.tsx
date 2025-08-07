@@ -193,6 +193,7 @@ function AvatarComponentShowcaser({
             lastExitByJump,
             lastClickTime,
           },
+          debug,
         });
       }
     },
@@ -203,6 +204,7 @@ function AvatarComponentShowcaser({
       avatarActions,
       exit,
       enter,
+      debug,
     ],
   );
 
