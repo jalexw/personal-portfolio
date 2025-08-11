@@ -10,19 +10,10 @@ import {
   useState,
   useCallback,
 } from "react";
-import {
-  type Vector3,
-  type Object3D,
-  type Object3DEventMap,
-  LoopOnce,
-  LoopRepeat,
-  AnimationAction,
-  SkinnedMesh,
-  Material,
-} from "three";
+import { type Vector3, type AnimationAction } from "three";
 import useExperience from "@/hooks/use-experience";
 import type { AssetRef } from "@/lib/experience-asset-definition";
-import type { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
+import type { GLTF } from "./GLTF";
 import { useAnimations } from "@react-three/drei";
 import { type MotionValue, useScroll } from "framer-motion";
 import { useFrame } from "@react-three/fiber";
@@ -32,6 +23,7 @@ import type { TAvatarRef } from "./TAvatarRef";
 import useExperienceInteractionsState from "@/hooks/use-experience-interactions-state";
 import useExperienceInteractionsStateDispatch from "@/hooks/use-experience-interactions-state-dispatch";
 import useDebug from "@/hooks/useDebug";
+import useUpdateOpacity from "./useUpdateOpacity";
 
 interface AvatarComponentProps {
   position: Vector3;
@@ -103,43 +95,15 @@ function AvatarComponentShowcaser({
     return null;
   }, [actions]);
 
+  const updateOpacity = useUpdateOpacity();
+
   useFrame((state, delta) => {
     if (!state.clock.running) {
       state.clock.start();
     }
     mixer.update(delta);
 
-    function updateOpacity(newOpacity: number): void {
-      gltf.scene.traverse((object) => {
-        const type = object.type.toUpperCase();
-        if (type === "MESH" || type === "SKINNEDMESH") {
-          if (
-            !object.hasOwnProperty("isMesh") ||
-            !(object as SkinnedMesh).isMesh
-          ) {
-            throw new Error("Object with type == Mesh but isMesh == false");
-          }
-          const mesh = object as SkinnedMesh;
-          const material: Material[] = Array.isArray(mesh.material)
-            ? mesh.material
-            : [mesh.material];
-          material.forEach((mat): void => {
-            if (newOpacity === 1) {
-              mat.transparent = false;
-              mat.opacity = 1;
-              return;
-            }
-            mat.transparent = true;
-            if (process.env.NODE_ENV === "development") {
-              console.assert(newOpacity >= 0 && newOpacity <= 1);
-            }
-            mat.opacity = newOpacity;
-          });
-        }
-      });
-    }
-
-    updateOpacity(1);
+    updateOpacity(gltf, 1);
   });
 
   const isOverScrollThreshold = useCallback((scrollY: MotionValue<number>) => {
@@ -216,6 +180,7 @@ function AvatarComponentShowcaser({
 }
 
 function AvatarComponent(props: AvatarComponentProps): ReactElement {
+  const debug: boolean = useDebug();
   const experience = useExperience();
   const manager = experience.experienceLoadManager?.current;
 
@@ -225,10 +190,10 @@ function AvatarComponent(props: AvatarComponentProps): ReactElement {
   const gltf: GLTF | undefined = avatarAssetRef?.asset;
 
   useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
+    if (debug) {
       console.log("AvatarComponent GLTF:", gltf);
     }
-  }, [gltf]);
+  }, [gltf, debug]);
 
   if (!gltf) {
     // This component was rendered before the load manager finished loading the Avatar data
