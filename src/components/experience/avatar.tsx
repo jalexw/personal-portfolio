@@ -14,6 +14,7 @@ import useExperienceInteractionsState from "@/hooks/use-experience-interactions-
 import useExperienceInteractionsStateDispatch from "@/hooks/use-experience-interactions-state-dispatch";
 import useDebug from "@/hooks/useDebug";
 import useUpdateAnimationMixerClock from "./useUpdateAnimationMixerClock";
+import useAvatarOpacity from "./useAvatarOpacity";
 
 interface AvatarComponentProps {
   position: Vector3;
@@ -86,6 +87,8 @@ function AvatarComponentShowcaser({
   }, [actions]);
 
   useUpdateAnimationMixerClock(mixer);
+
+  useAvatarOpacity(gltf);
 
   const isOverScrollThreshold = useCallback((scrollY: MotionValue<number>) => {
     if (typeof scrollY !== "object") {
