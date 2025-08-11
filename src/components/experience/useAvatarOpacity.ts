@@ -38,10 +38,14 @@ export function useAvatarOpacity(gltf: GLTF): void {
         return;
       }
 
+      if (debug) {
+        console.log("[setOpacity] opacity: ", opacity);
+      }
+
       _updateGltfModelOpacity(gltf, opacity);
       lastSetOpacityRef.current = opacity;
     },
-    [_updateGltfModelOpacity],
+    [_updateGltfModelOpacity, debug],
   );
 
   useFrame(({ clock }, delta: number) => {
@@ -81,11 +85,10 @@ export function useAvatarOpacity(gltf: GLTF): void {
     const timeSinceExit: number = now - lastExitTime;
 
     function setExitOpacity(): void {
-      const opacity: number = Math.max(
-        0,
-        Math.min(1, timeSinceExit / exitDuration),
+      setOpacity(
+        gltf,
+        1 - Math.max(0, Math.min(1, timeSinceExit / exitDuration)),
       );
-      setOpacity(gltf, opacity);
       return;
     }
     setExitOpacity();
