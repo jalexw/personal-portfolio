@@ -16,6 +16,8 @@ import useDebug from "@/hooks/useDebug";
 import useUpdateAnimationMixerClock from "./useUpdateAnimationMixerClock";
 import useAvatarOpacity from "./useAvatarOpacity";
 
+const DEBUG_SCROLL_HANDLER: boolean = false;
+
 interface AvatarComponentProps {
   position: Vector3;
   ref: TAvatarRef;
@@ -102,40 +104,80 @@ function AvatarComponentShowcaser({
     return isOverThreshold;
   }, []);
 
-  useEffect(() => {
-    const handleScroll = (): void => {
-      const isOverThreshold: boolean = isOverScrollThreshold(scroll.scrollY);
-      if (isOverThreshold) {
-        if (typeof lastExitByJump !== "number") {
-          exit();
-          return;
+  useEffect(
+    function scrollHandlerEffect(): UnsubscribeFn {
+      function handleScroll(): void {
+        const scrollY: MotionValue<number> = scroll.scrollY;
+        const isOverThreshold: boolean = isOverScrollThreshold(scrollY);
+
+        if (debug && DEBUG_SCROLL_HANDLER) {
+          console.groupCollapsed("[handleScroll]");
+          console.log("scrollY: ", scrollY);
+          console.log("isOverThreshold: ", isOverThreshold);
+          console.groupEnd();
         }
-      } else if (!isOverThreshold) {
-        if (typeof lastEntryByFall !== "number") {
-          enter();
-          return;
+
+        if (isOverThreshold) {
+          if (typeof lastExitByJump !== "number") {
+            exit();
+            return;
+          }
+
+          if (
+            typeof lastEntryByFall === "number" &&
+            typeof lastExitByJump === "number"
+          ) {
+            if (lastEntryByFall > lastExitByJump) {
+              exit();
+              return;
+            }
+          }
+        } else if (!isOverThreshold) {
+          if (typeof lastEntryByFall !== "number") {
+            enter();
+            return;
+          }
+
+          if (
+            typeof lastEntryByFall === "number" &&
+            typeof lastExitByJump === "number"
+          ) {
+            if (lastEntryByFall < lastExitByJump) {
+              enter();
+              return;
+            }
+          }
+        } else {
+          throw new Error("Unreachable code was somehow reached 👁️👄👁️");
         }
-      } else {
-        throw new Error("Unreachable code was somehow reached 👁️👄👁️");
       }
-    };
 
-    handleScroll();
+      handleScroll();
 
-    window.addEventListener("scroll", handleScroll);
+      if (debug) {
+        console.log("[scrollHandlerEffect] Adding scroll listener...");
+      }
+      window.addEventListener("scroll", handleScroll);
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [
-    scroll,
-    avatarActions,
-    lastExitByJump,
-    lastEntryByFall,
-    isOverScrollThreshold,
-    enter,
-    exit,
-  ]);
+      const unsubscribeScrollHandler: UnsubscribeFn = () => {
+        if (debug) {
+          console.log("[scrollHandlerEffect] Unsubscribing...");
+        }
+        window.removeEventListener("scroll", handleScroll);
+      };
+      return unsubscribeScrollHandler;
+    },
+    [
+      scroll,
+      avatarActions,
+      lastExitByJump,
+      lastEntryByFall,
+      isOverScrollThreshold,
+      enter,
+      exit,
+      debug,
+    ],
+  );
 
   useEffect(
     function animationEffect(): void | UnsubscribeFn {
