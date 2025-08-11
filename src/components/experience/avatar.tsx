@@ -1,29 +1,19 @@
 "use client";
 
-import {
-  type ReactElement,
-  type Ref,
-  forwardRef,
-  useEffect,
-  useRef,
-  useMemo,
-  useState,
-  useCallback,
-} from "react";
+import { type ReactElement, useEffect, useMemo, useCallback } from "react";
 import { type Vector3, type AnimationAction } from "three";
 import useExperience from "@/hooks/use-experience";
 import type { AssetRef } from "@/lib/experience-asset-definition";
 import type { GLTF } from "@/lib/GLTF";
 import { useAnimations } from "@react-three/drei";
 import { type MotionValue, useScroll } from "framer-motion";
-import { useFrame } from "@react-three/fiber";
 import { avatarAnimation } from "./avatar_animation";
 import type { AvatarAnimationActions } from "./avatar_animation_actions";
 import type { TAvatarRef } from "./TAvatarRef";
 import useExperienceInteractionsState from "@/hooks/use-experience-interactions-state";
 import useExperienceInteractionsStateDispatch from "@/hooks/use-experience-interactions-state-dispatch";
 import useDebug from "@/hooks/useDebug";
-import useUpdateOpacity from "./useUpdateOpacity";
+import useUpdateAnimationMixerClock from "./useUpdateAnimationMixerClock";
 
 interface AvatarComponentProps {
   position: Vector3;
@@ -95,16 +85,7 @@ function AvatarComponentShowcaser({
     return null;
   }, [actions]);
 
-  const updateOpacity = useUpdateOpacity();
-
-  useFrame((state, delta) => {
-    if (!state.clock.running) {
-      state.clock.start();
-    }
-    mixer.update(delta);
-
-    updateOpacity(gltf, 1);
-  });
+  useUpdateAnimationMixerClock(mixer);
 
   const isOverScrollThreshold = useCallback((scrollY: MotionValue<number>) => {
     if (typeof scrollY !== "object") {
