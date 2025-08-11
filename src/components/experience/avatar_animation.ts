@@ -136,9 +136,6 @@ export function avatarAnimation({
   actions,
   interactions,
 }: IAvatarAnimationInputs): void | UnsubscribeFn {
-  const { fallAction, landAction, waveAction, idleAction, jumpingAction } =
-    actions;
-
   const { lastEntryByFall, lastExitByJump, lastClickTime } = interactions;
 
   const now: number = Date.now();
@@ -157,7 +154,8 @@ export function avatarAnimation({
   const fallActionDurationMs: number = avatarAnimationsConstants.fallTime;
 
   // Get how long the landing action takes
-  const landingActionDurationSeconds: number = landAction.getClip().duration;
+  const landingActionDurationSeconds: number =
+    actions.landAction.getClip().duration;
   const landingActionDurationMs: number = landingActionDurationSeconds * 1000;
 
   const entryAnimationTotalDurationMs: number =
@@ -182,10 +180,14 @@ export function avatarAnimation({
   }
 
   if (debug) {
-    console.log("[avatarAnimation] hasEntered: ", hasEntered);
     console.table({
       timeSinceLastEntryStart,
       entryAnimationTotalDurationMs,
+      shouldAvatarBePresent,
+      hasEntered,
+      lastClickTime,
+      lastEntryByFall,
+      lastExitByJump,
     });
   }
 

@@ -245,3 +245,5 @@ function AvatarComponent(props: AvatarComponentProps): ReactElement {
 }
 
 export const Avatar = AvatarComponent;
+
+export default Avatar;

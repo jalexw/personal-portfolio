@@ -1,4 +1,4 @@
-import { type MutableRefObject, useEffect, useRef } from "react";
+import { type RefObject, useEffect, useRef } from "react";
 
 export interface WindowDimensions {
   width: number;
@@ -8,23 +8,25 @@ export interface WindowDimensions {
 export function getCurrentWindowDimensions(): WindowDimensions {
   return {
     width: window.innerWidth,
-    height: window.innerHeight
+    height: window.innerHeight,
   };
 }
 
-export function useCurrentWindowDimensions(initialWindowSize: WindowDimensions): MutableRefObject<WindowDimensions> {
+export function useCurrentWindowDimensions(
+  initialWindowSize: WindowDimensions,
+): RefObject<WindowDimensions> {
   const windowSize = useRef<WindowDimensions>(initialWindowSize);
 
   // Update current window dimensions
-  useEffect(() => { 
+  useEffect(() => {
     function updateCurrentWindowDimensions(): void {
       windowSize.current = getCurrentWindowDimensions();
     }
 
-    window.addEventListener('resize', updateCurrentWindowDimensions);
+    window.addEventListener("resize", updateCurrentWindowDimensions);
 
     return () => {
-      window.removeEventListener('resize', updateCurrentWindowDimensions);
+      window.removeEventListener("resize", updateCurrentWindowDimensions);
     };
   });
 
