@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import type { GLTF } from "./GLTF";
+import type { GLTF } from "@/lib/GLTF";
 import type { SkinnedMesh, Material } from "three";
 
 type GLTF_Opacity_Setter = (gltf: GLTF, newOpacity: number) => void;

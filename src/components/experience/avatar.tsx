@@ -13,7 +13,7 @@ import {
 import { type Vector3, type AnimationAction } from "three";
 import useExperience from "@/hooks/use-experience";
 import type { AssetRef } from "@/lib/experience-asset-definition";
-import type { GLTF } from "./GLTF";
+import type { GLTF } from "@/lib/GLTF";
 import { useAnimations } from "@react-three/drei";
 import { type MotionValue, useScroll } from "framer-motion";
 import { useFrame } from "@react-three/fiber";
@@ -67,7 +67,7 @@ function AvatarComponentShowcaser({
       type: "enter",
       timestamp: Date.now(),
     });
-  }, [interact]);
+  }, [interact, debug]);
 
   const scroll = useScroll();
 
@@ -143,7 +143,15 @@ function AvatarComponentShowcaser({
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [scroll, avatarActions, lastExitByJump, isOverScrollThreshold]);
+  }, [
+    scroll,
+    avatarActions,
+    lastExitByJump,
+    lastEntryByFall,
+    isOverScrollThreshold,
+    enter,
+    exit,
+  ]);
 
   useEffect(
     function animationEffect(): void | UnsubscribeFn {
