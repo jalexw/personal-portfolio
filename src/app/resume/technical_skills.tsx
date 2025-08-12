@@ -1,7 +1,7 @@
 import type { ReactElement } from "react";
 import ResumeSection from "./resume_section";
 import { Badge } from "@schemavaults/ui";
-import { cn } from "@/lib/utils";
+import { cn } from "@schemavaults/ui";
 
 export interface TechnicalSkillDef {
   label: string;

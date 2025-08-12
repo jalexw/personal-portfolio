@@ -93,3 +93,5 @@ export function AvatarSection(): ReactElement {
     </ExperienceInteractionsStateManager>
   );
 }
+
+export default AvatarSection;

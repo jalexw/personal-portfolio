@@ -1,1 +1,4 @@
-export {PortfolioExperienceProvider} from '@/components/experience-loader';
+export {
+  PortfolioExperienceProvider,
+  PortfolioExperienceProvider as default,
+} from "@/components/experience-loader";

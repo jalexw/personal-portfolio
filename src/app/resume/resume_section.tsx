@@ -1,6 +1,6 @@
 import { Separator } from "@schemavaults/ui";
 import type { PropsWithChildren, ReactElement } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@schemavaults/ui";
 
 export interface ResumeSectionProps extends PropsWithChildren {
   title: string;

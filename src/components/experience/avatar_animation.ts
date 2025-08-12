@@ -18,8 +18,12 @@ export interface IAvatarAnimationInputs {
 function playFallAndLandAnimation(
   actions: AvatarAnimationActions,
 ): UnsubscribeFn {
+  if (debug) {
+    console.log("[playFallAndLandAnimation]");
+  }
+
   // Play falling animation
-  actions.fallAction.setLoop(LoopRepeat, Infinity).play();
+  actions.fallAction.reset().setLoop(LoopRepeat, Infinity).play();
   // Slowly merge the fall action into the landing action
 
   const entryTimer = setTimeout(() => {
@@ -52,6 +56,10 @@ function secondsToMilliseconds(secs: number): number {
 }
 
 function playJumpToExitAnimation(actions: AvatarAnimationActions): void {
+  if (debug) {
+    console.log("[playJumpToExitAnimation]");
+  }
+
   const jumpingActionDurationSeconds: number =
     actions.jumpingAction.getClip().duration;
 
@@ -62,7 +70,7 @@ function playJumpToExitAnimation(actions: AvatarAnimationActions): void {
   actions.landAction.fadeOut(jumpingActionDurationSeconds / 4);
 
   // Play jumping animation
-  actions.jumpingAction.setLoop(LoopOnce, 1).play();
+  actions.jumpingAction.reset().setLoop(LoopOnce, 1).play();
   return;
 }
 
@@ -74,7 +82,7 @@ function playWaveAnimation(actions: AvatarAnimationActions): UnsubscribeFn {
   const waveDurationSeconds: number = actions.waveAction.getClip().duration;
 
   actions.waveAction
-    .crossFadeFrom(actions.idleAction, waveDurationSeconds / 6)
+    .crossFadeFrom(actions.idleAction, waveDurationSeconds / 5)
     .reset()
     .play();
   const timer = setTimeout(
@@ -113,16 +121,18 @@ function playIdleAnimation(
     console.log("[playIdleAnimation] Starting idle animation...");
   }
 
+  const effectiveIdleActionTimeScale: number = 0.5;
+
   if (typeof fadeIn === "number") {
     actions.idleAction
       .fadeIn(fadeIn)
-      .setEffectiveTimeScale(0.5)
+      .setEffectiveTimeScale(effectiveIdleActionTimeScale)
       .setLoop(LoopRepeat, Infinity)
       .play();
   } else {
     actions.idleAction
       .reset()
-      .setEffectiveTimeScale(0.5)
+      .setEffectiveTimeScale(effectiveIdleActionTimeScale)
       .setLoop(LoopRepeat, Infinity)
       .play();
   }

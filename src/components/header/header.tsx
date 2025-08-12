@@ -8,7 +8,7 @@ import { fullName } from "@/metadata/name";
 import { ResumeLink } from "@/components/resume-link";
 import { ContactDialog } from "@/components/contact";
 import { ThemeModeSelection } from "@/components/toggle-theme-button";
-import { cn } from "@/lib/utils";
+import { cn } from "@schemavaults/ui";
 
 export function HeaderBar(): ReactElement {
   return (

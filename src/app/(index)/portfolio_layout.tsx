@@ -1,9 +1,9 @@
 "use client";
 
 import type { ReactElement } from "react";
-import { AvatarSection } from "./avatar_section";
-import { SpacerSection } from "./spacer_section";
-import { CurrentProjectsSection } from "./current_projects_section";
+import AvatarSection from "./avatar_section";
+import SpacerSection from "./spacer_section";
+import CurrentProjectsSection from "./current_projects_section";
 
 export function PortfolioExperienceContent(): ReactElement {
   return (
@@ -14,3 +14,5 @@ export function PortfolioExperienceContent(): ReactElement {
     </main>
   );
 }
+
+export default PortfolioExperienceContent;
