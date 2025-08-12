@@ -6,6 +6,7 @@ import { TypewriterEffect, AnimatePresence } from "@schemavaults/ui";
 import { BlurredBackgroundColors } from "./blurred-background-colors";
 import { duration } from "./exit-duration";
 import useExperience from "@/hooks/use-experience";
+import useDebug from "@/hooks/useDebug";
 
 const message: string[] = [
   // message passed as array of characters because emojis r weird
@@ -24,7 +25,8 @@ const message: string[] = [
 ];
 
 export function WelcomeMessage(): ReactElement {
-  if (process.env.NODE_ENV === "development") {
+  const debug: boolean = useDebug();
+  if (debug) {
     console.log("[WelcomeMessage] rendering...");
   }
 
@@ -50,10 +52,12 @@ export function WelcomeMessage(): ReactElement {
           message={message}
           duration={duration}
           onComplete={(event: "exit" | "enter"): void => {
-            console.log(
-              "[WelcomeMessage] Typewriter Effect onComplete event: ",
-              event,
-            );
+            if (debug) {
+              console.log(
+                "[WelcomeMessage] Typewriter Effect onComplete event: ",
+                event,
+              );
+            }
             if (event === "exit") {
               experience.dispatch({
                 type: "typewriter_effect_exit_complete",
