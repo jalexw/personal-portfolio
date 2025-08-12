@@ -22,6 +22,11 @@ function playFallAndLandAnimation(
     console.log("[playFallAndLandAnimation]");
   }
 
+  // cancel other animations
+  actions.waveAction.stop();
+  actions.idleAction.stop();
+  actions.jumpingAction.stop();
+
   // Play falling animation
   actions.fallAction.reset().setLoop(LoopRepeat, Infinity).play();
   // Slowly merge the fall action into the landing action
@@ -86,6 +91,9 @@ function playWaveAnimation(actions: AvatarAnimationActions): UnsubscribeFn {
   if (debug) {
     console.log("[playWaveAnimation]");
   }
+
+  actions.fallAction.stop();
+  actions.landAction.stop();
 
   const waveDurationSeconds: number = actions.waveAction.getClip().duration;
 

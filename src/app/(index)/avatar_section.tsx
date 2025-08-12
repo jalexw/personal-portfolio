@@ -2,7 +2,10 @@
 
 import { useCallback, type ReactElement } from "react";
 
-import { DynamicExperience } from "@/components/experience";
+import {
+  avatarAnimationsConstants,
+  DynamicExperience,
+} from "@/components/experience";
 import useExperience from "@/hooks/use-experience";
 import { HeaderBar } from "@/components/header";
 import { WelcomeMessage } from "@/components/welcome-message";
@@ -12,8 +15,12 @@ import ExperienceInteractionsStateManager from "@/components/experience-interact
 import useExperienceInteractionsStateDispatch from "@/hooks/use-experience-interactions-state-dispatch";
 import useExperienceInteractionsState from "@/hooks/use-experience-interactions-state";
 
+const allowFallInAnimationBufferBeforeAllowingClicksBufferDuration: number =
+  avatarAnimationsConstants.fallTime * 1.5;
+
 function ExperienceClickCaptureElement(): ReactElement {
   const debug: boolean = useDebug();
+  const { lastEntranceTime } = useExperienceInteractionsState();
   const interactionsDispatch = useExperienceInteractionsStateDispatch();
   return (
     <div
@@ -29,9 +36,38 @@ function ExperienceClickCaptureElement(): ReactElement {
         if (debug) {
           console.log("[onClickAvatarSection] clicked!");
         }
+
+        if (typeof lastEntranceTime !== "number") {
+          if (debug) {
+            console.log(
+              "[onClickAvatarSection] Not emitting click/wave event-- avatar has not entered yet",
+            );
+          }
+          return;
+        }
+
+        const timestamp: number = Date.now();
+
+        const timeSinceLastEntrance: number = Math.abs(
+          timestamp - lastEntranceTime,
+        );
+
+        if (
+          timeSinceLastEntrance <
+          allowFallInAnimationBufferBeforeAllowingClicksBufferDuration
+        ) {
+          if (debug) {
+            console.log(
+              "[onClickAvatarSection] Not emitting click/wave event-- avatar has only just recently entered!" +
+                `\nTime since last entrance: '${timeSinceLastEntrance}'` +
+                `\nTime to wait before allowing click-event-emit: '${allowFallInAnimationBufferBeforeAllowingClicksBufferDuration}'`,
+            );
+          }
+          return;
+        }
         interactionsDispatch({
           type: "click",
-          timestamp: Date.now(),
+          timestamp,
         });
       }}
     />
