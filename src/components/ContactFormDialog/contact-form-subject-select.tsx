@@ -49,13 +49,6 @@ function MessageCategoryGroup({
         <SelectItem
           key={messageCategory.value}
           value={messageCategory.value}
-          // onSelect={(value) => {
-          //   setSelected(
-          //     messageCategories.find((category) => category.value === value) ||
-          //       null
-          //   );
-          //   setOpen(false);
-          // }}
           className="cursor-pointer flex flex-row justify-start items-center"
         >
           <messageCategory.icon

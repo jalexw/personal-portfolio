@@ -1,9 +1,12 @@
 "use client";
 
-import type { ReactElement } from "react";
-import AvatarSection from "./avatar_section";
-import SpacerSection from "./spacer_section";
-import CurrentProjectsSection from "./current_projects_section";
+import { type ReactElement } from "react";
+
+// Index Page Sections:
+import AvatarSection from "./sections/avatar_section";
+import SpacerSection from "./sections/spacer_section";
+import CurrentProjectsSection from "./sections/current_projects_section";
+import SocialMediaLinksSection from "./sections/social_media_links_section";
 
 export function PortfolioExperienceContent(): ReactElement {
   return (
@@ -11,6 +14,7 @@ export function PortfolioExperienceContent(): ReactElement {
       <AvatarSection />
       <SpacerSection />
       <CurrentProjectsSection />
+      <SocialMediaLinksSection />
     </main>
   );
 }

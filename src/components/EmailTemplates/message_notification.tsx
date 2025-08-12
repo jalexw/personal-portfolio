@@ -1,13 +1,15 @@
-import type { FC } from 'react';
-import { messageCategories, type ContactFormData } from '@/components/contact';
+import type { FC } from "react";
+import {
+  messageCategories,
+  type ContactFormData,
+} from "@/components/ContactFormDialog";
 
-export const MessageNotificationEmailTemplate: FC<Readonly<ContactFormData>> = ({
-  name,
-  email,
-  subject,
-  message
-}) => {
-  const subjectCategory = messageCategories.find(category => category.value === subject);
+export const MessageNotificationEmailTemplate: FC<
+  Readonly<ContactFormData>
+> = ({ name, email, subject, message }) => {
+  const subjectCategory = messageCategories.find(
+    (category) => category.value === subject,
+  );
 
   return (
     <div>
@@ -38,4 +40,4 @@ export const MessageNotificationEmailTemplate: FC<Readonly<ContactFormData>> = (
       </table>
     </div>
   );
-}
+};

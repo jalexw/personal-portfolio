@@ -2,7 +2,6 @@
 
 import { type ReactElement, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { z } from "zod";
 import {
   Button,
   Form,
@@ -134,7 +133,6 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
               <FormItem className="mx-2 my-2">
                 <FormLabel>Subject</FormLabel>
                 <FormControl>
-                  {/* <Input placeholder="Subject line" {...field} /> */}
                   <ContactFormSubjectSelect
                     field={field}
                     triggerClassName="w-full"
@@ -186,3 +184,5 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
     </Form>
   );
 }
+
+export default ContactForm;

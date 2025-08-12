@@ -1,6 +1,6 @@
 import type { FC } from "react";
-import type { ContactFormData } from "@/components/contact";
-import { messageCategories } from "@/components/contact/message-category";
+import type { ContactFormData } from "@/components/ContactFormDialog";
+import { messageCategories } from "@/components/ContactFormDialog/message-category";
 
 export const ContactConfirmationEmailTemplate: FC<
   Readonly<ContactFormData>

@@ -3,6 +3,7 @@
 import { cn } from "@schemavaults/ui";
 import Image from "next/image";
 import type { ReactElement } from "react";
+import IndexPageSectionTemplate from "../IndexPageSectionTemplate";
 
 interface CurrentProjectCardProps {
   title: string;
@@ -38,8 +39,11 @@ function CurrentProjectCard({
 
 export function CurrentProjectsSection(): ReactElement {
   return (
-    <section className="w-full min-h-[50vh] flex flex-col items-center justify-start">
-      <h2 className="text-xl font-semibold p-4">Current Projects:</h2>
+    <IndexPageSectionTemplate
+      title="Current Projects"
+      id="current-projects-section"
+      className="min-h-[40vh]"
+    >
       <ul className="flex flex-row justify-center gap-2 md:gap-4 items-center">
         <CurrentProjectCard
           title={"SchemaVaults"}
@@ -47,7 +51,7 @@ export function CurrentProjectsSection(): ReactElement {
           href={"https://schemavaults.com"}
         />
       </ul>
-    </section>
+    </IndexPageSectionTemplate>
   );
 }
 

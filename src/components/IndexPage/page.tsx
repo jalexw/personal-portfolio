@@ -1,7 +1,6 @@
 "use client";
 
 import type { ReactElement } from "react";
-import PortfolioExperienceProvider from "./providers";
 import PortfolioExperienceContent from "./portfolio_layout";
 import useDebug from "@/hooks/useDebug";
 
@@ -12,11 +11,7 @@ export function IndexPage(): ReactElement {
     console.log("[IndexPage] rendering...");
   }
 
-  return (
-    <PortfolioExperienceProvider>
-      <PortfolioExperienceContent />
-    </PortfolioExperienceProvider>
-  );
+  return <PortfolioExperienceContent />;
 }
 
 export default IndexPage;

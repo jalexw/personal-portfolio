@@ -6,7 +6,7 @@ import type { ReactElement } from "react";
 import { fullName } from "@/metadata/name";
 
 import { ResumeLink } from "@/components/resume-link";
-import { ContactDialog } from "@/components/contact";
+import ContactDialog from "@/components/ContactFormDialog";
 import { ThemeModeSelection } from "@/components/toggle-theme-button";
 import { cn } from "@schemavaults/ui";
 
