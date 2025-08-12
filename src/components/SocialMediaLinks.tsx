@@ -1,12 +1,15 @@
 "use client";
 
+import { facebookLink } from "@/metadata/facebook";
 import { githubLink } from "@/metadata/github";
 import { instagramLink } from "@/metadata/instagram";
 import { linkedInLink } from "@/metadata/linkedin";
-import { cn } from "@schemavaults/ui";
-import { Github, Instagram, Linkedin } from "lucide-react";
+
 import Link from "next/link";
 import { type ReactElement } from "react";
+import { cn } from "@schemavaults/ui";
+import { Github, Instagram, Linkedin, Facebook, Twitter } from "lucide-react";
+import { twitterLink } from "@/metadata/twitter";
 
 interface BaseSocialMediaLinkProps {
   SocialMediaIcon: ({ className }: { className?: string }) => ReactElement;
@@ -94,6 +97,14 @@ export function SocialMediaLinks(): ReactElement {
       <SocialMediaLink
         href={githubLink}
         SocialMediaIcon={({ className }) => <Github className={className} />}
+      />
+      <SocialMediaLink
+        href={facebookLink}
+        SocialMediaIcon={({ className }) => <Facebook className={className} />}
+      />
+      <SocialMediaLink
+        href={twitterLink}
+        SocialMediaIcon={({ className }) => <Twitter className={className} />}
       />
     </ul>
   );
