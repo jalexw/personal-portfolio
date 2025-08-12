@@ -22,6 +22,7 @@ import {
 
 export interface ContactFormSubjectSelectProps {
   field: ControllerRenderProps<ContactFormData, "subject">;
+  triggerClassName?: string;
 }
 
 interface MessageCategoryGroupProps {
@@ -74,6 +75,7 @@ function MessageCategoryGroup({
 
 export function ContactFormSubjectSelect({
   field,
+  ...props
 }: ContactFormSubjectSelectProps) {
   // const [open, setOpen] = useState<boolean>(false);
   // const [selected, setSelected] = useState<MessageCategory | null>(null);
@@ -91,7 +93,7 @@ export function ContactFormSubjectSelect({
       defaultValue={field.value}
       disabled={field.disabled}
     >
-      <SelectTrigger>
+      <SelectTrigger className={props.triggerClassName}>
         <SelectValue placeholder="Select message category..." />
       </SelectTrigger>
       <SelectContent>

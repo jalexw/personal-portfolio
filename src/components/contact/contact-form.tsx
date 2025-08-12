@@ -135,7 +135,10 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
                 <FormLabel>Subject</FormLabel>
                 <FormControl>
                   {/* <Input placeholder="Subject line" {...field} /> */}
-                  <ContactFormSubjectSelect field={field} />
+                  <ContactFormSubjectSelect
+                    field={field}
+                    triggerClassName="w-full"
+                  />
                 </FormControl>
                 <FormDescription>
                   Help me categorize your message so I can respond
