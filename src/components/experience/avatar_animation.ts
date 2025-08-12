@@ -189,14 +189,14 @@ export function avatarAnimation({
   }
 
   // Get how long the fall action takes
-  // const fallActionDurationSeconds: number = fallAction.getClip().duration;
-  // const fallActionDurationMs: number = fallActionDurationSeconds * 1000;
   const fallActionDurationMs: number = avatarAnimationsConstants.fallTime;
 
   // Get how long the landing action takes
   const landingActionDurationSeconds: number =
     actions.landAction.getClip().duration;
-  const landingActionDurationMs: number = landingActionDurationSeconds * 1000;
+  const landingActionDurationMs: number = secondsToMilliseconds(
+    landingActionDurationSeconds,
+  );
 
   const entryAnimationTotalDurationMs: number =
     fallActionDurationMs + landingActionDurationMs;

@@ -16,7 +16,7 @@ import useExperienceInteractionsStateDispatch from "@/hooks/use-experience-inter
 import useExperienceInteractionsState from "@/hooks/use-experience-interactions-state";
 
 const allowFallInAnimationBufferBeforeAllowingClicksBufferDuration: number =
-  avatarAnimationsConstants.fallTime * 1.5;
+  avatarAnimationsConstants.fallTime * 2.25;
 
 function ExperienceClickCaptureElement(): ReactElement {
   const debug: boolean = useDebug();
