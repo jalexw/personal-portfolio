@@ -5,7 +5,7 @@ import PortfolioExperienceProvider from "./providers";
 import PortfolioExperienceContent from "./portfolio_layout";
 import useDebug from "@/hooks/useDebug";
 
-export default function IndexPage(): ReactElement {
+export function IndexPage(): ReactElement {
   const debug: boolean = useDebug();
 
   if (debug) {
@@ -18,3 +18,5 @@ export default function IndexPage(): ReactElement {
     </PortfolioExperienceProvider>
   );
 }
+
+export default IndexPage;
