@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactElement } from "react";
+import { useCallback, type ReactElement } from "react";
 
 import { DynamicExperience } from "@/components/experience";
 import useExperience from "@/hooks/use-experience";
@@ -38,24 +38,37 @@ function ExperienceClickCaptureElement(): ReactElement {
   );
 }
 
-export function AvatarSection(): ReactElement {
+function AvatarSectionCanvas(): ReactElement {
   const debug: boolean = useDebug();
-  // experience loading state
-  const experience = useExperience();
-
-  if (debug) {
-    console.log("[AvatarSection] rendering...");
-  }
-
-  function onCanvasReady(): void {
+  const { dispatch } = useExperience();
+  const onCanvasReady = useCallback((): void => {
     if (debug) {
       console.log(
         "[onCanvasReady] Canvas is ready! Dispatching ready event...",
       );
     }
-    experience.dispatch({
+    dispatch({
       type: "canvas_ready",
     });
+  }, [debug, dispatch]);
+
+  return (
+    <AnimatePresence>
+      <DynamicExperience
+        key="dynamic-jalexw-portfolio-experience"
+        onReady={onCanvasReady}
+      />
+    </AnimatePresence>
+  );
+}
+
+export function AvatarSection(): ReactElement {
+  const debug: boolean = useDebug();
+  // experience loading state
+  const { loadingStates } = useExperience();
+
+  if (debug) {
+    console.log("[AvatarSection] rendering...");
   }
 
   return (
@@ -67,7 +80,7 @@ export function AvatarSection(): ReactElement {
         >
           <HeaderBar />
 
-          {!experience.loadingStates.placeholder_exit && (
+          {!loadingStates.placeholder_exit && (
             <div
               id="welcome-message-container"
               className="w-full overflow-x-hidden flex items-center justify-center z-10 min-h-[40vh]"
@@ -76,19 +89,12 @@ export function AvatarSection(): ReactElement {
             </div>
           )}
 
-          {experience.loadingStates.canvas &&
-            experience.loadingStates.placeholder_exit &&
-            experience.loadingStates.initial_assets && (
-              <ExperienceClickCaptureElement />
-            )}
+          {loadingStates.canvas &&
+            loadingStates.placeholder_exit &&
+            loadingStates.initial_assets && <ExperienceClickCaptureElement />}
         </div>
 
-        <AnimatePresence>
-          <DynamicExperience
-            key="dynamic-jalexw-portfolio-experience"
-            onReady={onCanvasReady}
-          />
-        </AnimatePresence>
+        <AvatarSectionCanvas />
       </section>
     </ExperienceInteractionsStateManager>
   );

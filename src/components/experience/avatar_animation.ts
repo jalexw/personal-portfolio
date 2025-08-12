@@ -26,13 +26,21 @@ function playFallAndLandAnimation(
   actions.fallAction.reset().setLoop(LoopRepeat, Infinity).play();
   // Slowly merge the fall action into the landing action
 
-  const entryTimer = setTimeout(() => {
+  const entryTimer = setTimeout(function onFallAnimationFinish(): void {
     if (actions.fallAction.isRunning() || actions.fallAction.isScheduled()) {
       actions.fallAction.fadeOut(0.2);
     }
     actions.landAction.reset().setLoop(LoopOnce, 1).play();
 
-    playIdleAnimation(actions, actions.landAction.getClip().duration);
+    const landActionDuration: number = actions.landAction.getClip().duration;
+
+    if (debug) {
+      console.log(
+        "[onFallAnimationFinish] Fading landing animation into idle animation over duration of: ",
+        landActionDuration,
+      );
+    }
+    playIdleAnimation(actions, landActionDuration);
   }, avatarAnimationsConstants.fallTime - 100);
 
   const unsubscribe: UnsubscribeFn = (): void => {
@@ -92,7 +100,7 @@ function playWaveAnimation(actions: AvatarAnimationActions): UnsubscribeFn {
           "Wave animation should be done, resuming idle animation...",
         );
       }
-      playIdleAnimation(actions);
+      playIdleAnimation(actions, waveDurationSeconds / 5);
       return;
     },
     secondsToMilliseconds(waveDurationSeconds) * 0.8,
@@ -124,12 +132,26 @@ function playIdleAnimation(
   const effectiveIdleActionTimeScale: number = 0.5;
 
   if (typeof fadeIn === "number") {
+    if (debug) {
+      console.log(
+        "[playIdleAnimation] Fading in idle animation over custom duration: ",
+        fadeIn,
+      );
+    }
+
     actions.idleAction
+      .reset()
       .fadeIn(fadeIn)
       .setEffectiveTimeScale(effectiveIdleActionTimeScale)
       .setLoop(LoopRepeat, Infinity)
       .play();
   } else {
+    if (debug) {
+      console.log(
+        "[playIdleAnimation] Playing idle animation without a custom 'fadeIn' time set...",
+      );
+    }
+
     actions.idleAction
       .reset()
       .setEffectiveTimeScale(effectiveIdleActionTimeScale)
