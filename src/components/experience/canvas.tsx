@@ -69,7 +69,7 @@ export function ExperienceCanvas({
 }: ExperienceCanvasOptions): ReactElement {
   useEffect(() => {
     onReady();
-  }, []);
+  }, [onReady]);
   return <ExperienceCanvasRenderer />;
 }
 

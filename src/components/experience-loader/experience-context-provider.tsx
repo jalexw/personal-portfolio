@@ -6,6 +6,7 @@ import {
   useEffect,
   useTransition,
   useRef,
+  useCallback,
 } from "react";
 import {
   PortfolioExperienceContext,
@@ -24,11 +25,14 @@ export function PortfolioExperienceProvider({
   const [value, dispatchSync] = useExperienceManagerLoadingStatesReducer();
   const [isDispatching, startDispatching] = useTransition();
 
-  const dispatch = (action: ExperienceManagerReducerAction) => {
-    startDispatching(() => {
-      dispatchSync(action);
-    });
-  };
+  const dispatch = useCallback(
+    (action: ExperienceManagerReducerAction) => {
+      startDispatching(() => {
+        dispatchSync(action);
+      });
+    },
+    [startDispatching, dispatchSync],
+  );
 
   const experienceManagerRef = useRef<PortfolioExperienceLoadManager | null>(
     null,
@@ -57,7 +61,7 @@ export function PortfolioExperienceProvider({
       }
     }
     init();
-  }, []);
+  }, [dispatch]);
 
   return (
     <PortfolioExperienceContext.Provider
