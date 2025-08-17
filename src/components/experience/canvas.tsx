@@ -2,10 +2,8 @@
 
 import { Canvas } from "@react-three/fiber";
 import { useEffect, type ReactElement } from "react";
-import { Scene } from "./scene";
-import { m } from "@schemavaults/ui";
+import Scene from "./scene";
 import useExperienceReady from "@/hooks/use-experience-ready";
-import { welcomeMessageExitDuration } from "@/components/welcome-message";
 
 function ExperienceCanvasRenderer(): ReactElement {
   const isReady: boolean = useExperienceReady(
@@ -16,47 +14,20 @@ function ExperienceCanvasRenderer(): ReactElement {
     return <></>;
   }
   return (
-    <m.div
-      id="experience-canvas-fade-in-effect"
-      key="experience-canvas-fade-in-effect"
-      variants={{
-        hidden: {
-          opacity: 0,
-          transitionEnd: {
-            visibility: "hidden",
-            display: "none",
-          },
-        },
-        visible: {
-          opacity: 1,
-          transition: {
-            delay: welcomeMessageExitDuration,
-            duration: 3.5,
-          },
-          visibility: "visible",
-          display: "block",
-        },
+    <Canvas
+      style={{
+        width: "100vw",
+        height: "100vh",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        zIndex: -10,
       }}
-      initial="hidden"
-      animate="visible"
-      exit="hidden"
-      className="w-full h-full fixed top-0 left-0 -z-10"
+      className="-z-10"
+      gl={{ alpha: true }}
     >
-      <Canvas
-        style={{
-          width: "100%",
-          height: "100%",
-          position: "relative",
-          top: 0,
-          left: 0,
-          zIndex: -10,
-        }}
-        className="-z-10"
-        gl={{ alpha: true }}
-      >
-        <Scene />
-      </Canvas>
-    </m.div>
+      <Scene />
+    </Canvas>
   );
 }
 
@@ -67,7 +38,7 @@ export interface ExperienceCanvasOptions {
 export function ExperienceCanvas({
   onReady,
 }: ExperienceCanvasOptions): ReactElement {
-  useEffect(() => {
+  useEffect((): void => {
     onReady();
   }, [onReady]);
   return <ExperienceCanvasRenderer />;

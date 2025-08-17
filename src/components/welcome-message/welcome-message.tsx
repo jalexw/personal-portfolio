@@ -71,3 +71,5 @@ export function WelcomeMessage(): ReactElement {
     </AnimatePresence>
   );
 }
+
+export default WelcomeMessage;

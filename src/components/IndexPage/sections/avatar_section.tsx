@@ -2,14 +2,13 @@
 
 import { useCallback, type ReactElement } from "react";
 
-import {
+import DynamicExperience, {
   avatarAnimationsConstants,
-  DynamicExperience,
 } from "@/components/experience";
 import useExperience from "@/hooks/use-experience";
-import { HeaderBar } from "@/components/header";
-import { WelcomeMessage } from "@/components/welcome-message";
-import { AnimatePresence, cn } from "@schemavaults/ui";
+import HeaderBar from "@/components/header";
+import WelcomeMessage from "@/components/welcome-message";
+import { cn } from "@schemavaults/ui";
 import useDebug from "@/hooks/useDebug";
 import ExperienceInteractionsStateManager from "@/components/experience-interactions-state-manager";
 import useExperienceInteractionsStateDispatch from "@/hooks/use-experience-interactions-state-dispatch";
@@ -89,12 +88,10 @@ function AvatarSectionCanvas(): ReactElement {
   }, [debug, dispatch]);
 
   return (
-    <AnimatePresence>
-      <DynamicExperience
-        key="dynamic-jalexw-portfolio-experience"
-        onReady={onCanvasReady}
-      />
-    </AnimatePresence>
+    <DynamicExperience
+      key="dynamic-jalexw-portfolio-experience"
+      onReady={onCanvasReady}
+    />
   );
 }
 

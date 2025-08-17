@@ -56,3 +56,5 @@ export function HeaderBar(): ReactElement {
     </header>
   );
 }
+
+export default HeaderBar;

@@ -25,7 +25,14 @@ function CurrentProjectCard({
         "border rounded-md",
       )}
     >
-      <a className={cn(containerSize, "flex flex-row gap-0")} href={href}>
+      <a
+        className={cn(
+          containerSize,
+          "flex flex-row gap-0",
+          "hover:cursor-pointer",
+        )}
+        href={href}
+      >
         <div className="h-16 w-16 flex items-center justify-center">
           <Image src={img_src} alt={title} width={40} height={40} />
         </div>

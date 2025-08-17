@@ -34,3 +34,5 @@ export function Scene(): ReactElement {
     </>
   );
 }
+
+export default Scene;
