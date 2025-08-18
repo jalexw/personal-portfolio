@@ -28,7 +28,7 @@ export function HeaderBar(): ReactElement {
         <h1
           className={cn(
             "text-md sm:text-lg md:text-xl",
-            "font-mono font-bold",
+            "font-bold",
             "text-center lg:text-left",
             "transition-colors duration-500",
           )}
