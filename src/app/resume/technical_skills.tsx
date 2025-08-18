@@ -35,6 +35,7 @@ const technical_skills: TechnicalSkillDef[] = [
   { label: "Angular" },
   { label: ".NET" },
   { label: "Node.js" },
+  { label: "Redux" },
 ];
 
 export function TechnicalSkills({
