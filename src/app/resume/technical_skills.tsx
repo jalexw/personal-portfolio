@@ -13,25 +13,28 @@ interface TechnicalSkillsProps {
 }
 
 const technical_skills: TechnicalSkillDef[] = [
-  { label: "Cross-Platform Apps" },
+  { label: "O.O.P." },
+  { label: "Cross-Platform Apps (React Native + Tauri)" },
   { label: "LLMs & NLP" },
   { label: "Deep Learning" },
   { label: "C.I. & C.D." },
-  { label: "React.js/Next.js" },
+  { label: "Networking" },
+  { label: "LangChain" },
   { label: "Containerization & Kubernetes" },
-  { label: "React Native" },
   { label: "3D Rendering" },
   { label: "Cryptography" },
   { label: "Authentication" },
-  { label: "Tauri" },
   { label: "Test-Driven Development" },
   { label: "WebSockets" },
   { label: "Redis" },
-  { label: "Turborepo" },
-  { label: "Terraform" },
-  { label: "APIs: REST, tRPC, GraphQL" },
-  { label: "O.O.P." },
+  { label: "IaC (Terraform, Helm)" },
+  { label: "APIs: REST, RPC, GraphQL" },
   { label: "Vector Search" },
+  { label: "React.js/Next.js" },
+  { label: "Vue.js" },
+  { label: "Angular" },
+  { label: ".NET" },
+  { label: "Node.js" },
 ];
 
 export function TechnicalSkills({
