@@ -15,6 +15,7 @@ import useExperienceInteractionsStateDispatch from "@/hooks/use-experience-inter
 import useDebug from "@/hooks/useDebug";
 import useUpdateAnimationMixerClock from "./useUpdateAnimationMixerClock";
 import useAvatarOpacity from "./useAvatarOpacity";
+import type { PortfolioExperienceLoadManager } from "@/components/experience-loader";
 
 const DEBUG_SCROLL_HANDLER: boolean = false;
 
@@ -216,7 +217,8 @@ function AvatarComponentShowcaser({
 function AvatarComponent(props: AvatarComponentProps): ReactElement {
   const debug: boolean = useDebug();
   const experience = useExperience();
-  const manager = experience.experienceLoadManager?.current;
+  const manager: PortfolioExperienceLoadManager | null | undefined =
+    experience.experienceLoadManager?.current;
 
   const avatarAssetRef: AssetRef<"avatar", "gltf"> | undefined =
     manager?.assets.get("avatar");
