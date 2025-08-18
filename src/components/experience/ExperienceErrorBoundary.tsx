@@ -41,7 +41,7 @@ export class ExperienceErrorBoundary extends Component<
             reloading the page or updating your browser!
           </p>
           <p className="text-red-400">
-            <span className="font-bold">Error Message:</span>
+            <span className="font-bold mr-2">Error Message:</span>
             {errorMessage}
           </p>
         </div>
