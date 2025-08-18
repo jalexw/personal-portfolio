@@ -38,7 +38,7 @@ export class PortfolioExperienceLoadManager {
   }
 
   private onAssetLoadProgress(...args: unknown[]): void {
-    if (this.debug && this._debug) {
+    if (this.debug) {
       console.log("[onAssetLoadProgress] Progress Event:", args);
     }
   }
@@ -105,7 +105,8 @@ export class PortfolioExperienceLoadManager {
   }
 
   public async loadInitialAssets(): Promise<void> {
-    if (this.debug) {
+    const debug: boolean = this.debug;
+    if (debug) {
       console.log(
         "[PortfolioExperienceLoadManager] loadInitialAssets() - Loading assets: ",
         this._initial_assets,
@@ -113,7 +114,16 @@ export class PortfolioExperienceLoadManager {
     }
     await Promise.all(
       this._initial_assets.map(async (asset_def): Promise<void> => {
-        this.loadGLTFAsset(asset_def);
+        if (asset_def.type !== "gltf") {
+          throw new Error("Currently only GLTF assets are supported!");
+        }
+        const gltf = await this.loadGLTFAsset(asset_def);
+        if (debug) {
+          console.log(
+            "[PortfolioExperienceLoadManager] loadInitialAssets() - Loaded asset: ",
+            gltf,
+          );
+        }
       }),
     );
   }
