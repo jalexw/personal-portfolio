@@ -4,6 +4,7 @@ import { useCallback, type ReactElement } from "react";
 
 import DynamicExperience, {
   avatarAnimationsConstants,
+  ExperienceErrorBoundary,
 } from "@/components/experience";
 import useExperience from "@/hooks/use-experience";
 import HeaderBar from "@/components/header";
@@ -88,10 +89,12 @@ function AvatarSectionCanvas(): ReactElement {
   }, [debug, dispatch]);
 
   return (
-    <DynamicExperience
-      key="dynamic-jalexw-portfolio-experience"
-      onReady={onCanvasReady}
-    />
+    <ExperienceErrorBoundary>
+      <DynamicExperience
+        key="dynamic-jalexw-portfolio-experience"
+        onReady={onCanvasReady}
+      />
+    </ExperienceErrorBoundary>
   );
 }
 
