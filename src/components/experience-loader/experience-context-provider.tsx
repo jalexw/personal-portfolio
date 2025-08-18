@@ -59,7 +59,11 @@ export function PortfolioExperienceProvider({
       }
     }
 
+    let cancelHandler: boolean = false;
+
     async function init(): Promise<void> {
+      if (cancelHandler) return;
+
       if (!experienceManagerRef.current) {
         if (debug) {
           console.log(
@@ -76,11 +80,24 @@ export function PortfolioExperienceProvider({
         });
       } else {
         if (debug) {
-          console.log("Portfolio experience manager already initialized...");
+          console.log(
+            "[PortfolioExperienceProvider] Portfolio experience manager already initialized...",
+          );
         }
       }
     }
-    init();
+
+    init().then(() => {
+      if (debug) {
+        console.log("[PortfolioExperienceProvider] init() finished running!");
+      }
+    });
+
+    const unsubscribe = (): void => {
+      cancelHandler = true;
+    };
+
+    return unsubscribe;
   }, [dispatch, debug, value.start_load]);
 
   return (
