@@ -62,7 +62,14 @@ export function PortfolioExperienceProvider({
     let cancelHandler: boolean = false;
 
     async function init(): Promise<void> {
-      if (cancelHandler) return;
+      if (cancelHandler) {
+        if (debug) {
+          console.log(
+            "[PortfolioExperienceProvider] Cancelling init() effect due to unmount/unsubscribe...",
+          );
+        }
+        return;
+      }
 
       if (!experienceManagerRef.current) {
         if (debug) {
@@ -72,6 +79,7 @@ export function PortfolioExperienceProvider({
         }
         const experienceManager = new PortfolioExperienceLoadManager(
           experienceAssetDefinitions,
+          debug,
         );
         experienceManagerRef.current = experienceManager;
         await experienceManagerRef.current.loadInitialAssets();

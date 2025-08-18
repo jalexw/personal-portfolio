@@ -32,13 +32,13 @@ export class PortfolioExperienceLoadManager {
   >;
 
   private onAssetLoad(...args: unknown[]): void {
-    if (process.env.NODE_ENV === "development") {
+    if (this.debug) {
       console.log("[onAssetLoad] Successfully loaded asset: ", args);
     }
   }
 
   private onAssetLoadProgress(...args: unknown[]): void {
-    if (process.env.NODE_ENV === "development" && this._debug) {
+    if (this.debug && this._debug) {
       console.log("[onAssetLoadProgress] Progress Event:", args);
     }
   }
@@ -66,6 +66,10 @@ export class PortfolioExperienceLoadManager {
     >();
   }
 
+  private get debug(): boolean {
+    return this._debug;
+  }
+
   private async loadGLTFAsset(
     asset_def: AssetDefinition<
       ExperienceAssetFileNames,
@@ -82,7 +86,7 @@ export class PortfolioExperienceLoadManager {
         return cached.asset;
       } catch (e: unknown) {
         // no-op
-        if (process.env.NODE_ENV === "development") {
+        if (this.debug) {
           console.warn(`Error loading cached asset \"${asset_def.name}\"`);
         }
       }
@@ -101,6 +105,12 @@ export class PortfolioExperienceLoadManager {
   }
 
   public async loadInitialAssets(): Promise<void> {
+    if (this.debug) {
+      console.log(
+        "[PortfolioExperienceLoadManager] loadInitialAssets() - Loading assets: ",
+        this._initial_assets,
+      );
+    }
     await Promise.all(
       this._initial_assets.map(async (asset_def): Promise<void> => {
         this.loadGLTFAsset(asset_def);
