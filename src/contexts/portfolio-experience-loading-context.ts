@@ -4,11 +4,8 @@ import { type RefObject, createContext } from "react";
 import type { ExperienceManagerReducerAction } from "@/hooks/use-experience-manager-loading-states-reducer";
 import type { PortfolioExperienceLoadManager } from "@/lib/portfolio-experience-load-manager";
 
-export type ExperienceLoadingCategories =
-  | "canvas"
-  | "initial_assets"
-  | "placeholder_exit"
-  | "typewriter_effect_exit";
+import type { ExperienceLoadingCategories } from "@/lib/PortfolioExperienceLoadingCategories";
+export type { ExperienceLoadingCategories } from "@/lib/PortfolioExperienceLoadingCategories";
 
 export type PortfolioExperienceLoadingState = {
   loadingStates: Record<ExperienceLoadingCategories, boolean>;
@@ -18,6 +15,7 @@ export type PortfolioExperienceLoadingState = {
 
 export const defaultExperienceLoadingState: PortfolioExperienceLoadingState = {
   loadingStates: {
+    start_load: false,
     canvas: false,
     initial_assets: false,
     placeholder_exit: false,

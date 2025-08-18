@@ -31,7 +31,7 @@ export function WelcomeMessage(): ReactElement {
   }
 
   const isReady: boolean = useExperienceReady(
-    ["canvas", "initial_assets"],
+    ["start_load", "canvas", "initial_assets"],
     "WelcomeMessage",
   );
   const experience = useExperience();

@@ -7,7 +7,7 @@ import useExperienceReady from "@/hooks/use-experience-ready";
 
 function ExperienceCanvasRenderer(): ReactElement {
   const isReady: boolean = useExperienceReady(
-    ["canvas", "placeholder_exit", "initial_assets"],
+    ["start_load", "canvas", "placeholder_exit", "initial_assets"],
     "ExperienceCanvasRenderer",
   );
   if (!isReady) {

@@ -226,14 +226,28 @@ function AvatarComponent(props: AvatarComponentProps): ReactNode {
   const manager: PortfolioExperienceLoadManager | null | undefined =
     experience.experienceLoadManager?.current;
 
+  console.assert(
+    experience.loadingStates.initial_assets,
+    "Expected initial assets to have been loaded if this component is being rendered!",
+  );
+
   const avatarAssetRef: AssetRef<"avatar", "gltf"> | undefined =
     manager?.assets.get("avatar");
 
   const gltf: GLTF | undefined = avatarAssetRef?.asset;
 
   useEffect(() => {
-    if (debug) {
-      console.log("AvatarComponent GLTF:", gltf);
+    if (gltf) {
+      if (debug) {
+        console.log("AvatarComponent GLTF:", gltf);
+      }
+    } else {
+      console.warn(
+        "AvatarComponent GLTF asset missing! Did it get unloaded somehow? Resetting...",
+      );
+      experience.dispatch({
+        type: "reset",
+      });
     }
   }, [gltf, debug]);
 

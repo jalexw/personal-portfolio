@@ -7,6 +7,7 @@ import {
   useTransition,
   useRef,
   useCallback,
+  useMemo,
 } from "react";
 import {
   PortfolioExperienceContext,
@@ -18,10 +19,12 @@ import {
 } from "@/hooks/use-experience-manager-loading-states-reducer";
 import { PortfolioExperienceLoadManager } from "@/lib/portfolio-experience-load-manager";
 import { experienceAssetDefinitions } from "@/lib/experience-asset-definitions";
+import useDebug from "@/hooks/useDebug";
 
 export function PortfolioExperienceProvider({
   children,
 }: PropsWithChildren): ReactElement {
+  const debug: boolean = useDebug();
   const [value, dispatchSync] = useExperienceManagerLoadingStatesReducer();
   const [isDispatching, startDispatching] = useTransition();
 
@@ -39,9 +42,26 @@ export function PortfolioExperienceProvider({
   );
 
   useEffect(() => {
-    async function init() {
+    if (!value.start_load) {
+      if (debug) {
+        console.log("[PortfolioExperienceProvider] Loading experience...");
+      }
+      experienceManagerRef.current = null;
+      dispatch({
+        type: "start_load",
+      });
+      return;
+    } else {
+      if (debug) {
+        console.log(
+          "[PortfolioExperienceProvider] 'start_load' event started!",
+        );
+      }
+    }
+
+    async function init(): Promise<void> {
       if (!experienceManagerRef.current) {
-        if (process.env.NODE_ENV === "development") {
+        if (debug) {
           console.log(
             "[PortfolioExperienceProvider] Initializing PortfolioExperienceLoadManager...",
           );
@@ -55,13 +75,13 @@ export function PortfolioExperienceProvider({
           type: "initial_assets_loaded",
         });
       } else {
-        if (process.env.NODE_ENV === "development") {
+        if (debug) {
           console.log("Portfolio experience manager already initialized...");
         }
       }
     }
     init();
-  }, [dispatch]);
+  }, [dispatch, debug, value.start_load]);
 
   return (
     <PortfolioExperienceContext.Provider

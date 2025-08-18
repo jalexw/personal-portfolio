@@ -3,6 +3,7 @@
 import { useReducer } from "react";
 import {
   defaultExperienceLoadingState,
+  type ExperienceLoadingCategories,
   type PortfolioExperienceLoadingState,
 } from "@/contexts/portfolio-experience-loading-context";
 
@@ -28,11 +29,21 @@ interface PlaceholderExitCompleteAction
   type: "placeholder_exit_complete";
 }
 
+interface StartLoadingExperienceAction extends BaseAction<"start_load"> {
+  type: "start_load";
+}
+
+interface ResetExperienceAction extends BaseAction<"reset"> {
+  type: "reset";
+}
+
 export type ExperienceManagerReducerAction =
+  | StartLoadingExperienceAction
   | LoadCompleteAction
   | CanvasReadyAction
   | PlaceholderExitCompleteAction
-  | TypewriterEffectExitCompleteAction;
+  | TypewriterEffectExitCompleteAction
+  | ResetExperienceAction;
 
 function experienceManagerReducer(
   state: PortfolioExperienceLoadingState["loadingStates"],
@@ -47,6 +58,9 @@ function experienceManagerReducer(
   // state.
 
   switch (action.type) {
+    case "start_load":
+      state.start_load = true;
+      return state;
     case "canvas_ready":
       state.canvas = true;
       return state;
@@ -59,11 +73,15 @@ function experienceManagerReducer(
     case "typewriter_effect_exit_complete":
       state.typewriter_effect_exit = true;
       return state;
-    default:
-      if (process.env.NODE_ENV === "development") {
-        throw new Error(`Unhandled experience manager reducer action`);
-      }
+    case "reset":
+      state.start_load = false;
+      state.canvas = false;
+      state.initial_assets = false;
+      state.typewriter_effect_exit = false;
+      state.placeholder_exit = false;
       return state;
+    default:
+      throw new Error(`Unhandled experience manager reducer action`);
   }
 }
 
@@ -71,7 +89,7 @@ export function useExperienceManagerLoadingStatesReducer() {
   const [value, dispatch] = useReducer(
     experienceManagerReducer, // state + action => new state
     defaultExperienceLoadingState.loadingStates,
-    (init) => init,
+    (init: Record<ExperienceLoadingCategories, boolean>) => init,
   );
   return [value, dispatch] as const;
 }

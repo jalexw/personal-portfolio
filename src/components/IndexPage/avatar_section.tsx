@@ -130,7 +130,7 @@ export function AvatarSection(): ReactElement {
             loadingStates.initial_assets && <ExperienceClickCaptureElement />}
         </div>
 
-        <AvatarSectionCanvas />
+        {loadingStates.start_load && <AvatarSectionCanvas />}
       </section>
     </ExperienceInteractionsStateManager>
   );
