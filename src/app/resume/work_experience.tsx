@@ -45,8 +45,8 @@ const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
     company_name: "Aycoutay Technologies Ltd.",
     time_description: "2024, 2025",
     job_duties: [
-      "Rewrote legacy Visual Basic driver as a cross-platform memory-safe Rust library to interact with measurement device.",
-      "Created cross-platform native Tauri app, which allowed taking electrophysiology measurements from Aycoutay's proprietary hardware devices, analyzing and visualizing the measurement data in real-time.",
+      "Rewrote buggy Windows-only Visual Basic driver as a cross-platform Rust driver to interact with proprietary hardware.",
+      "Created cross-platform Mac+Windows+Web Tauri app, allowing real-time analysis and visualization of measurement data.",
       "Set up authentication, RBAC, and a type-safe tRPC API to allow secure access to electrophysiology data stored in MongoDB.",
     ],
   },
