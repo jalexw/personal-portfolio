@@ -2,6 +2,6 @@
 // Proficient in delivering results under tight deadlines.
 
 export const openingStatement: string =
-
-  `I'm a fast-learning team player seeking opportunities to leverage my technical and interpersonal skills to drive innovative solutions and contribute to the growth of a forward-thinking company. ` +
-  "I excel at communicating and presenting to non-technical stakeholders, and I'm proficient in delivering results under tight deadlines."
+  "Results-driven developer who excels at making complex ideas accessible to non-technical stakeholders through clear communication and engaging presentations." +
+  " " +
+  "I am looking for a role where I can leverage both technical expertise and strong interpersonal skills to align teams and accelerate project outcomes.";
