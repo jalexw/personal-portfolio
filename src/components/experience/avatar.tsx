@@ -1,6 +1,12 @@
 "use client";
 
-import { type ReactElement, useEffect, useMemo, useCallback } from "react";
+import {
+  type ReactElement,
+  useEffect,
+  useMemo,
+  useCallback,
+  ReactNode,
+} from "react";
 import { type Vector3, type AnimationAction } from "three";
 import useExperience from "@/hooks/use-experience";
 import type { AssetRef } from "@/lib/experience-asset-definition";
@@ -214,7 +220,7 @@ function AvatarComponentShowcaser({
   );
 }
 
-function AvatarComponent(props: AvatarComponentProps): ReactElement {
+function AvatarComponent(props: AvatarComponentProps): ReactNode {
   const debug: boolean = useDebug();
   const experience = useExperience();
   const manager: PortfolioExperienceLoadManager | null | undefined =
@@ -232,8 +238,8 @@ function AvatarComponent(props: AvatarComponentProps): ReactElement {
   }, [gltf, debug]);
 
   if (!gltf) {
-    // This component was rendered before the load manager finished loading the Avatar data
-    throw new Error("Failed to load 3D Avatar GLTF data!");
+    // Wait for the load manager to finish loading the Avatar data
+    return null;
   }
 
   return (
