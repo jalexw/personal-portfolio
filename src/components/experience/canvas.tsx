@@ -38,9 +38,16 @@ export interface ExperienceCanvasOptions {
 export function ExperienceCanvas({
   onReady,
 }: ExperienceCanvasOptions): ReactElement {
+  const isCanvasMarkedReady: boolean = useExperienceReady(
+    ["canvas"],
+    "ExperienceCanvas",
+  );
+
   useEffect((): void => {
-    onReady();
-  }, [onReady]);
+    if (!isCanvasMarkedReady) {
+      onReady();
+    }
+  }, [onReady, isCanvasMarkedReady]);
   return <ExperienceCanvasRenderer />;
 }
 
