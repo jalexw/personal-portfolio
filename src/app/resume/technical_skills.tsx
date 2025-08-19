@@ -20,6 +20,7 @@ const technical_skills: TechnicalSkillDef[] = [
   { label: "C.I. & C.D." },
   { label: "Networking" },
   { label: "LangChain" },
+  { label: "Airflow" },
   { label: "Containerization & Kubernetes" },
   { label: "3D Rendering" },
   { label: "Cryptography" },
