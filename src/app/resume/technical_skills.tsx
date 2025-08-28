@@ -33,7 +33,7 @@ const technical_skills: TechnicalSkillDef[] = [
   { label: "Vector Search" },
   { label: "React.js/Next.js" },
   { label: "Vue.js" },
-  { label: "Angular" },
+  { label: "Angular.js" },
   { label: ".NET" },
   { label: "Node.js" },
   { label: "Redux" },
@@ -56,6 +56,7 @@ export function TechnicalSkills({
               "text-black bg-transparent border-dashed border-slate-400",
               "hover:text-white hover:bg-slate-400 hover:border-transparent",
               "print:hover:text-black print:hover:bg-transparent print:hover:border-slate-400",
+              "text-xs print:text-[0.65rem] print:leading-[0.866rem]",
             )}
           >
             {skill.label}

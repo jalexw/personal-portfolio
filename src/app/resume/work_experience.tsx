@@ -45,9 +45,9 @@ const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
     company_name: "Aycoutay Technologies Ltd.",
     time_description: "2024, 2025",
     job_duties: [
-      "Rewrote buggy Windows-only Visual Basic driver as a cross-platform Rust driver to interact with proprietary hardware.",
-      "Created cross-platform Mac+Windows+Web Tauri app, allowing real-time analysis and visualization of measurement data.",
-      "Set up authentication, RBAC, and a type-safe tRPC API to allow secure access to electrophysiology data stored in MongoDB.",
+      "Created cross-platform Mac+Windows+Web Tauri app (Next.js/React.js app w/ TypeScript, TailwindCSS, & Redux, wrapped in Rust webview to collect data w/ native hardware driver), allowing real-time analysis and visualization of measurement data.",
+      "Rewrote Windows-only Visual Basic + C# USB driver as a cross-platform Rust driver (using rusb) to interact with hardware.",
+      "Set up Auth0 authentication, RBAC, and a tRPC (full-stack type-safety) Node.js API to store electrical readings in MongoDB.",
     ],
   },
   {
@@ -55,8 +55,8 @@ const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
     company_name: "SolutionInc Ltd.",
     time_description: "2019, 2023",
     job_duties: [
-      "Built customer and staff portal applications for a new ISP company to allow controlling and monitoring network + IPTV services. Designed and implemented high-availability Kubernetes cluster to host services. Automated deployment using Helm.",
-      "Upgraded a legacy LAMPerl-stack network monitoring dashboard to use containers, automated testing, C.I./C.D., & more. Added a report editing feature to allow customers to customize their hotel/convention center network gateway usage reports.",
+      "Built customer and staff portal applications (using tech such as Angular.js, Express.js, Next.js, SQL) for a new ISP company to allow controlling and monitoring network + IPTV services + managing subscriptions with Chargebee. Designed and implemented high-availability Kubernetes cluster to host web applications across Proxmox cluster. Automated deployment w/ Helm & GitLab.",
+      "Upgraded a legacy LAMPerl-stack network monitoring dashboard to use containers, Cypress E2E testing, GitLab C.I./C.D. Added a report editing feature to allow customers to customize their hotel/convention center network gateway usage reports.",
       "Returned in a software development position after working for a summer on the support & delivery team as a student, where I mostly worked on staging hardware with proprietary software for allowing secure in-room media casting in large hotel networks.",
     ],
   },
@@ -67,7 +67,7 @@ const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
     job_duties: [
       "Maintained and updated their serverless COVID testing software for public rapid testing sites and B2B employer-led testing; facilitated the reporting of 300,000+ test results to patients, as well as aggregate statistic reports to stakeholders.",
       "Upgraded Firestore database to allow more performant result querying and storage of additional information about each test.",
-      "Designed and implemented a serverless backend, database, and Vue.js web app for volunteer registration and cancellation.",
+      "Designed and implemented volunteer registration system w/ Firebase Cloud Functions, Firestore database, and Vue.js app.",
     ],
   },
   {
@@ -75,7 +75,7 @@ const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
     company_name: "Race Auto Group Ltd.",
     time_description: "2017, 2018, 2020, 2022",
     job_duties: [
-      "Rapidly designed and implemented a Next.js rental car booking system for the dealership to capitalize on a local rental car shortage. Later added a custom pricing calendar system, to allow dynamically setting rental rates by date range by vehicle type.",
+      "Rapidly designed and implemented a Next.js/React.js rental car booking system for the dealership to capitalize on a local rental car shortage w/ a dynamic price-calendar system by vehicle type and embedded Stripe payment processing.",
       "Managed the service desk by creating work orders, ordering parts, resolving customer issues, and allocating mechanic time. Was responsible for keeping the company Wordpress website and integrated inventory system up to date.",
     ],
   },
