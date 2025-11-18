@@ -38,28 +38,33 @@ export function SocialMediaLinks(): ReactElement {
         SocialMediaIcon={({ className }) => (
           <LinkedInIcon className={className} />
         )}
+        tooltip="LinkedIn"
       />
       <SocialMediaLink
         href={instagramLink}
         SocialMediaIcon={({ className }) => (
           <InstagramIcon className={className} />
         )}
+        tooltip="Instagram"
       />
       <SocialMediaLink
         href={githubLink}
         SocialMediaIcon={({ className }) => (
           <GithubIcon className={className} />
         )}
+        tooltip="Github"
       />
       <SocialMediaLink
         href={facebookLink}
         SocialMediaIcon={({ className }) => (
           <FacebookIcon className={className} />
         )}
+        tooltip="Facebook"
       />
       <SocialMediaLink
         href={xLink}
         SocialMediaIcon={({ className }) => <XIcon className={className} />}
+        tooltip="X/Twitter"
       />
     </ul>
   );

@@ -1,10 +1,17 @@
 "use client";
 
-import { cn } from "@schemavaults/ui";
+import {
+  cn,
+  Tooltip,
+  TooltipArrow,
+  TooltipContent,
+  TooltipTrigger,
+} from "@schemavaults/ui";
 import type { ReactElement } from "react";
 import Link from "next/link";
 
 interface BaseSocialMediaLinkProps {
+  tooltip: string;
   SocialMediaIcon: ({ className }: { className?: string }) => ReactElement;
 }
 
@@ -20,7 +27,7 @@ export type SocialMediaLinkProps =
   | HrefSocialMediaLinkProps
   | ClickActionSocialMediaLinkProps;
 
-export function SocialMediaLink({
+function SocialMediaLinkContent({
   SocialMediaIcon,
   ...props
 }: SocialMediaLinkProps): ReactElement {
@@ -59,14 +66,21 @@ export function SocialMediaLink({
           containerSizeClassName,
           containerHoverAnimationClassName,
           containerBorderClassName,
-          "flex items-center justify-center",
         )}
-        onClick={(e): void => {
-          e.preventDefault();
-          props.onClick();
-        }}
       >
-        <SocialMediaIcon className={iconSizeClassName} />
+        <button
+          className={cn(
+            containerSizeClassName,
+            containerHoverAnimationClassName,
+            "flex items-center justify-center",
+          )}
+          onClick={(e): void => {
+            e.preventDefault();
+            props.onClick();
+          }}
+        >
+          <SocialMediaIcon className={iconSizeClassName} />
+        </button>
       </li>
     );
   } else {
@@ -74,6 +88,21 @@ export function SocialMediaLink({
       "Invalid props for SocialMediaLink component! Missing a valid 'href' or 'onClick' prop!",
     );
   }
+}
+
+function SocialMediaLink(props: SocialMediaLinkProps): ReactElement {
+  const tooltip: string = props.tooltip;
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <SocialMediaLinkContent {...props} />
+      </TooltipTrigger>
+      <TooltipContent>
+        <TooltipArrow />
+        {tooltip}
+      </TooltipContent>
+    </Tooltip>
+  );
 }
 
 export default SocialMediaLink;
