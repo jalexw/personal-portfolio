@@ -24,7 +24,12 @@ import InstagramIcon from "./social_media_logos/instagram.svg";
 import { githubLink } from "@/metadata/github";
 import GithubIcon from "./social_media_logos/github.svg";
 
+// Email/Contact
+import { useOpenContactForm } from "@/components/ContactFormDialog";
+import { Mail } from "lucide-react";
+
 export function SocialMediaLinks(): ReactElement {
+  const openContactForm = useOpenContactForm();
   return (
     <ul
       className={cn(
@@ -65,6 +70,14 @@ export function SocialMediaLinks(): ReactElement {
         href={xLink}
         SocialMediaIcon={({ className }) => <XIcon className={className} />}
         tooltip="X/Twitter"
+      />
+      <SocialMediaLink
+        onClick={(): void => {
+          openContactForm();
+          return;
+        }}
+        SocialMediaIcon={({ className }) => <Mail className={className} />}
+        tooltip="Email / Contact Form"
       />
     </ul>
   );

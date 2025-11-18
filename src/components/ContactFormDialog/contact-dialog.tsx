@@ -5,27 +5,22 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  // DialogFooter,
   DialogHeader,
   DialogTitle,
   Separator,
 } from "@schemavaults/ui";
-import { useContext, useState, type ReactElement } from "react";
-import { DialogTriggerButton } from "./dialog-trigger";
+import type { ReactElement } from "react";
 import Link from "next/link";
 import { email } from "@/metadata";
 import { Mail } from "lucide-react";
-import { ContactForm } from "./contact-form";
+import ContactForm from "./contact-form";
+import useContactFormIsOpenStore from "./useContactFormIsOpenStore";
 
 export function ContactDialog(): ReactElement {
-  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const { open, setOpen } = useContactFormIsOpenStore();
 
   return (
-    <Dialog
-      open={dialogOpen}
-      onOpenChange={(o: boolean): void => setDialogOpen(o)}
-    >
-      <DialogTriggerButton />
+    <Dialog open={open} onOpenChange={(o: boolean): void => setOpen(o)}>
       <DialogContent className="sm:max-w-[425px] md:max-w-[525px] lg:max-w-[700px] xl:max-w-[900px] overflow-y-scroll max-h-screen">
         <DialogHeader>
           <DialogTitle>Send me a message</DialogTitle>
@@ -35,7 +30,7 @@ export function ContactDialog(): ReactElement {
           </DialogDescription>
         </DialogHeader>
 
-        <ContactForm setDialogOpen={setDialogOpen} />
+        <ContactForm setDialogOpen={setOpen} />
 
         <Separator />
 

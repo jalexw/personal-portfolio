@@ -1,8 +1,9 @@
 "use client";
 
 import type { ReactElement } from "react";
-import PortfolioExperienceContent from "./portfolio_layout";
+import PortfolioLayout from "./portfolio_layout";
 import useDebug from "@/hooks/useDebug";
+import ContactFormDialog from "@/components/ContactFormDialog";
 
 export function IndexPage(): ReactElement {
   const debug: boolean = useDebug();
@@ -11,7 +12,12 @@ export function IndexPage(): ReactElement {
     console.log("[IndexPage] rendering...");
   }
 
-  return <PortfolioExperienceContent />;
+  return (
+    <>
+      <PortfolioLayout />
+      <ContactFormDialog />
+    </>
+  );
 }
 
 export default IndexPage;

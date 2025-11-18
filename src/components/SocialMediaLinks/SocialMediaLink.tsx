@@ -27,7 +27,7 @@ export type SocialMediaLinkProps =
   | HrefSocialMediaLinkProps
   | ClickActionSocialMediaLinkProps;
 
-function SocialMediaLinkContent({
+function SocialMediaLink({
   SocialMediaIcon,
   ...props
 }: SocialMediaLinkProps): ReactElement {
@@ -36,6 +36,8 @@ function SocialMediaLinkContent({
   const iconSizeClassName: string = "h-14 w-14";
   const containerHoverAnimationClassName =
     "hover:bg-muted transition-colors duration-200 ease-in-out hover:cursor-pointer";
+
+  const tooltipSide = "bottom" as const;
 
   if ("href" in props && typeof props.href === "string") {
     return (
@@ -46,17 +48,25 @@ function SocialMediaLinkContent({
           containerBorderClassName,
         )}
       >
-        <Link
-          href={props.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={cn(
-            containerSizeClassName,
-            "flex items-center justify-center",
-          )}
-        >
-          <SocialMediaIcon className={iconSizeClassName} />
-        </Link>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Link
+              href={props.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                containerSizeClassName,
+                "flex items-center justify-center",
+              )}
+            >
+              <SocialMediaIcon className={iconSizeClassName} />
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent side={tooltipSide}>
+            <TooltipArrow />
+            {props.tooltip}
+          </TooltipContent>
+        </Tooltip>
       </li>
     );
   } else if ("onClick" in props && typeof props.onClick === "function") {
@@ -68,19 +78,27 @@ function SocialMediaLinkContent({
           containerBorderClassName,
         )}
       >
-        <button
-          className={cn(
-            containerSizeClassName,
-            containerHoverAnimationClassName,
-            "flex items-center justify-center",
-          )}
-          onClick={(e): void => {
-            e.preventDefault();
-            props.onClick();
-          }}
-        >
-          <SocialMediaIcon className={iconSizeClassName} />
-        </button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              className={cn(
+                containerSizeClassName,
+                containerHoverAnimationClassName,
+                "flex items-center justify-center",
+              )}
+              onClick={(e): void => {
+                e.preventDefault();
+                props.onClick();
+              }}
+            >
+              <SocialMediaIcon className={iconSizeClassName} />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent side={tooltipSide}>
+            <TooltipArrow />
+            {props.tooltip}
+          </TooltipContent>
+        </Tooltip>
       </li>
     );
   } else {
@@ -89,20 +107,6 @@ function SocialMediaLinkContent({
     );
   }
 }
-
-function SocialMediaLink(props: SocialMediaLinkProps): ReactElement {
-  const tooltip: string = props.tooltip;
-  return (
-    <Tooltip>
-      <TooltipTrigger>
-        <SocialMediaLinkContent {...props} />
-      </TooltipTrigger>
-      <TooltipContent>
-        <TooltipArrow />
-        {tooltip}
-      </TooltipContent>
-    </Tooltip>
-  );
-}
+SocialMediaLink.displayName = "SocialMediaLink";
 
 export default SocialMediaLink;

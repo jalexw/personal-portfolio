@@ -9,7 +9,7 @@ import CurrentProjectsSection from "./sections/current_projects_section";
 import SocialMediaLinksSection from "./sections/social_media_links_section";
 import BuyMeACoffeeSection from "./sections/buy_me_a_coffee_section";
 
-export function PortfolioExperienceContent(): ReactElement {
+export default function PortfolioLayout(): ReactElement {
   return (
     <main className="flex flex-col gap-0 flex-nowrap">
       <AvatarSection />
@@ -21,5 +21,3 @@ export function PortfolioExperienceContent(): ReactElement {
     </main>
   );
 }
-
-export default PortfolioExperienceContent;
