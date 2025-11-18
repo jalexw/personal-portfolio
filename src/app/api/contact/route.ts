@@ -8,6 +8,7 @@ import {
   ContactConfirmationEmailTemplate,
   MessageNotificationEmailTemplate,
 } from "@/components/EmailTemplates";
+import { captureException } from "@sentry/nextjs";
 
 function getResendKey(): string {
   const key = process.env.RESEND_PRIVATE_KEY;
@@ -78,7 +79,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       );
     }
     contactFormMessage = parsed.data;
-  } catch (error) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         error: "Error parsing JSON body as contact form message",
@@ -101,7 +102,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       },
       { status: 200 },
     );
-  } catch (error) {
+  } catch (error: unknown) {
+    console.error("Error sending email + confirmation email: ", error);
+    captureException(error);
     return NextResponse.json({ error });
   }
 }

@@ -20,6 +20,7 @@ import {
 import { Loader2, Mail } from "lucide-react";
 import { type ContactFormData, contactFormSchema } from "./contact-form-schema";
 import { ContactFormSubjectSelect } from "./contact-form-subject-select";
+import { captureException } from "@sentry/nextjs";
 
 export interface ContactFormProps {
   setDialogOpen: (open: boolean) => void;
@@ -52,6 +53,7 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
         });
       } catch (error: unknown) {
         console.error("Error submitting contact form: ", error);
+        captureException(error);
         toast({
           variant: "destructive",
           title: "Error submitting form!",
