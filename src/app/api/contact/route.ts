@@ -109,4 +109,4 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-export const runtime = "edge";
+export const runtime = "nodejs";
