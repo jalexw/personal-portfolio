@@ -1,15 +1,8 @@
 "use client";
 
-import { facebookLink } from "@/metadata/facebook";
-import { githubLink } from "@/metadata/github";
-import { instagramLink } from "@/metadata/instagram";
-import { linkedInLink } from "@/metadata/linkedin";
-
-import Link from "next/link";
-import { type ReactElement } from "react";
 import { cn } from "@schemavaults/ui";
-import { Github, Instagram, Linkedin, Facebook, Twitter } from "lucide-react";
-import { twitterLink } from "@/metadata/twitter";
+import type { ReactElement } from "react";
+import Link from "next/link";
 
 interface BaseSocialMediaLinkProps {
   SocialMediaIcon: ({ className }: { className?: string }) => ReactElement;
@@ -27,7 +20,7 @@ export type SocialMediaLinkProps =
   | HrefSocialMediaLinkProps
   | ClickActionSocialMediaLinkProps;
 
-function SocialMediaLink({
+export function SocialMediaLink({
   SocialMediaIcon,
   ...props
 }: SocialMediaLinkProps): ReactElement {
@@ -83,31 +76,4 @@ function SocialMediaLink({
   }
 }
 
-export function SocialMediaLinks(): ReactElement {
-  return (
-    <ul className="flex flex-wrap gap-2 md:gap-3 lg:gap-4 xl:gap-6 flex-row justify-evenly items-center">
-      <SocialMediaLink
-        href={linkedInLink}
-        SocialMediaIcon={({ className }) => <Linkedin className={className} />}
-      />
-      <SocialMediaLink
-        href={instagramLink}
-        SocialMediaIcon={({ className }) => <Instagram className={className} />}
-      />
-      <SocialMediaLink
-        href={githubLink}
-        SocialMediaIcon={({ className }) => <Github className={className} />}
-      />
-      <SocialMediaLink
-        href={facebookLink}
-        SocialMediaIcon={({ className }) => <Facebook className={className} />}
-      />
-      <SocialMediaLink
-        href={twitterLink}
-        SocialMediaIcon={({ className }) => <Twitter className={className} />}
-      />
-    </ul>
-  );
-}
-
-export default SocialMediaLinks;
+export default SocialMediaLink;
