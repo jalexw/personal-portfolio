@@ -29,7 +29,7 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
   const [isSubmitting, startTransition] = useTransition();
   const { toast } = useToast();
 
-  // 1. Define your form.
+  // Contact Form (react-hook-form)
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
@@ -40,10 +40,7 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
     },
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: ContactFormData) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  function onSubmitContactForm(values: ContactFormData) {
     if (process.env.NODE_ENV === "development") {
       console.log("Submitting contact form: ", values);
     }
@@ -53,26 +50,43 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
           body: JSON.stringify(values),
           method: "POST",
         });
-        toast({
-          title: "Message received!",
-          description:
-            "Thanks for reaching out. I will get back to you as soon as possible!",
-        });
-        setDialogOpen(false);
       } catch (error: unknown) {
-        console.error(error);
+        console.error("Error submitting contact form: ", error);
         toast({
           variant: "destructive",
           title: "Error submitting form!",
           description: "Please try again later...",
         });
+        return;
       }
-    });
+
+      toast({
+        title: "Message received!",
+        description:
+          "Thanks for reaching out. I will get back to you as soon as possible!",
+      });
+      setDialogOpen(false);
+      return;
+    }); // end of onSubmitContactForm
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full m-2 p-2">
+      <form
+        onSubmit={form.handleSubmit(
+          onSubmitContactForm,
+          function onSubmitContactFormError(e): void {
+            console.error("Error submitting contact form:", e);
+            toast({
+              variant: "destructive",
+              title: "Error submitting contact form!",
+              description:
+                "Please double check that you've filled all fields properly!",
+            });
+          },
+        )}
+        className="w-full m-2 p-2"
+      >
         <ScrollArea
           className="space-y-2 w-full overflow-y-scroll"
           onScroll={(e) => {
