@@ -47,10 +47,15 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
     }
     startTransition(async () => {
       try {
-        await fetch("/api/contact", {
+        const response = await fetch("/api/contact", {
           body: JSON.stringify(values),
           method: "POST",
         });
+        if (!response.ok || response.status !== 200) {
+          throw new Error(
+            `Received error response from /api/contact endpoint: '${response.status} ${response.statusText}'`,
+          );
+        }
       } catch (error: unknown) {
         console.error("Error submitting contact form: ", error);
         captureException(error);
