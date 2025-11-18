@@ -7,6 +7,7 @@ import AvatarSection from "./sections/avatar_section";
 import SpacerSection from "./sections/spacer_section";
 import CurrentProjectsSection from "./sections/current_projects_section";
 import SocialMediaLinksSection from "./sections/social_media_links_section";
+import BuyMeACoffeeSection from "./sections/buy_me_a_coffee_section";
 
 export function PortfolioExperienceContent(): ReactElement {
   return (
@@ -15,6 +16,8 @@ export function PortfolioExperienceContent(): ReactElement {
       <SpacerSection />
       <CurrentProjectsSection />
       <SocialMediaLinksSection />
+      <BuyMeACoffeeSection />
+      <SpacerSection />
     </main>
   );
 }
