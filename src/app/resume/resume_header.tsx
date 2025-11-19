@@ -3,6 +3,7 @@ import { Briefcase, Github, Linkedin, Mail } from "lucide-react";
 import type { ReactElement } from "react";
 
 export function ResumeHeader(): ReactElement {
+  const PORTFOLIO_SITE_URL: string = `https://${process.env.NEXT_PUBLIC_WEB_DOMAIN}`;
   return (
     <>
       <header className="w-full flex flex-row items-center justify-between">
@@ -45,14 +46,9 @@ export function ResumeHeader(): ReactElement {
               {process.env.NEXT_PUBLIC_CONTACT_EMAIL}
             </span>
           </a>
-          <a
-            href={`https://${process.env.NEXT_PUBLIC_WEB_DOMAIN}`}
-            className="flex flex-row gap-2"
-          >
+          <a href={PORTFOLIO_SITE_URL} className="flex flex-row gap-2">
             <Briefcase className="p-1" />
-            <span className="text-black">
-              {process.env.NEXT_PUBLIC_WEB_DOMAIN}
-            </span>
+            <span className="text-black">{PORTFOLIO_SITE_URL}</span>
           </a>
         </div>
       </header>
