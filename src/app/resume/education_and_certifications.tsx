@@ -1,6 +1,7 @@
 import type { ReactElement } from "react";
 import ResumeSection from "./resume_section";
 import Image from "next/image";
+import { cn } from "@schemavaults/ui";
 
 interface EducationOrCertificationTileProps {
   img_src: string;
@@ -14,10 +15,18 @@ interface EducationOrCertificationTileProps {
 function EducationTile(props: EducationOrCertificationTileProps) {
   const scale: number = props.scale ?? 1;
   return (
-    <div className="flex flex-col justify-start items-center grow text-center">
+    <div
+      className={cn(
+        "flex flex-col justify-start items-center grow",
+        "text-center",
+        "bg-blue-50 print:bg-transparent",
+        "p-1",
+        "rounded-md border border-gray-400 border-dotted",
+      )}
+    >
       <Image
-        width={64}
-        height={64}
+        width={48}
+        height={48}
         src={props.img_src}
         alt={props.img_alt}
         className="mb-2"
