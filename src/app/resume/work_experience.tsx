@@ -45,6 +45,7 @@ const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
     company_name: "Aycoutay Technologies Ltd.",
     time_description: "2024, 2025",
     job_duties: [
+      "Evaluated, built, and deployed biological age models (including k-NN, CNN, RNN, etc.) from electrode measurement dataset.",
       "Created cross-platform Mac+Windows+Web Tauri app (Next.js/React.js app w/ TypeScript, TailwindCSS, & Redux, wrapped in Rust webview to collect data w/ native hardware driver), allowing real-time analysis and visualization of measurement data.",
       "Rewrote Windows-only Visual Basic + C# USB driver as a cross-platform Rust driver (using rusb) to interact with hardware.",
       "Set up Auth0 authentication, RBAC, and a tRPC (full-stack type-safety) Node.js API to store electrical readings in MongoDB.",
@@ -83,7 +84,7 @@ const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
 
 export function WorkExperienceSection(): ReactElement {
   return (
-    <ResumeSection title="Relevant Work Experience">
+    <ResumeSection title="Work Experience">
       {WORK_EXPERIENCES.map((job, index) => (
         <div key={`${job.company_name}-${index}`}>
           <PastJobDescription key={`past-job-${index}`} {...job} />
