@@ -3,7 +3,7 @@
   "image": "oven/bun:1.3.3",
   "postCreateCommand": "bun install",
   "postAttachCommand": {
-    "server": "bun run dev"
+    "server": "RESEND_PRIVATE_KEY=$RESEND_PRIVATE_KEY bun run dev"
   },
   "forwardPorts": [3000],
   "portsAttributes": {
