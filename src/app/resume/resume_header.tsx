@@ -1,9 +1,10 @@
+import domain from "@/metadata/domain";
 import { Separator } from "@schemavaults/ui";
 import { Briefcase, Github, Linkedin, Mail } from "lucide-react";
 import type { ReactElement } from "react";
 
 export function ResumeHeader(): ReactElement {
-  const PORTFOLIO_SITE_URL: string = `https://${process.env.NEXT_PUBLIC_WEB_DOMAIN}`;
+  const PORTFOLIO_SITE_URL: string = `https://${domain()}`;
   return (
     <>
       <header className="w-full flex flex-row items-center justify-between">
