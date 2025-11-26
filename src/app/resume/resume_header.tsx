@@ -1,4 +1,7 @@
+import { email } from "@/metadata";
 import domain from "@/metadata/domain";
+import { githubUser } from "@/metadata/github";
+import { linkedInUser } from "@/metadata/linkedin";
 import { Separator } from "@schemavaults/ui";
 import { Briefcase, Github, Linkedin, Mail } from "lucide-react";
 import type { ReactElement } from "react";
@@ -11,22 +14,18 @@ export function ResumeHeader(): ReactElement {
         {/** Social Media Links */}
         <div className="">
           <a
-            href={`https://github.com/${process.env.NEXT_PUBLIC_GITHUB_USERNAME}`}
+            href={`https://github.com/${githubUser}`}
             className="flex flex-row gap-2"
           >
             <Github className="p-1" />
-            <span className="text-black">
-              {process.env.NEXT_PUBLIC_GITHUB_USERNAME}
-            </span>
+            <span className="text-black">{githubUser}</span>
           </a>
           <a
-            href={`https://linkedin.com/in/${process.env.NEXT_PUBLIC_LINKEDIN_USERNAME}`}
+            href={`https://linkedin.com/in/${linkedInUser}`}
             className="flex flex-row gap-2"
           >
             <Linkedin className="text-white bg-blue-800 p-1 print:bg-transparent print:text-black" />
-            <span className="text-black">
-              {process.env.NEXT_PUBLIC_LINKEDIN_USERNAME}
-            </span>
+            <span className="text-black">{linkedInUser}</span>
           </a>
         </div>
 
@@ -38,14 +37,9 @@ export function ResumeHeader(): ReactElement {
 
         {/** Get in touch */}
         <div>
-          <a
-            href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL}`}
-            className="flex flex-row gap-2"
-          >
+          <a href={`mailto:${email}`} className="flex flex-row gap-2">
             <Mail className="p-1" />
-            <span className="text-black">
-              {process.env.NEXT_PUBLIC_CONTACT_EMAIL}
-            </span>
+            <span className="text-black">{email}</span>
           </a>
           <a href={PORTFOLIO_SITE_URL} className="flex flex-row gap-2">
             <Briefcase className="p-1" />
