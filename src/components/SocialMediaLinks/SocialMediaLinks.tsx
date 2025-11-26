@@ -28,6 +28,10 @@ import GithubIcon from "./social_media_logos/github.svg";
 import { useOpenContactForm } from "@/components/ContactFormDialog";
 import { Mail } from "lucide-react";
 
+// GoodReads
+import { goodreadsLink } from "@/metadata/goodreads";
+import GoodreadsIcon from "./social_media_logos/goodreads.svg";
+
 export function SocialMediaLinks(): ReactElement {
   const openContactForm = useOpenContactForm();
   return (
@@ -36,6 +40,7 @@ export function SocialMediaLinks(): ReactElement {
         "flex flex-wrap flex-row",
         "gap-2 md:gap-3 lg:gap-4 xl:gap-6",
         "justify-evenly items-center",
+        "px-8 md:px-8 lg:px-12 xl:px-16",
       )}
     >
       <SocialMediaLink
@@ -70,6 +75,15 @@ export function SocialMediaLinks(): ReactElement {
         href={xLink}
         SocialMediaIcon={({ className }) => <XIcon className={className} />}
         tooltip="X/Twitter"
+      />
+      <SocialMediaLink
+        href={goodreadsLink}
+        SocialMediaIcon={({ className }) => (
+          <GoodreadsIcon
+            className={cn(className, "w-full h-full fill-white", "scale-75")}
+          />
+        )}
+        tooltip="Goodreads"
       />
       <SocialMediaLink
         onClick={(): void => {
