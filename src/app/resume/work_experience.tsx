@@ -1,11 +1,11 @@
-import type { ReactElement } from "react";
+import type { FC, ReactElement, ReactNode } from "react";
 import ResumeSection from "./resume_section";
-import { Separator } from "@schemavaults/ui";
+import { cn, Separator } from "@schemavaults/ui";
 
 interface PastJobDescriptionProps {
   job_title: string;
   company_name: string;
-  time_description: string; // e.g. 2023 - 2025
+  time_description: string | FC; // e.g. 2023 - 2025
   job_duties: string[];
 }
 
@@ -17,7 +17,11 @@ function PastJobDescription(props: PastJobDescriptionProps): ReactElement {
           <span className="font-bold">{props.company_name}</span>,{" "}
           {props.job_title}
         </h3>
-        <p className="text-xs font-bold">{props.time_description}</p>
+        <p className="text-xs font-bold">
+          {typeof props.time_description === "string"
+            ? props.time_description
+            : props.time_description({})}
+        </p>
       </header>
       <ul className="w-full flex flex-col gap-1 list-disc list-inside">
         {props.job_duties.map((duty, index) => (
@@ -29,6 +33,8 @@ function PastJobDescription(props: PastJobDescriptionProps): ReactElement {
     </article>
   );
 }
+
+const timeDescriptionDateAnnotationClassname = cn("text-gray-400 text-xs");
 
 function WorkExperienceSeparator(): ReactElement {
   return (
@@ -43,7 +49,18 @@ const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
   {
     job_title: "Software Developer",
     company_name: "Aycoutay Technologies Ltd.",
-    time_description: "2024, 2025",
+    time_description: (): ReactNode => (
+      <>
+        {"2024"}{" "}
+        <span className={timeDescriptionDateAnnotationClassname}>
+          {"Full-time"}
+        </span>
+        , {"2025"}{" "}
+        <span className={timeDescriptionDateAnnotationClassname}>
+          {"Part-time"}
+        </span>
+      </>
+    ),
     job_duties: [
       "Evaluated, built, and deployed biological age models (including k-NN, CNN, RNN, etc.) from electrode measurement dataset.",
       "Created cross-platform Mac+Windows+Web Tauri app (Next.js/React.js app w/ TypeScript, TailwindCSS, & Redux, wrapped in Rust webview to collect data w/ native hardware driver), allowing real-time analysis and visualization of measurement data.",
@@ -54,7 +71,18 @@ const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
   {
     job_title: "Software Developer",
     company_name: "SolutionInc Ltd.",
-    time_description: "2019, 2023",
+    time_description: (): ReactNode => (
+      <>
+        {"2019"}{" "}
+        <span className={timeDescriptionDateAnnotationClassname}>
+          {"May-August"}
+        </span>
+        , {"2023"}{" "}
+        <span className={timeDescriptionDateAnnotationClassname}>
+          {"March-September"}
+        </span>
+      </>
+    ),
     job_duties: [
       "Built customer and staff portal applications (using tech such as Angular.js, Express.js, Next.js, SQL) for a new ISP company to allow controlling and monitoring network + IPTV services + managing subscriptions with Chargebee. Designed and implemented high-availability Kubernetes cluster to host web applications across Proxmox cluster. Automated deployment w/ Helm & GitLab.",
       "Upgraded a legacy LAMPerl-stack network monitoring dashboard to use containers, Cypress E2E testing, GitLab C.I./C.D. Added a report editing feature to allow customers to customize their hotel/convention center network gateway usage reports.",
@@ -64,7 +92,14 @@ const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
   {
     job_title: "Software Developer",
     company_name: "Praxes Medical Group Ltd.",
-    time_description: "2021",
+    time_description: (): ReactNode => (
+      <>
+        {"2021"}{" "}
+        <span className={timeDescriptionDateAnnotationClassname}>
+          {"May-September"}
+        </span>
+      </>
+    ),
     job_duties: [
       "Maintained and updated their serverless COVID testing software for public rapid testing sites and B2B employer-led testing; facilitated the reporting of 300,000+ test results to patients, as well as aggregate statistic reports to stakeholders.",
       "Upgraded Firestore database to allow more performant result querying and storage of additional information about each test.",
@@ -74,7 +109,14 @@ const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
   {
     job_title: "Software Developer & Service Desk Coordinator",
     company_name: "Race Auto Group Ltd.",
-    time_description: "2017, 2018, 2020, 2022",
+    time_description: (): ReactNode => (
+      <>
+        {"2017, 2018, 2020, 2022"}{" "}
+        <span className={timeDescriptionDateAnnotationClassname}>
+          {"Summer Jobs & Part-time"}
+        </span>
+      </>
+    ),
     job_duties: [
       "Rapidly designed and implemented a Next.js/React.js rental car booking system for the dealership to capitalize on a local rental car shortage w/ a dynamic price-calendar system by vehicle type and embedded Stripe payment processing.",
       "Managed the service desk by creating work orders, ordering parts, resolving customer issues, and allocating mechanic time. Was responsible for keeping the company Wordpress website and integrated inventory system up to date.",
@@ -84,7 +126,7 @@ const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
 
 export function WorkExperienceSection(): ReactElement {
   return (
-    <ResumeSection title="Work Experience">
+    <ResumeSection title="Selected Work Experience">
       {WORK_EXPERIENCES.map((job, index) => (
         <div key={`${job.company_name}-${index}`}>
           <PastJobDescription key={`past-job-${index}`} {...job} />
