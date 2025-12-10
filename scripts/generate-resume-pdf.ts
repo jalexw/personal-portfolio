@@ -1,3 +1,6 @@
+// generate-resume-pdf.ts
+// Generate a PDF from the /resume page of the web app using Puppeteer.
+
 import * as puppeteer from "puppeteer";
 import { existsSync, mkdirSync } from "fs";
 import { join, normalize } from "path";
