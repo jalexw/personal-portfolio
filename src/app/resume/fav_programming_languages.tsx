@@ -1,8 +1,10 @@
+"use client";
+
 import type { ReactElement } from "react";
 import ResumeSection from "./resume_section";
-import { Separator } from "@schemavaults/ui";
+import { cn, Separator } from "@schemavaults/ui";
 
-const tiers = ["😍", "😁", "🙂"] as const;
+const tiers = ["🥇", "🥈", "🥉"] as const;
 type Tier = (typeof tiers)[number];
 
 interface ProgrammingLanguageRef {
@@ -11,20 +13,20 @@ interface ProgrammingLanguageRef {
 }
 
 const languages: readonly ProgrammingLanguageRef[] = [
-  { tier: "😍", name: "TypeScript" },
-  { tier: "😍", name: "Rust" },
-  { tier: "😍", name: "Python" },
-  { tier: "😁", name: "C++" },
-  { tier: "😁", name: "C" },
-  { tier: "😁", name: "C#" },
-  { tier: "😁", name: "JavaScript" },
-  { tier: "😁", name: "HTML" },
-  { tier: "😁", name: "CSS" },
-  { tier: "😁", name: "SQL" },
-  { tier: "🙂", name: "Java" },
-  { tier: "🙂", name: "PHP" },
-  { tier: "🙂", name: "Perl" },
-  { tier: "🙂", name: "R" },
+  { tier: "🥇", name: "TypeScript" },
+  { tier: "🥇", name: "Rust" },
+  { tier: "🥇", name: "Python" },
+  { tier: "🥇", name: "HTML" },
+  { tier: "🥇", name: "CSS" },
+  { tier: "🥇", name: "Shell Scripts" },
+  { tier: "🥇", name: "SQL" },
+  { tier: "🥈", name: "C" },
+  { tier: "🥈", name: "C++" },
+  { tier: "🥈", name: "C#" },
+  { tier: "🥉", name: "Java" },
+  { tier: "🥉", name: "PHP" },
+  { tier: "🥉", name: "Perl" },
+  { tier: "🥉", name: "R" },
 ];
 
 interface ProgrammingLanguageTierProps {
@@ -52,10 +54,20 @@ function ProgrammingLanguageTier({ tier }: ProgrammingLanguageTierProps) {
 
 function ProgrammingLanguageTierList() {
   return (
-    <ol className="list-none flex flex-col w-full gap-2">
-      {tiers.map((tier: Tier) => (
-        <ProgrammingLanguageTier key={tier} tier={tier} />
-      ))}
+    <ol
+      className={cn(
+        "grow",
+        "list-none",
+        "flex flex-col",
+        "justify-around items-stretch",
+        "w-full gap-2",
+      )}
+    >
+      {tiers.map(
+        (tier: Tier): ReactElement => (
+          <ProgrammingLanguageTier key={tier} tier={tier} />
+        ),
+      )}
     </ol>
   );
 }

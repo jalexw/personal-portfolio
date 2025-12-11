@@ -23,10 +23,21 @@ export default function ResumeLayout(): ReactElement {
       <ResumeHeader />
       <p className="text-sm">{openingStatement}</p>
       <EducationAndCertificationsSection />
-      <div className="w-full flex flex-row gap-4">
-        <FavProgrammingLanguages widthClassName="grow-0 min-w-[250px]" />
-        <Separator orientation="vertical" decorative={true} />
-        <TechnicalSkills widthClassName="grow" />
+      <div
+        className={cn(
+          "w-full",
+          "flex flex-row",
+          "items-stretch justify-around",
+          "gap-2",
+        )}
+      >
+        <FavProgrammingLanguages widthClassName={cn("grow-0 min-w-[225px]")} />
+        <Separator
+          orientation="vertical"
+          decorative={true}
+          className="min-h-[140px] my-auto"
+        />
+        <TechnicalSkills widthClassName={cn("grow")} />
       </div>
       <WorkExperienceSection />
     </main>

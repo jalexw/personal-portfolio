@@ -14,7 +14,7 @@ export function ResumeSection({
 }: ResumeSectionProps): ReactElement {
   return (
     <section className={cn("flex flex-col gap-0", widthClassName ?? "w-full")}>
-      <h2 className="text-xl text-nowrap">{title}</h2>
+      <h2 className={cn("text-lg", "text-nowrap", "font-semibold")}>{title}</h2>
       <Separator decorative={true} className={cn("mt-0.5 mb-2")} />
       {children}
     </section>
