@@ -26,7 +26,7 @@ function EducationTile(props: EducationOrCertificationTileProps) {
         "grow",
         props.priority ? "flex-shrink-0" : undefined,
         "text-center",
-        "bg-blue-50 print:bg-transparent",
+        "bg-blue-50",
         "rounded-md border border-dotted",
         borderColorClassname,
         "shadow-md",
@@ -117,6 +117,7 @@ export function EducationAndCertificationsSection(): ReactElement {
           "flex flex-row",
           "justify-around items-stretch",
           "flex-nowrap gap-2",
+          "bg-white",
         )}
       >
         <EducationTile
