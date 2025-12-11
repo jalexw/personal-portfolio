@@ -13,20 +13,20 @@ interface ILinkProps extends PropsWithChildren {
 }
 type TLink = FC<ILinkProps>;
 
-export function ResumeLink(): ReactElement {
-  const Link: TLink =
-    process.env.NODE_ENV === "development"
-      ? (props: ILinkProps) => (
-          <NextLink href={props.href} target={props.target}>
-            {props.children}
-          </NextLink>
-        )
-      : (props: ILinkProps) => (
-          <a href={props.href} target={props.target}>
-            {props.children}
-          </a>
-        );
+const Link: TLink =
+  process.env.NODE_ENV === "development"
+    ? (props: ILinkProps) => (
+        <NextLink href={props.href} target={props.target} prefetch={true}>
+          {props.children}
+        </NextLink>
+      )
+    : (props: ILinkProps) => (
+        <a href={props.href} target={props.target}>
+          {props.children}
+        </a>
+      );
 
+export function ResumeLink(): ReactElement {
   return (
     <Link
       href={getResumeDocumentHref()}
