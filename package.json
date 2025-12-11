@@ -1,6 +1,6 @@
 {
   "name": "@jalexw/personal-portfolio",
-  "version": "0.4.64",
+  "version": "0.4.65",
   "private": true,
   "scripts": {
     "dev": "PORT=3000 bun --bun next dev",
