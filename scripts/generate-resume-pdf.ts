@@ -21,11 +21,34 @@ async function generatePdfFromWebpage({
   const page = await browser.newPage();
   await page.goto(resume_page_url);
   await page.waitForNetworkIdle();
+
+  async function resumePageTitleSanityChecks(): Promise<boolean> {
+    const title: string = await page.$eval("h1", (el) => el.textContent);
+    if (!title) {
+      return false;
+    }
+    if (
+      title.includes("Resume") ||
+      title.includes("CV") ||
+      title.includes("Résumé")
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  if (!(await resumePageTitleSanityChecks())) {
+    throw new Error(
+      "Document does not have expected title content; not proceeding with PDF generation!",
+    );
+  }
+
   await page.pdf({
     path: output_path,
     format: "Letter",
     margin: { top: "0.5cm", right: "0.5cm", bottom: "0.5cm", left: "0.5cm" },
     scale: 0.95,
+    printBackground: true,
   });
   await browser.close();
   return output_path;

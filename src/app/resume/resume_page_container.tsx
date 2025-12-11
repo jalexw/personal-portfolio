@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@schemavaults/ui";
 import type { PropsWithChildren, ReactElement } from "react";
 
 export interface ResumePageContainerProps extends PropsWithChildren {}
@@ -9,11 +10,12 @@ export default function ResumePageContainer({
 }: ResumePageContainerProps): ReactElement {
   return (
     <div
-      className="
-      grid place-items-center
-      min-h-screen print:min-h-0
-      bg-gray-400
-      overflow-x-scroll print:overflow-x-hidden"
+      className={cn(
+        "grid place-items-center",
+        "min-h-screen print:min-h-0",
+        "bg-gray-400 print:bg-white",
+        "overflow-x-scroll print:overflow-x-hidden",
+      )}
     >
       <div
         className="
@@ -23,7 +25,7 @@ export default function ResumePageContainer({
         rounded-md print:rounded-none
         bg-white
         text-black
-        p-8 print:p-0
+        p-[5mm] print:p-0
         shadow-lg print:shadow-none
       "
       >
