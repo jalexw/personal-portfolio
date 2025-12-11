@@ -1,13 +1,14 @@
 {
   "name": "@jalexw/personal-portfolio",
-  "version": "0.4.63",
+  "version": "0.4.64",
   "private": true,
   "scripts": {
     "dev": "PORT=3000 bun --bun next dev",
     "build": "bun --bun next build",
     "start": "bun --bun next start",
     "lint": "bun --bun next lint",
-    "pdfgen:resume": "bun run ./scripts/generate-resume-pdf.ts http://localhost:3000/resume"
+    "pdfgen:resume": "bun run ./scripts/generate-resume-pdf.ts http://localhost:3000/resume",
+    "build:resume-pdf": "bun run ./scripts/build-resume-pdf.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "3.9.0",
