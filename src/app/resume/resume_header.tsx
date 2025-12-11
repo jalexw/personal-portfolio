@@ -1,3 +1,5 @@
+"use client";
+
 import { email } from "@/metadata";
 import domain from "@/metadata/domain";
 import geographic_location from "@/metadata/geographic_location";
@@ -68,3 +70,5 @@ export function ResumeHeader(): ReactElement {
     </>
   );
 }
+
+export default ResumeHeader;

@@ -73,7 +73,7 @@ function ProgrammingLanguageTierList() {
   );
 }
 
-export function FavProgrammingLanguages({
+export function FavProgrammingLanguagesSection({
   widthClassName,
 }: {
   widthClassName: string;
@@ -87,3 +87,5 @@ export function FavProgrammingLanguages({
     </ResumeSection>
   );
 }
+
+export default FavProgrammingLanguagesSection;

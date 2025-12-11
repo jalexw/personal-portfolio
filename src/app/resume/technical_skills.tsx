@@ -56,7 +56,7 @@ const technical_skills: TechnicalSkillDef[] = [
   { label: "Express.js" },
 ];
 
-export function TechnicalSkills({
+export function TechnicalSkillsSection({
   skills,
   widthClassName,
 }: TechnicalSkillsProps): ReactElement {
@@ -80,3 +80,5 @@ export function TechnicalSkills({
     </ResumeSection>
   );
 }
+
+export default TechnicalSkillsSection;

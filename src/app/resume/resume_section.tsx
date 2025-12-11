@@ -5,15 +5,23 @@ import { cn } from "@schemavaults/ui";
 export interface ResumeSectionProps extends PropsWithChildren {
   title: string;
   widthClassName?: string;
+  heightClassName?: string;
 }
 
 export function ResumeSection({
   title,
   children,
   widthClassName,
+  heightClassName,
 }: ResumeSectionProps): ReactElement {
   return (
-    <section className={cn("flex flex-col gap-0", widthClassName ?? "w-full")}>
+    <section
+      className={cn(
+        "flex flex-col gap-0",
+        widthClassName ?? "w-full",
+        heightClassName ?? "h-auto",
+      )}
+    >
       <h2 className={cn("text-lg", "text-nowrap", "font-semibold")}>{title}</h2>
       <Separator decorative={true} className={cn("mt-0.5 mb-2")} />
       {children}

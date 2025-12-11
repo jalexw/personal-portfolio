@@ -11,7 +11,14 @@ interface PastJobDescriptionProps {
 
 function PastJobDescription(props: PastJobDescriptionProps): ReactElement {
   return (
-    <article className="flex flex-col justify-start items-start text-left w-full text-black">
+    <li
+      className={cn(
+        "flex flex-col",
+        "justify-start items-start",
+        "text-left w-full",
+        "text-black",
+      )}
+    >
       <header className="flex flex-row justify-between w-full pb-1">
         <h3 className="text-xs">
           <span className="font-bold">{props.company_name}</span>,{" "}
@@ -30,7 +37,7 @@ function PastJobDescription(props: PastJobDescriptionProps): ReactElement {
           </li>
         ))}
       </ul>
-    </article>
+    </li>
   );
 }
 
@@ -62,10 +69,10 @@ const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
       </>
     ),
     job_duties: [
-      "Evaluated, built, and deployed biological age models (including k-NN, CNN, RNN, etc.) from electrode measurement dataset.",
-      "Created cross-platform Mac+Windows+Web Tauri app (Next.js/React.js app w/ TypeScript, TailwindCSS, & Redux, wrapped in Rust webview to collect data w/ native hardware driver), allowing real-time analysis and visualization of measurement data.",
+      "Built an app for electrode data collection, and real-time data analysis + visualization; a cross-platform Mac+Windows+Web app (Next.js/React.js/TypeScript/TailwindCSS/Redux, wrapped in a Tauri/Rust webview to collect data via native hardware driver).",
       "Rewrote Windows-only Visual Basic + C# USB driver as a cross-platform Rust driver (using rusb) to interact with hardware.",
       "Set up Auth0 authentication, RBAC, and a tRPC (full-stack type-safety) Node.js API to store electrical readings in MongoDB.",
+      "Evaluated, built, and deployed biological age models (including k-NN, CNN, RNN, etc.) from electrode measurement dataset.",
     ],
   },
   {
@@ -124,19 +131,36 @@ const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
   },
 ];
 
-export function WorkExperienceSection(): ReactElement {
+export function WorkExperienceSection({
+  heightClassName,
+}: {
+  heightClassName: string;
+}): ReactElement {
+  const sectionContent: ReactNode[] = [];
+
+  for (const [index, job] of WORK_EXPERIENCES.entries()) {
+    sectionContent.push(
+      <PastJobDescription key={`past-job-${index}`} {...job} />,
+    );
+    if (index !== WORK_EXPERIENCES.length - 1) {
+      sectionContent.push(
+        <WorkExperienceSeparator key={`work-experience-separator-${index}`} />,
+      );
+    }
+  }
+
   return (
-    <ResumeSection title="Selected Work Experience">
-      {WORK_EXPERIENCES.map((job, index) => (
-        <div key={`${job.company_name}-${index}`}>
-          <PastJobDescription key={`past-job-${index}`} {...job} />
-          {index === WORK_EXPERIENCES.length - 1 ? null : (
-            <WorkExperienceSeparator
-              key={`work-experience-separator-${index}`}
-            />
-          )}
-        </div>
-      ))}
+    <ResumeSection
+      title="Selected Work Experience"
+      heightClassName={heightClassName}
+    >
+      <ul
+        className={cn("grow", "flex flex-col", "items-stretch justify-around")}
+      >
+        {sectionContent}
+      </ul>
     </ResumeSection>
   );
 }
+
+export default WorkExperienceSection;

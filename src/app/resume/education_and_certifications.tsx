@@ -161,3 +161,5 @@ export function EducationAndCertificationsSection(): ReactElement {
     </ResumeSection>
   );
 }
+
+export default EducationAndCertificationsSection;
