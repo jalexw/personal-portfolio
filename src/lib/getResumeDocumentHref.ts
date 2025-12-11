@@ -1,5 +1,5 @@
 export function getProductionResumeDocumentHref(): string {
-  return "/shared-documents/resume.pdf";
+  return "/shared-documents/jalexw-resume.pdf";
 }
 
 export function getResumeDocumentHref(): string {

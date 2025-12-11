@@ -84,7 +84,7 @@ function resolveSharedDocumentsDir(): string {
 
 async function generateResumePdf(resume_page_url: string): Promise<string> {
   const sharedDocumentsPath = resolveSharedDocumentsDir();
-  const outputPdfPath: string = join(sharedDocumentsPath, "resume.pdf");
+  const outputPdfPath: string = join(sharedDocumentsPath, "jalexw-resume.pdf");
 
   if (existsSync(outputPdfPath)) {
     console.error(`Output file '${outputPdfPath}' already exists!`);
