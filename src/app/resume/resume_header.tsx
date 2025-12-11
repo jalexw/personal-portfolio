@@ -39,7 +39,7 @@ export function ResumeHeader(): ReactElement {
         {/** Title */}
         <div className="grow flex flex-col items-center justify-center">
           <h1 className="font-bold text-2xl">J. Alex Whitman{"'"}s Résumé</h1>
-          <h2 className="text-xl">Full-Stack Developer & Data Scientist</h2>
+          <h2 className="text-xl">Full-Stack Software Developer</h2>
         </div>
 
         {/** Right-Side Links / Info */}
