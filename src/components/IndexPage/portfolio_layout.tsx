@@ -8,6 +8,7 @@ import SpacerSection from "./sections/spacer_section";
 import CurrentProjectsSection from "./sections/current_projects_section";
 import SocialMediaLinksSection from "./sections/social_media_links_section";
 import BuyMeACoffeeSection from "./sections/buy_me_a_coffee_section";
+import ThisPortfolioIsOpenSourceSection from "./sections/this_portfolio_is_open_source_section";
 
 export default function PortfolioLayout(): ReactElement {
   return (
@@ -18,6 +19,7 @@ export default function PortfolioLayout(): ReactElement {
       <SocialMediaLinksSection />
       <BuyMeACoffeeSection />
       <SpacerSection />
+      <ThisPortfolioIsOpenSourceSection />
     </main>
   );
 }
