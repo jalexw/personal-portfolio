@@ -14,7 +14,10 @@ async function generatePdfFromWebpage({
   resume_page_url,
   output_path,
 }: IGenerateResumePdfOptions): Promise<string> {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
   const page = await browser.newPage();
   await page.goto(resume_page_url);
   await page.waitForNetworkIdle();
