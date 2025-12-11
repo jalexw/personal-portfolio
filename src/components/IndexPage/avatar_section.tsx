@@ -119,7 +119,12 @@ export function AvatarSection(): ReactElement {
           {!loadingStates.placeholder_exit && (
             <div
               id="welcome-message-container"
-              className="w-full overflow-x-hidden flex items-center justify-center z-10 min-h-[40vh]"
+              className={cn(
+                "w-full overflow-x-hidden",
+                "flex items-center justify-center",
+                "z-10",
+                "min-h-[40vh]",
+              )}
             >
               <WelcomeMessage />
             </div>

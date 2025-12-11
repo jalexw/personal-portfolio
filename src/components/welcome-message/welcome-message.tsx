@@ -34,13 +34,13 @@ export function WelcomeMessage(): ReactElement {
     ["start_load", "canvas", "initial_assets"],
     "WelcomeMessage",
   );
-  const experience = useExperience();
+  const { dispatch } = useExperience();
 
   return (
     <AnimatePresence
       initial={false}
       onExitComplete={(): void => {
-        experience.dispatch({
+        dispatch({
           type: "placeholder_exit_complete",
         });
       }}
@@ -59,7 +59,7 @@ export function WelcomeMessage(): ReactElement {
               );
             }
             if (event === "exit") {
-              experience.dispatch({
+              dispatch({
                 type: "typewriter_effect_exit_complete",
               });
             }

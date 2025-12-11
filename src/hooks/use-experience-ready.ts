@@ -18,9 +18,7 @@ export function useExperienceReady(
   callerLabel?: string,
 ): boolean {
   const debug: boolean = useDebug();
-  const experience = useExperience();
-  const loadingStates: Record<ExperienceLoadingCategories, boolean> =
-    experience.loadingStates;
+  const { loadingStates } = useExperience();
 
   const debugLogLocationLabel: string = `[useExperienceReady${callerLabel ? `::<${callerLabel}>` : ""}]`;
 

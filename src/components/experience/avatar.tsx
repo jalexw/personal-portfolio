@@ -6,6 +6,7 @@ import {
   useMemo,
   useCallback,
   type ReactNode,
+  useState,
 } from "react";
 import { type Vector3, type AnimationAction } from "three";
 import useExperience from "@/hooks/use-experience";
@@ -222,8 +223,7 @@ function AvatarComponentShowcaser({
 
 function AvatarComponent(props: AvatarComponentProps): ReactNode {
   const debug: boolean = useDebug();
-  const experience = useExperience();
-  const dispatch = experience.dispatch;
+  const { dispatch, experienceLoadManager, loadingStates } = useExperience();
   const resetExperience = useCallback(
     () =>
       dispatch({
@@ -231,29 +231,38 @@ function AvatarComponent(props: AvatarComponentProps): ReactNode {
       }),
     [dispatch],
   );
-  const manager: PortfolioExperienceLoadManager | null | undefined =
-    experience.experienceLoadManager?.current;
+  const [gltf, setGltf] = useState<GLTF | null>(null);
 
   console.assert(
-    experience.loadingStates.initial_assets,
+    loadingStates.initial_assets,
     "Expected initial assets to have been loaded if this component is being rendered!",
   );
 
-  const avatarAssetRef: AssetRef<"avatar", "gltf"> | undefined =
-    manager?.assets.get("avatar");
-
-  const gltf: GLTF | undefined = avatarAssetRef?.asset;
-
   useEffect(() => {
-    if (gltf) {
+    const manager: PortfolioExperienceLoadManager | null | undefined =
+      experienceLoadManager?.current;
+    if (!manager) {
+      console.warn(
+        "Failed to load reference to PortfolioExperienceLoadManager from AvatarComponent! Resetting...",
+      );
+      resetExperience();
+      return;
+    }
+    const avatarAssetRef: AssetRef<"avatar", "gltf"> | undefined =
+      manager.assets.get("avatar");
+    const gltf_asset: GLTF | undefined = avatarAssetRef?.asset;
+
+    if (gltf_asset) {
       if (debug) {
-        console.log("AvatarComponent GLTF:", gltf);
+        console.log("AvatarComponent GLTF:", gltf_asset);
       }
+      setGltf(gltf_asset);
     } else {
       console.warn(
         "AvatarComponent GLTF asset missing! Did it get unloaded somehow? Resetting...",
       );
       resetExperience();
+      return;
     }
   }, [gltf, debug, resetExperience]);
 

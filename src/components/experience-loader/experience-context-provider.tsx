@@ -6,7 +6,7 @@ import {
   useEffect,
   useRef,
   useCallback,
-  startTransition,
+  useTransition,
 } from "react";
 import {
   PortfolioExperienceContext,
@@ -25,10 +25,11 @@ export function PortfolioExperienceProvider({
 }: PropsWithChildren): ReactElement {
   const debug: boolean = useDebug();
   const [value, dispatchSync] = useExperienceManagerLoadingStatesReducer();
-
+  const [isDispatching, startDispatching] = useTransition();
+  void isDispatching;
   const dispatch = useCallback(
     (action: ExperienceManagerReducerAction) => {
-      startTransition(() => {
+      startDispatching(() => {
         dispatchSync(action);
       });
     },
