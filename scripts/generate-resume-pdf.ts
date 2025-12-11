@@ -56,7 +56,7 @@ function resolveSharedDocumentsDir(): string {
   return dir;
 }
 
-async function generateResumePdf(): Promise<string> {
+async function generateResumePdf(resume_page_url: string): Promise<string> {
   const sharedDocumentsPath = resolveSharedDocumentsDir();
   const outputPdfPath: string = join(sharedDocumentsPath, "resume.pdf");
 
@@ -67,7 +67,7 @@ async function generateResumePdf(): Promise<string> {
 
   try {
     await generatePdfFromWebpage({
-      resume_page_url: "http://localhost:3000/resume",
+      resume_page_url,
       output_path: outputPdfPath,
     });
   } catch (e: unknown) {
@@ -86,7 +86,18 @@ async function generateResumePdf(): Promise<string> {
 }
 
 async function main() {
-  const output = await generateResumePdf();
+  const args: readonly string[] = process.argv.slice(2);
+  const firstArg = args[0];
+  if (
+    !firstArg ||
+    (!firstArg.startsWith("http://") && !firstArg.startsWith("https://"))
+  ) {
+    console.error("Usage: node generate-resume-pdf.ts <resume_page_url>");
+    process.exit(1);
+  }
+  const resume_page_url: string = firstArg;
+
+  const output = await generateResumePdf(resume_page_url);
   console.log(`Resume PDF generated at '${output}'`);
 }
 

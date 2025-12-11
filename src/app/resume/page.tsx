@@ -3,16 +3,16 @@
 // React/Next Imports
 import type { ReactElement } from "react";
 import type { Metadata } from "next";
-import ResumeLayout from "./resume_layout";
-import ResumePageContainer from "./resume_page_container";
 import { openingStatement } from "./opening_statement";
+import { redirect } from "next/navigation";
+import { getProductionResumeDocumentHref } from "@/lib/getResumeDocumentHref";
+import ResumePageView from "./resume_page_view";
 
-export default function Resume(): ReactElement {
-  return (
-    <ResumePageContainer>
-      <ResumeLayout />
-    </ResumePageContainer>
-  );
+export default async function ResumePage(): Promise<ReactElement> {
+  if (process.env.NODE_ENV === "development") {
+    return <ResumePageView />;
+  }
+  redirect(getProductionResumeDocumentHref());
 }
 
 export const metadata: Metadata = {
