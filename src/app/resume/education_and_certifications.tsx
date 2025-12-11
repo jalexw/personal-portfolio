@@ -29,7 +29,7 @@ function EducationTile(props: EducationOrCertificationTileProps) {
         "bg-blue-50",
         "rounded-md border border-dotted",
         borderColorClassname,
-        "shadow-md",
+        "shadow-md print:shadow-none",
         "relative",
       )}
     >
