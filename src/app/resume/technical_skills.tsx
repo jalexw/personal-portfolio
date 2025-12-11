@@ -41,7 +41,6 @@ const technical_skills: TechnicalSkillDef[] = [
   { label: "APIs: REST, RPC, GraphQL" },
   { label: "Compilers, Bundlers, & Transpilers" },
   { label: "Vector Search" },
-
   { label: "React.js/Next.js" },
   { label: "Vue.js" },
   { label: "Angular.js" },
@@ -54,6 +53,7 @@ const technical_skills: TechnicalSkillDef[] = [
   { label: "Electron" },
   { label: "Django" },
   { label: "Flask" },
+  { label: "Express.js" },
 ];
 
 export function TechnicalSkills({

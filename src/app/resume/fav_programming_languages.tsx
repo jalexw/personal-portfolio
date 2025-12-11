@@ -20,6 +20,7 @@ const languages: readonly ProgrammingLanguageRef[] = [
   { tier: "🥇", name: "CSS" },
   { tier: "🥇", name: "Shell Scripts" },
   { tier: "🥇", name: "SQL" },
+  { tier: "🥈", name: "JavaScript" },
   { tier: "🥈", name: "C" },
   { tier: "🥈", name: "C++" },
   { tier: "🥈", name: "C#" },
