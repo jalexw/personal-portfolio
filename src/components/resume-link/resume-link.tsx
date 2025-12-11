@@ -12,6 +12,7 @@ export function ResumeLink(): ReactElement {
     <Link
       href={getResumeDocumentHref()}
       target={process.env.NODE_ENV === "development" ? "_self" : "_blank"}
+      prefetch={process.env.NODE_ENV === "development"}
     >
       <Button className="flex flex-row justify-start gap-2" variant={"outline"}>
         <span className="block md:hidden">Resume: </span>
