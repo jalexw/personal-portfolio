@@ -64,10 +64,7 @@ export function useExperienceReady(
   }
 
   const allCategoriesReady: boolean = Object.entries(loadingStates).every(
-    (
-      [loadingCategoryName, loadingStatusBool]: [string, boolean],
-      index: number,
-    ): boolean => {
+    ([loadingCategoryName, loadingStatusBool]: [string, boolean]): boolean => {
       void loadingCategoryName;
       return loadingStatusBool;
     },

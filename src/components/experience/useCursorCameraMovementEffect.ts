@@ -51,7 +51,7 @@ export function useCursorCameraMovementEffect({
     };
   }
 
-  useFrame(({ clock }) => {
+  useFrame(() => {
     if (!avatarRef.current) {
       return;
     }

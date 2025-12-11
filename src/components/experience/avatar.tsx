@@ -5,7 +5,7 @@ import {
   useEffect,
   useMemo,
   useCallback,
-  ReactNode,
+  type ReactNode,
 } from "react";
 import { type Vector3, type AnimationAction } from "three";
 import useExperience from "@/hooks/use-experience";
@@ -223,6 +223,14 @@ function AvatarComponentShowcaser({
 function AvatarComponent(props: AvatarComponentProps): ReactNode {
   const debug: boolean = useDebug();
   const experience = useExperience();
+  const dispatch = experience.dispatch;
+  const resetExperience = useCallback(
+    () =>
+      dispatch({
+        type: "reset",
+      }),
+    [dispatch],
+  );
   const manager: PortfolioExperienceLoadManager | null | undefined =
     experience.experienceLoadManager?.current;
 
@@ -245,11 +253,9 @@ function AvatarComponent(props: AvatarComponentProps): ReactNode {
       console.warn(
         "AvatarComponent GLTF asset missing! Did it get unloaded somehow? Resetting...",
       );
-      experience.dispatch({
-        type: "reset",
-      });
+      resetExperience();
     }
-  }, [gltf, debug]);
+  }, [gltf, debug, resetExperience]);
 
   if (!gltf) {
     // Wait for the load manager to finish loading the Avatar data

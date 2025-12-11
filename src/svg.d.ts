@@ -1,5 +1,6 @@
+import type { FC, SVGProps } from "react";
+
 declare module "*.svg" {
-  import React = require("react");
-  const src: React.FC<React.SVGProps<SVGSVGElement>>;
+  const src: FC<SVGProps<SVGSVGElement>>;
   export default src;
 }

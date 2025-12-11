@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@schemavaults/ui";
-import { ReactElement, useMemo, useState } from "react";
+import { type ReactElement, useMemo } from "react";
 import type { ControllerRenderProps } from "react-hook-form";
 import type { ContactFormData } from "./contact-form-schema";
 import { type MessageCategory, messageCategories } from "./message-category";
@@ -30,7 +30,7 @@ interface MessageCategoryGroupProps {
   selected: MessageCategory | null;
 }
 
-function MessageCategoryGroup({
+function MessageCategoryGroupComponent({
   group,
   selected,
 }: MessageCategoryGroupProps): ReactElement {
@@ -91,7 +91,7 @@ export function ContactFormSubjectSelect({
       </SelectTrigger>
       <SelectContent>
         {messageCategoryGroups.map((group) => (
-          <MessageCategoryGroup
+          <MessageCategoryGroupComponent
             key={group}
             group={group}
             selected={selectedCategory ?? null}

@@ -22,6 +22,7 @@ async function waitForServer(
         return;
       }
     } catch (error) {
+      void error;
       // Server not ready yet, continue waiting
     }
 

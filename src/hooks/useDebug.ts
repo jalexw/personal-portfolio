@@ -7,13 +7,17 @@ export function useDebug(): boolean {
     if (process.env.NODE_ENV === "development") {
       return true;
     }
-  } catch (e: unknown) {}
+  } catch (e: unknown) {
+    void e; // no-op
+  }
 
   try {
     if (isDebugFlagSetInEnvironmentVariables()) {
       return true;
     }
-  } catch (e: unknown) {}
+  } catch (e: unknown) {
+    void e; // no-op
+  }
 
   return false;
 }

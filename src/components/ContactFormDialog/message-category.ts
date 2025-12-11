@@ -11,7 +11,6 @@ import {
   Bug,
   Wrench,
   Rocket,
-  Swords,
 } from "lucide-react";
 
 export type MessageCategory = {

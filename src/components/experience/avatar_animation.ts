@@ -1,4 +1,3 @@
-import type { AnimationAction } from "three";
 import { LoopRepeat, LoopOnce } from "three";
 import type { AvatarAnimationActions } from "./avatar_animation_actions";
 import avatarAnimationsConstants from "./avatar_animation_constants";
@@ -52,13 +51,6 @@ function playFallAndLandAnimation(
     clearTimeout(entryTimer);
   };
   return unsubscribe;
-}
-
-function millisecondsToSeconds(ms: number): number {
-  if (typeof ms !== "number") {
-    throw new Error("Expected first argument to be a number!");
-  }
-  return ms / 1000;
 }
 
 function secondsToMilliseconds(secs: number): number {
@@ -258,8 +250,6 @@ export function avatarAnimation({
     }
     return playFallAndLandAnimation(actions);
   }
-
-  throw new Error("Unhandled animation state");
 }
 
 export default avatarAnimation;

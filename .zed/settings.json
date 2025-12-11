@@ -12,6 +12,22 @@
           "classRegex": ["[cls|className]\\s\\:\\=\\s\"([^\"]*)"]
         }
       }
+    },
+    "eslint": {
+      "settings": {
+        "workingDirectories": [
+          {
+            "mode": "auto"
+          }
+        ],
+        "validate": [
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact"
+        ],
+        "run": "onSave"
+      }
     }
   }
 }

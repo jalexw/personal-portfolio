@@ -16,7 +16,7 @@ export class ExperienceErrorBoundary extends Component<
   }
 
   public componentDidCatch(error: Error, errorInfo: unknown) {
-    console.error(error);
+    console.error(error, errorInfo);
     this.setState({
       error: error,
     });

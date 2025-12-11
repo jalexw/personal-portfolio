@@ -4,10 +4,9 @@ import {
   type PropsWithChildren,
   type ReactElement,
   useEffect,
-  useTransition,
   useRef,
   useCallback,
-  useMemo,
+  startTransition,
 } from "react";
 import {
   PortfolioExperienceContext,
@@ -26,15 +25,14 @@ export function PortfolioExperienceProvider({
 }: PropsWithChildren): ReactElement {
   const debug: boolean = useDebug();
   const [value, dispatchSync] = useExperienceManagerLoadingStatesReducer();
-  const [isDispatching, startDispatching] = useTransition();
 
   const dispatch = useCallback(
     (action: ExperienceManagerReducerAction) => {
-      startDispatching(() => {
+      startTransition(() => {
         dispatchSync(action);
       });
     },
-    [startDispatching, dispatchSync],
+    [dispatchSync],
   );
 
   const experienceManagerRef = useRef<PortfolioExperienceLoadManager | null>(

@@ -2,18 +2,18 @@
 
 import { useCallback } from "react";
 import type { GLTF } from "@/lib/GLTF";
-import type { SkinnedMesh, Material } from "three";
+import type { SkinnedMesh, Material, Object3D } from "three";
 
 type GLTF_Opacity_Setter = (gltf: GLTF, newOpacity: number) => void;
 
 export function useUpdateOpacity(): GLTF_Opacity_Setter {
   const setter: GLTF_Opacity_Setter = useCallback(
     (gltf: GLTF, newOpacity: number) => {
-      gltf.scene.traverse((object) => {
+      gltf.scene.traverse((object: Object3D) => {
         const type = object.type.toUpperCase();
         if (type === "MESH" || type === "SKINNEDMESH") {
           if (
-            !object.hasOwnProperty("isMesh") ||
+            !Object.hasOwn(object, "isMesh") ||
             !(object as SkinnedMesh).isMesh
           ) {
             throw new Error("Object with type == Mesh but isMesh == false");

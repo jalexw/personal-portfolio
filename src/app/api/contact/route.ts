@@ -37,7 +37,7 @@ async function sendConfirmationEmail(
   contactFormMessage: ContactFormData,
 ): Promise<void> {
   console.log(
-    `Sending confirmation email to \"${contactFormMessage.email}\" at ${new Date().toISOString()}`,
+    `Sending confirmation email to "${contactFormMessage.email}" at ${new Date().toISOString()}`,
   );
   await resend.emails.send({
     from: "J. Alex Whitman Contact Form <noreply@jalexw.ca>",
@@ -57,6 +57,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     json = await request.json();
   } catch (error: unknown) {
+    captureException(error);
     return NextResponse.json(
       {
         error: "Error parsing JSON body",
@@ -80,6 +81,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
     contactFormMessage = parsed.data;
   } catch (error: unknown) {
+    captureException(error);
     return NextResponse.json(
       {
         error: "Error parsing JSON body as contact form message",

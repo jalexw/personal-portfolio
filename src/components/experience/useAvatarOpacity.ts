@@ -48,7 +48,7 @@ export function useAvatarOpacity(gltf: GLTF): void {
     [_updateGltfModelOpacity, debug],
   );
 
-  useFrame(({ clock }, delta: number) => {
+  useFrame(() => {
     if (!hasEntered(lastEntranceTime)) {
       setOpacity(gltf, 0);
       return;

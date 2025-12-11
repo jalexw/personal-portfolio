@@ -1,6 +1,8 @@
+"use client";
+
 import { z } from "zod";
 import {
-  MessageCategoryValue,
+  type MessageCategoryValue,
   messageCategoryValues,
 } from "./message-category";
 
@@ -10,7 +12,7 @@ export const contactFormSchema = z
       .string()
       .min(2, "Name must be at least 2 letters long")
       .max(64, "Name must be under 64 characters"),
-    email: z.string().email(),
+    email: z.email(),
     subject: z
       .string()
       .refine((value): value is MessageCategoryValue =>

@@ -87,7 +87,7 @@ export class PortfolioExperienceLoadManager {
       } catch (e: unknown) {
         // no-op
         if (this.debug) {
-          console.warn(`Error loading cached asset \"${asset_def.name}\"`);
+          console.warn(`Error loading cached asset "${asset_def.name}": `, e);
         }
       }
     }
