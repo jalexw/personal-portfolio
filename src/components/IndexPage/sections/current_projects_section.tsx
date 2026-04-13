@@ -36,8 +36,11 @@ function CurrentProjectCard({
         <div className="h-16 w-16 flex items-center justify-center">
           <Image src={img_src} alt={title} width={40} height={40} />
         </div>
-        <div className="h-16 w-32 flex items-center justify-center">
-          <span>{title}</span>
+        <div className={cn(
+          "h-16 w-auto min-w-32",
+          "flex items-center justify-center"
+        )}>
+          <span className="text-nowrap">{title}</span>
         </div>
       </a>
     </li>
@@ -54,7 +57,9 @@ export function CurrentProjectsSection(): ReactElement {
       <ul className={cn(
         "flex",
         "flex-col md:flex-row",
-        "justify-center gap-2 md:gap-4 items-center"
+        "justify-center items-center",
+        "flex-wrap",
+        "gap-2 md:gap-4"
       )}>
         <CurrentProjectCard
           title={"SchemaVaults"}
