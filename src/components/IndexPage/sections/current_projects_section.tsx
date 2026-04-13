@@ -30,6 +30,7 @@ function CurrentProjectCard({
           containerSize,
           "flex flex-row gap-0",
           "hover:cursor-pointer",
+          "p-1"
         )}
         href={href}
       >
