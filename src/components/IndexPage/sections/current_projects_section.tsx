@@ -27,19 +27,22 @@ function CurrentProjectCard({
     >
       <a
         className={cn(
-          containerSize,
-          "flex flex-row gap-0",
+          "h-full w-auto",
+          "flex flex-row", "items-center justify-start",
+          "gap-0",
           "hover:cursor-pointer",
           "p-1"
         )}
         href={href}
       >
         <div className="h-16 w-16 flex items-center justify-center">
-          <Image src={img_src} alt={title} width={40} height={40} />
+          <Image src={img_src} alt={title} width={48} height={48} />
         </div>
         <div className={cn(
           "h-16 w-auto min-w-32",
-          "flex items-center justify-center"
+          "flex items-center justify-center",
+          "grow flex-shrink-0 flex-nowrap",
+          "pr-2"
         )}>
           <span className="text-nowrap">{title}</span>
         </div>
