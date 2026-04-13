@@ -57,6 +57,16 @@ export function CurrentProjectsSection(): ReactElement {
           img_src="/images/schemavaults.png"
           href={"https://schemavaults.com"}
         />
+        <CurrentProjectCard
+          title={"SchemaVaults UI"}
+          img_src="/images/schemavaults.png"
+          href={"https://ui.schemavaults.com"}
+        />
+        <CurrentProjectCard
+          title={"SchemaVaults Auth"}
+          img_src="/images/schemavaults.png"
+          href={"https://auth.schemavaults.com"}
+        />
       </ul>
     </IndexPageSectionTemplate>
   );
