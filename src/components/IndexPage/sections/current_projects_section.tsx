@@ -16,7 +16,7 @@ function CurrentProjectCard({
   img_src,
   href,
 }: CurrentProjectCardProps): ReactElement {
-  const containerSize: string = "h-16 w-48";
+  const containerSize: string = cn("h-16 w-auto min-w-48");
   return (
     <li
       className={cn(
@@ -51,7 +51,11 @@ export function CurrentProjectsSection(): ReactElement {
       id="current-projects-section"
       className="min-h-[40vh]"
     >
-      <ul className="flex flex-row justify-center gap-2 md:gap-4 items-center">
+      <ul className={cn(
+        "flex",
+        "flex-col md:flex-row",
+        "justify-center gap-2 md:gap-4 items-center"
+      )}>
         <CurrentProjectCard
           title={"SchemaVaults"}
           img_src="/images/schemavaults.png"
