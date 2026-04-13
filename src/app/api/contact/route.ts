@@ -9,6 +9,7 @@ import {
   MessageNotificationEmailTemplate,
 } from "@/components/EmailTemplates";
 import { captureException } from "@sentry/nextjs";
+import { ReactNode } from "react";
 
 function getResendKey(): string {
   const key = process.env.RESEND_PRIVATE_KEY;
@@ -24,11 +25,12 @@ async function sendMeEmail(contactFormMessage: ContactFormData): Promise<void> {
   console.log(
     `Sending notification email to admin at ${new Date().toISOString()}`,
   );
+  const rendered: ReactNode = await MessageNotificationEmailTemplate(contactFormMessage)
   await resend.emails.send({
     from: "jalexw.ca - Contact Form <noreply@jalexw.ca>",
     to: ["J. Alex Whitman <contact@jalexw.ca>"],
     subject: "Portfolio Contact Form Message",
-    react: MessageNotificationEmailTemplate(contactFormMessage),
+    react: rendered,
     text: `You've received a new message from ${contactFormMessage.name} <${contactFormMessage.email}>:\n\n${contactFormMessage.message}`,
   });
 }
@@ -39,11 +41,12 @@ async function sendConfirmationEmail(
   console.log(
     `Sending confirmation email to "${contactFormMessage.email}" at ${new Date().toISOString()}`,
   );
+  const rendered = await ContactConfirmationEmailTemplate(contactFormMessage)
   await resend.emails.send({
     from: "J. Alex Whitman Contact Form <noreply@jalexw.ca>",
     to: [contactFormMessage.email],
     subject: "Portfolio Contact Form Message",
-    react: ContactConfirmationEmailTemplate(contactFormMessage),
+    react: rendered,
     text: `Thank you for contacting me. I will get back to you as soon as possible.`,
   });
 }

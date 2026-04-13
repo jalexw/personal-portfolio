@@ -1,10 +1,10 @@
-import type { FC } from "react";
+import type { FC, ReactElement } from "react";
 import type { ContactFormData } from "@/components/ContactFormDialog";
 import { messageCategories } from "@/components/ContactFormDialog/message-category";
 
 export const ContactConfirmationEmailTemplate: FC<
   Readonly<ContactFormData>
-> = ({ name, email, subject, message }) => {
+> = ({ name, email, subject, message }): ReactElement => {
   const subjectCategory = messageCategories.find(
     (category) => category.value === subject,
   );

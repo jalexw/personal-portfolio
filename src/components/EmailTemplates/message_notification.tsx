@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import type { FC, ReactElement } from "react";
 import {
   messageCategories,
   type ContactFormData,
@@ -6,7 +6,7 @@ import {
 
 export const MessageNotificationEmailTemplate: FC<
   Readonly<ContactFormData>
-> = ({ name, email, subject, message }) => {
+> = ({ name, email, subject, message }): ReactElement => {
   const subjectCategory = messageCategories.find(
     (category) => category.value === subject,
   );

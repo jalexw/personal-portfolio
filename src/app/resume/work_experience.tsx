@@ -5,11 +5,15 @@ import { cn, Separator } from "@schemavaults/ui";
 interface PastJobDescriptionProps {
   job_title: string;
   company_name: string;
-  time_description: string | FC; // e.g. 2023 - 2025
+  time_description: string | (() => ReactNode); // e.g. 2023 - 2025
   job_duties: string[];
 }
 
 function PastJobDescription(props: PastJobDescriptionProps): ReactElement {
+  const time_description: ReactNode = typeof props.time_description === "string"
+    ? props.time_description
+    : props.time_description()
+
   return (
     <li
       className={cn(
@@ -25,9 +29,7 @@ function PastJobDescription(props: PastJobDescriptionProps): ReactElement {
           {props.job_title}
         </h3>
         <p className="text-xs font-bold">
-          {typeof props.time_description === "string"
-            ? props.time_description
-            : props.time_description({})}
+          { time_description }
         </p>
       </header>
       <ul className="w-full flex flex-col gap-1 list-disc list-inside">
