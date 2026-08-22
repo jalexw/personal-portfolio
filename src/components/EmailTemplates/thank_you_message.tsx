@@ -5,6 +5,14 @@ import { messageCategories } from "@/components/ContactFormDialog/message-catego
 export const ContactConfirmationEmailTemplate: FC<
   Readonly<ContactFormData>
 > = ({ name, email, subject, message }): ReactElement => {
+  if (typeof name !== 'string') {
+    throw new TypeError("Expected 'name' to be a string!");
+  } else if (typeof email !== 'string') {
+    throw new TypeError("Expected 'email' to be a string!");
+  } else if (typeof message !== 'string') {
+    throw new TypeError("Expected 'message' to be a string!")
+  }
+
   const subjectCategory = messageCategories.find(
     (category) => category.value === subject,
   );

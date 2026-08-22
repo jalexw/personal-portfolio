@@ -38,8 +38,14 @@ async function sendMeEmail(contactFormMessage: ContactFormData): Promise<void> {
 async function sendConfirmationEmail(
   contactFormMessage: ContactFormData,
 ): Promise<void> {
+  if (typeof contactFormMessage.email !== 'string') {
+    throw new TypeError("Expected email to be a string!", {
+      cause: `Bad type of contactFormMessage.email: '${typeof contactFormMessage.email}'`
+    })
+  }
+  const email: string = contactFormMessage.email;
   console.log(
-    `Sending confirmation email to "${contactFormMessage.email}" at ${new Date().toISOString()}`,
+    `Sending confirmation email to "${email}" at ${new Date().toISOString()}`,
   );
   const rendered = await ContactConfirmationEmailTemplate(contactFormMessage)
   await resend.emails.send({

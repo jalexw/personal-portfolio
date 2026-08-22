@@ -1,6 +1,6 @@
 {
   "name": "@jalexw/personal-portfolio",
-  "version": "0.4.97",
+  "version": "0.4.98",
   "private": true,
   "scripts": {
     "dev": "PORT=3000 NODE_ENV=development bun --bun next dev",
@@ -12,7 +12,7 @@
     "build:resume-pdf": "bun run ./scripts/build-resume-pdf.ts"
   },
   "dependencies": {
-    "@hookform/resolvers": "5.9.1",
+    "@hookform/resolvers": "3.9.0",
     "@react-three/drei": "10.7.7",
     "@react-three/fiber": "9.4.0",
     "@react-three/postprocessing": "3.0.4",
@@ -25,11 +25,11 @@
     "react-dom": "19.2.8",
     "resend": "6.11.0",
     "three": "0.181.0",
-    "zod": "4.4.3",
+    "zod": "3.25.76",
     "zustand": "5.0.8"
   },
   "devDependencies": {
-    "@types/node": "22.0.0",
+    "@types/node": "24.13.3",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@types/three": "0.181.0",

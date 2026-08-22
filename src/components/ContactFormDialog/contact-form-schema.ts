@@ -12,7 +12,7 @@ export const contactFormSchema = z
       .string()
       .min(2, "Name must be at least 2 letters long")
       .max(64, "Name must be under 64 characters"),
-    email: z.email(),
+    email: z.string().email(),
     subject: z
       .string()
       .refine((value): value is MessageCategoryValue =>

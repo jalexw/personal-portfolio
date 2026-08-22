@@ -27,7 +27,7 @@ export interface ContactFormProps {
 }
 
 export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
-  const [isSubmitting, startTransition] = useTransition();
+  const [isSubmitting, startSubmitting] = useTransition();
   const { toast } = useToast();
 
   // Contact Form (react-hook-form)
@@ -41,11 +41,11 @@ export function ContactForm({ setDialogOpen }: ContactFormProps): ReactElement {
     },
   });
 
-  function onSubmitContactForm(values: ContactFormData) {
+  function onSubmitContactForm(values: ContactFormData): void {
     if (process.env.NODE_ENV === "development") {
       console.log("Submitting contact form: ", values);
     }
-    startTransition(async () => {
+    startSubmitting(async (): Promise<void> => {
       try {
         const response = await fetch("/api/contact", {
           body: JSON.stringify(values),
