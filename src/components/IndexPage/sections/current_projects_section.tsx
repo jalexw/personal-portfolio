@@ -66,6 +66,11 @@ export function CurrentProjectsSection(): ReactElement {
         "gap-2 md:gap-4"
       )}>
         <CurrentProjectCard
+          title={"Botree"}
+          img_src="/images/botreeinc_logo.png"
+          href={"https://botreeinc.com"}
+        />
+        <CurrentProjectCard
           title={"SchemaVaults"}
           img_src="/images/schemavaults.png"
           href={"https://schemavaults.com"}

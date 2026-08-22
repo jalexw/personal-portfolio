@@ -1,6 +1,6 @@
 {
   "name": "@jalexw/personal-portfolio",
-  "version": "0.4.94",
+  "version": "0.4.95",
   "private": true,
   "scripts": {
     "dev": "PORT=3000 NODE_ENV=development bun --bun next dev",
@@ -15,16 +15,16 @@
     "@react-three/drei": "10.7.7",
     "@react-three/fiber": "9.4.0",
     "@react-three/postprocessing": "3.0.4",
-    "@schemavaults/theme": "0.25.9",
-    "@schemavaults/ui": "0.56.2",
+    "@schemavaults/theme": "0.26.1",
+    "@schemavaults/ui": "0.98.4",
     "@sentry/nextjs": "^10",
     "lucide-react": "0.575.0",
-    "next": "16.2.6",
-    "react": "19.2.6",
-    "react-dom": "19.2.6",
+    "next": "16.3.2",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "resend": "6.11.0",
     "three": "0.181.0",
-    "zod": "4.1.13",
+    "zod": "4.4.3",
     "zustand": "5.0.8"
   },
   "devDependencies": {
@@ -33,7 +33,7 @@
     "@types/react-dom": "19.2.3",
     "@types/three": "0.181.0",
     "autoprefixer": "10.4.21",
-    "postcss": "8.5.12",
+    "postcss": "8.5.26",
     "tailwindcss": "3.4.17",
     "typescript": "5.9.3",
     "@svgr/webpack": "8.1.0",
@@ -43,7 +43,7 @@
     "globals": "16.5.0",
     "@typescript-eslint/eslint-plugin": "8.49.0",
     "@typescript-eslint/parser": "8.49.0",
-    "eslint-config-next": "16.2.6"
+    "eslint-config-next": "16.3.2"
   },
   "packageManager": "bun@1.3.11"
 }
