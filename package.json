@@ -1,23 +1,24 @@
 {
   "name": "@jalexw/personal-portfolio",
-  "version": "0.4.96",
+  "version": "0.4.97",
   "private": true,
   "scripts": {
     "dev": "PORT=3000 NODE_ENV=development bun --bun next dev",
     "build": "NODE_ENV=production bun --bun next build",
+    "typecheck": "tsc --noEmit",
     "start": "NODE_ENV=production bun --bun next start",
     "lint": "next typegen && eslint",
     "pdfgen:resume": "bun run ./scripts/generate-resume-pdf.ts http://localhost:3000/resume",
     "build:resume-pdf": "bun run ./scripts/build-resume-pdf.ts"
   },
   "dependencies": {
-    "@hookform/resolvers": "5.2.2",
+    "@hookform/resolvers": "5.9.1",
     "@react-three/drei": "10.7.7",
     "@react-three/fiber": "9.4.0",
     "@react-three/postprocessing": "3.0.4",
     "@schemavaults/theme": "0.26.1",
     "@schemavaults/ui": "0.98.4",
-    "@sentry/nextjs": "^10",
+    "@sentry/nextjs": "10.70.0",
     "lucide-react": "0.575.0",
     "next": "16.3.2",
     "react": "19.2.8",
