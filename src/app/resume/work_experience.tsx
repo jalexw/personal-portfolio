@@ -133,11 +133,13 @@ const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
   },
 ];
 
+export interface WorkExperienceSectionProps {
+  heightClassName: string;
+}
+
 export function WorkExperienceSection({
   heightClassName,
-}: {
-  heightClassName: string;
-}): ReactElement {
+}: WorkExperienceSectionProps): ReactElement {
   const sectionContent: ReactNode[] = [];
 
   for (const [index, job] of WORK_EXPERIENCES.entries()) {
@@ -165,4 +167,4 @@ export function WorkExperienceSection({
   );
 }
 
-export default WorkExperienceSection;
+export default WorkExperienceSection satisfies FC<WorkExperienceSectionProps>;
