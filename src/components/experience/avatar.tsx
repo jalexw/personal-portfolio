@@ -231,7 +231,11 @@ function AvatarComponent(props: AvatarComponentProps): ReactNode {
       }),
     [dispatch],
   );
-  const [gltf, setGltf] = useState<GLTF | null>(null);
+  const [gltf] = useState<GLTF | null>(() => {
+    const avatarAssetRef: AssetRef<"avatar", "gltf"> | undefined =
+      experienceLoadManager?.current?.assets.get("avatar");
+    return avatarAssetRef?.asset ?? null;
+  });
 
   console.assert(
     loadingStates.initial_assets,
@@ -248,15 +252,11 @@ function AvatarComponent(props: AvatarComponentProps): ReactNode {
       resetExperience();
       return;
     }
-    const avatarAssetRef: AssetRef<"avatar", "gltf"> | undefined =
-      manager.assets.get("avatar");
-    const gltf_asset: GLTF | undefined = avatarAssetRef?.asset;
 
-    if (gltf_asset) {
+    if (gltf) {
       if (debug) {
-        console.log("AvatarComponent GLTF:", gltf_asset);
+        console.log("AvatarComponent GLTF:", gltf);
       }
-      setGltf(gltf_asset);
     } else {
       console.warn(
         "AvatarComponent GLTF asset missing! Did it get unloaded somehow? Resetting...",
@@ -264,7 +264,7 @@ function AvatarComponent(props: AvatarComponentProps): ReactNode {
       resetExperience();
       return;
     }
-  }, [gltf, debug, resetExperience]);
+  }, [gltf, debug, resetExperience, experienceLoadManager]);
 
   if (!gltf) {
     // Wait for the load manager to finish loading the Avatar data
