@@ -80,7 +80,7 @@ export function SocialMediaLinks(): ReactElement {
         href={goodreadsLink}
         SocialMediaIcon={({ className }) => (
           <GoodreadsIcon
-            className={cn(className, "w-full h-full fill-white", "scale-75")}
+            className={cn(className, "w-full h-full fill-current", "scale-75")}
           />
         )}
         tooltip="Goodreads"
