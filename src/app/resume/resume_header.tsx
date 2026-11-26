@@ -1,6 +1,6 @@
 "use client";
 
-import { email } from "@/metadata";
+import { abbreviatedFullName, email } from "@/metadata";
 import domain from "@/metadata/domain";
 import geographic_location from "@/metadata/geographic_location";
 import { githubUser } from "@/metadata/github";
@@ -17,10 +17,12 @@ import {
 } from "lucide-react";
 import type { ReactElement } from "react";
 
+const RESUME_HEADLINE: string = "Full-Stack Software Developer";
+
 export function ResumeHeader(): ReactElement {
   const PORTFOLIO_SITE_URL: string = `https://${domain()}`;
   return (
-    <>
+    <div className="w-full flex flex-col gap-2">
       <header className="w-full flex flex-row items-center justify-between">
         {/** Left-Side Links / Info */}
         <div className="">
@@ -41,7 +43,7 @@ export function ResumeHeader(): ReactElement {
         {/** Title */}
         <div className="grow flex flex-col items-center justify-center">
           <h1 className="font-bold text-2xl">J. Alex Whitman{"'"}s Résumé</h1>
-          <h2 className="text-xl">Full-Stack Software Developer</h2>
+          <h2 className="text-xl">{RESUME_HEADLINE}</h2>
         </div>
 
         {/** Right-Side Links / Info */}
@@ -67,7 +69,36 @@ export function ResumeHeader(): ReactElement {
         </div>
       </header>
       <Separator decorative={true} />
-    </>
+    </div>
+  );
+}
+
+export interface ResumeContinuationHeaderProps {
+  pageNumber: number;
+  pageCount: number;
+}
+
+// Compact running header for the pages after the first one
+export function ResumeContinuationHeader({
+  pageNumber,
+  pageCount,
+}: ResumeContinuationHeaderProps): ReactElement {
+  return (
+    <div className="w-full flex flex-col gap-2">
+      <header className="w-full flex flex-row items-baseline justify-between">
+        <p className="text-sm">
+          <span className="font-bold">{abbreviatedFullName}</span>
+          {" · "}
+          {RESUME_HEADLINE}
+        </p>
+        <p className="text-xs text-gray-500">
+          <a href={`mailto:${email}`}>{email}</a>
+          {" · "}
+          Page {pageNumber} of {pageCount}
+        </p>
+      </header>
+      <Separator decorative={true} />
+    </div>
   );
 }
 

@@ -2,7 +2,7 @@ import type { FC, ReactElement, ReactNode } from "react";
 import ResumeSection from "./resume_section";
 import { cn, Separator } from "@schemavaults/ui";
 
-interface PastJobDescriptionProps {
+export interface PastJobDescriptionProps {
   job_title: string;
   company_name: string;
   time_description: string | (() => ReactNode); // e.g. 2023 - 2025
@@ -23,18 +23,18 @@ function PastJobDescription(props: PastJobDescriptionProps): ReactElement {
         "text-black",
       )}
     >
-      <header className="flex flex-row justify-between w-full pb-1">
-        <h3 className="text-xs">
+      <header className="flex flex-row justify-between gap-2 w-full pb-1">
+        <h3 className="text-sm">
           <span className="font-bold">{props.company_name}</span>,{" "}
           {props.job_title}
         </h3>
-        <p className="text-xs font-bold">
+        <p className="text-sm font-bold shrink-0 whitespace-nowrap">
           { time_description }
         </p>
       </header>
       <ul className="w-full flex flex-col gap-1 list-disc list-inside">
         {props.job_duties.map((duty, index) => (
-          <li key={index} className="text-xs">
+          <li key={index} className="text-sm">
             {duty}
           </li>
         ))}
@@ -48,13 +48,25 @@ const timeDescriptionDateAnnotationClassname = cn("text-gray-400 text-xs");
 function WorkExperienceSeparator(): ReactElement {
   return (
     <Separator
-      className="border-dashed px-16 border-slate-300 border-t bg-transparent print:border-slate-300 mt-2 mb-1"
+      className="border-dashed px-16 border-slate-300 border-t bg-transparent print:border-slate-300 my-3"
       decorative={true}
     />
   );
 }
 
-const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
+// Current & most recent roles; shown on the first page of the resume
+export const RECENT_WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
+  {
+    job_title: "Software Developer",
+    company_name: "BotreeInc",
+    time_description: "2026 – Present",
+    job_duties: [
+      "Solo-built a custom learning management system (LMS) + learning record store (LRS), complete with SCORM package serving, AI coaching, and QR/NFC code-to-resource linking with analytics.",
+      "Built an AI-powered instructional design tool to accelerate instructional designers' workflows, from generating course outlines and micro-lessons to building SCORM packages.",
+      "Built marketing websites for Botree's brands, plus a booking system for live workshops.",
+      "Built tools for mapping existing workflows and SOPs, designing training around the captured processes, and generating quotes/estimates for that training.",
+    ],
+  },
   {
     job_title: "Software Developer",
     company_name: "Aycoutay Technologies Ltd.",
@@ -77,6 +89,10 @@ const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
       "Evaluated, built, and deployed biological age models (including k-NN, CNN, RNN, etc.) from electrode measurement dataset.",
     ],
   },
+];
+
+// Older roles; pushed to the second page of the resume
+export const EARLIER_WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
   {
     job_title: "Software Developer",
     company_name: "SolutionInc Ltd.",
@@ -134,19 +150,23 @@ const WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
 ];
 
 export interface WorkExperienceSectionProps {
-  heightClassName: string;
+  title: string;
+  experiences: readonly PastJobDescriptionProps[];
+  heightClassName?: string;
 }
 
 export function WorkExperienceSection({
+  title,
+  experiences,
   heightClassName,
 }: WorkExperienceSectionProps): ReactElement {
   const sectionContent: ReactNode[] = [];
 
-  for (const [index, job] of WORK_EXPERIENCES.entries()) {
+  for (const [index, job] of experiences.entries()) {
     sectionContent.push(
       <PastJobDescription key={`past-job-${index}`} {...job} />,
     );
-    if (index !== WORK_EXPERIENCES.length - 1) {
+    if (index !== experiences.length - 1) {
       sectionContent.push(
         <WorkExperienceSeparator key={`work-experience-separator-${index}`} />,
       );
@@ -155,7 +175,7 @@ export function WorkExperienceSection({
 
   return (
     <ResumeSection
-      title="Selected Work Experience"
+      title={title}
       heightClassName={heightClassName}
     >
       <ul

@@ -5,32 +5,23 @@ import type { PropsWithChildren, ReactElement } from "react";
 
 export interface ResumePageContainerProps extends PropsWithChildren {}
 
+// Stacks the resume's sheets (see 'resume_sheet.tsx') on a grey backdrop on
+// screen; in print, the backdrop is removed and each sheet fills a page
 export default function ResumePageContainer({
   children,
 }: ResumePageContainerProps): ReactElement {
   return (
-    <div
+    <main
       className={cn(
-        "grid place-items-center",
+        "flex flex-col print:block",
+        "gap-4 lg:gap-12",
+        "p-4 lg:p-12 print:p-0",
         "min-h-screen print:min-h-0",
         "bg-gray-400 print:bg-white",
-        "overflow-x-scroll print:overflow-x-hidden",
+        "overflow-x-scroll print:overflow-visible",
       )}
     >
-      <div
-        className="
-        m-4 lg:m-12 print:m-0
-        h-[297mm] w-[210mm] print:h-screen
-        overflow-hidden
-        rounded-md print:rounded-none
-        bg-white
-        text-black
-        p-[5mm] print:p-0
-        shadow-lg print:shadow-none
-      "
-      >
-        {children}
-      </div>
-    </div>
+      {children}
+    </main>
   );
 }
