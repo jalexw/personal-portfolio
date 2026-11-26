@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import type { FC, ReactElement, ReactNode } from "react";
 import ResumeSection from "./resume_section";
 import { cn, Separator } from "@schemavaults/ui";
@@ -6,8 +7,11 @@ export interface PastJobDescriptionProps {
   job_title: string;
   company_name: string;
   time_description: string | (() => ReactNode); // e.g. 2023 - 2025
-  job_duties: string[];
+  job_duties: ReactNode[];
 }
+
+// Shared text size for each job's title row and duties
+const jobEntryTextClassname = cn("text-[0.8125rem] leading-[1.1875rem]");
 
 function PastJobDescription(props: PastJobDescriptionProps): ReactElement {
   const time_description: ReactNode = typeof props.time_description === "string"
@@ -24,17 +28,22 @@ function PastJobDescription(props: PastJobDescriptionProps): ReactElement {
       )}
     >
       <header className="flex flex-row justify-between gap-2 w-full pb-1">
-        <h3 className="text-sm">
+        <h3 className={jobEntryTextClassname}>
           <span className="font-bold">{props.company_name}</span>,{" "}
           {props.job_title}
         </h3>
-        <p className="text-sm font-bold shrink-0 whitespace-nowrap">
+        <p
+          className={cn(
+            jobEntryTextClassname,
+            "font-bold shrink-0 whitespace-nowrap",
+          )}
+        >
           { time_description }
         </p>
       </header>
       <ul className="w-full flex flex-col gap-1 list-disc list-inside">
         {props.job_duties.map((duty, index) => (
-          <li key={index} className="text-sm">
+          <li key={index} className={jobEntryTextClassname}>
             {duty}
           </li>
         ))}
@@ -57,14 +66,35 @@ function WorkExperienceSeparator(): ReactElement {
 // Current & most recent roles; shown on the first page of the resume
 export const RECENT_WORK_EXPERIENCES: readonly PastJobDescriptionProps[] = [
   {
-    job_title: "Software Developer",
+    job_title: "Director of Technology & Innovation",
     company_name: "BotreeInc",
     time_description: "2026 – Present",
     job_duties: [
-      "Solo-built a custom learning management system (LMS) + learning record store (LRS), complete with SCORM package serving, AI coaching, and QR/NFC code-to-resource linking with analytics.",
+      "Solo-built a custom learning management system (LMS) + learning record store (LRS), complete with SCORM package serving, AI coaching, and QR/NFC code-to-resource linking with analytics; its AI agents run in isolated sandboxes with scoped, delegated access.",
       "Built an AI-powered instructional design tool to accelerate instructional designers' workflows, from generating course outlines and micro-lessons to building SCORM packages.",
       "Built marketing websites for Botree's brands, plus a booking system for live workshops.",
       "Built tools for mapping existing workflows and SOPs, designing training around the captured processes, and generating quotes/estimates for that training.",
+    ],
+  },
+  {
+    job_title: "Web Developer",
+    company_name: "Daniel Johnson Architect",
+    time_description: (): ReactNode => (
+      <>
+        {"2025 – 2026"}{" "}
+        <span className={timeDescriptionDateAnnotationClassname}>
+          {"Contract"}
+        </span>
+      </>
+    ),
+    job_duties: [
+      <Fragment key="djaarch-website">
+        {"Built a Next.js website ("}
+        <a href="https://djaarch.com" className="underline underline-offset-2">
+          {"djaarch.com"}
+        </a>
+        {") from Jack Riley's designs, with Framer Motion animations and a Django CMS backend."}
+      </Fragment>,
     ],
   },
   {
